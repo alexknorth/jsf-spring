@@ -1,7 +1,6 @@
 package de.northcodes.course.jsfspring.bean;
 
 import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,9 @@ import java.util.List;
 public class PopularProducts {
 
 	@Autowired
-    private ProductService productService;
+	private ProductService productService;
 
-    private List<Product> products;
-
-    @PostConstruct
-    public void initialize() {
-        products = productService.getPopularProducts();
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
+	public List<Product> getProducts() {
+		return productService.getPopularProducts();
+	}
 }
