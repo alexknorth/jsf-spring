@@ -1,4 +1,4 @@
-package de.northcodes.course.jsfspring;
+package de.northcodes.course.jsfspring.bean;
 
 import javax.annotation.ManagedBean;
 import javax.faces.bean.RequestScoped;

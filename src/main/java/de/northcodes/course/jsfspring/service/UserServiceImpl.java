@@ -1,10 +1,13 @@
-package de.northcodes.course.jsfspring;
+package de.northcodes.course.jsfspring.service;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ApplicationScoped
+import org.springframework.stereotype.Service;
+
+import de.northcodes.course.jsfspring.model.User;
+
+@Service
 public class UserServiceImpl implements UserService {
 
     private final Map<String, User> users = new ConcurrentHashMap<>();

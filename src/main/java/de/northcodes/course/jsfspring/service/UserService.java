@@ -1,4 +1,6 @@
-package de.northcodes.course.jsfspring;
+package de.northcodes.course.jsfspring.service;
+
+import de.northcodes.course.jsfspring.model.User;
 
 public interface UserService {
 

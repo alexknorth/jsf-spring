@@ -1,4 +1,4 @@
-package de.northcodes.course.jsfspring;
+package de.northcodes.course.jsfspring.model;
 
 import java.io.Serializable;
 import java.util.Date;
