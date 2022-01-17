@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/page-template.xhtml">
+    <ui:param name="pageTitle" value="Shopping Cart"/>
+    <ui:define name="panel-top">
+        <section>
+            <h1>Shopping Cart</h1>
+            <p>Your shopping cart is empty.</p>
+            <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
+        </section>
+    </ui:define>
+    <ui:define name="panel-main">
+        <!-- TODO: Content of shopping cart -->
+    </ui:define>
+</ui:composition>
+</html>

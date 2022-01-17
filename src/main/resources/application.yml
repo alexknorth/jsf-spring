@@ -1,0 +1,2 @@
+### JSF CONFIGS ###
+server.context_parameters.com.sun.faces.forceLoadConfiguration=true

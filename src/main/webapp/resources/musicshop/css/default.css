@@ -1,0 +1,78 @@
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e5e5e5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 0.5em 0;
+    padding: 0;
+}
+
+p {
+    margin: 0.5em 0 0 0;
+    padding: 0;
+}
+
+a:link, a:visited {
+    color: #1f778d;
+}
+
+a:hover, a:active {
+    color: #76cbe0;
+}
+
+body > header {
+    padding: 1em;
+    clear: both;
+    background-color: #f15b2a;
+    color: white;
+    text-align: center;
+}
+
+body > header > h1 {
+    margin: 0;
+}
+
+body > section {
+    margin: 0.5em 20%;
+    padding: 1em;
+    overflow: hidden;
+    background-color: white;
+    color: black;
+}
+
+body > footer {
+    padding: 0.5em;
+    clear: both;
+    background-color: #2a9fbc;
+    color: #e5e5e5;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+body > footer > p {
+    margin: 0;
+}
+
+.product-summary {
+    margin: 0.5em 0;
+    padding: 0.5em 0;
+    clear: both;
+}
+
+.product-summary > img {
+    float: left;
+    padding-right: 1em;
+}
+
+.product-details > img {
+    float: left;
+    padding-right: 1em;
+}
