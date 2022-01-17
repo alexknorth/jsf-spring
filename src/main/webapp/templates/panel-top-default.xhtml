@@ -5,7 +5,21 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition>
     <section>
-        <h1>Welcome, visitor!</h1>
+       
+        <ui:fragment rendered="#{not userManager.signedIn}">
+            <h1>Welcome, visitor!</h1>
+            <p>Please <h:outputLink value="sign-in.xhtml">sign in</h:outputLink>
+                or <h:outputLink value="user-details.xhtml">register</h:outputLink>.</p>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{userManager.signedIn}">
+            <h:form>
+                <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
+                <p>View and update your <h:outputLink value="user-details.xhtml">user details</h:outputLink>
+                    or <h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>.</p>
+            </h:form>
+        </ui:fragment>
+       
          <ui:fragment rendered="#{shoppingCart.totalQuantity == 0}">
             <p>Your <h:outputLink value="shopping-cart.xhtml">shopping cart</h:outputLink> is empty.</p>
         </ui:fragment>
