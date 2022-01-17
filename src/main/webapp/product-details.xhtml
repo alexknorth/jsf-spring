@@ -17,7 +17,8 @@
             <h:form>
                 <h1>#{productDetails.product.name}</h1>
                 <p>#{productDetails.product.description}</p>
-                <p>Price: $ #{productDetails.product.price} - <h:commandLink>Add to cart</h:commandLink></p>
+                <p>Price: $ #{productDetails.product.price} - <h:commandLink
+                        action="#{shoppingCart.addProduct(productDetails.product)}">Add to cart</h:commandLink></p>
                 <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
             </h:form>
         </section>

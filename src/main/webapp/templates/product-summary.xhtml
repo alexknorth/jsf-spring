@@ -11,7 +11,8 @@
         <ui:insert name="product-description">
             <p>Product description.</p>
         </ui:insert>
-        <p>Price: $ #{product.price} - <h:commandLink>Add to cart</h:commandLink></p>
+        <p>Price: $ #{product.price} - <h:commandLink
+                        action="#{shoppingCart.addProduct(product)}">Add to cart</h:commandLink></p>
         <p>
             <h:outputLink value="product-details.xhtml">
                 <f:param name="productId" value="#{product.id}"/>
