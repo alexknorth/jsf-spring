@@ -2,13 +2,13 @@ package de.northcodes.course.jsfspring.model;
 
 import java.math.BigDecimal;
 
-public class ShoppingCartLine {
+public class ShoppingCartItem {
 
     private Product product;
     private int quantity;
     private BigDecimal amount;
 
-    public ShoppingCartLine(Product product) {
+    public ShoppingCartItem(Product product) {
         this.product = product;
         this.quantity = 1;
         this.amount = product.getPrice();

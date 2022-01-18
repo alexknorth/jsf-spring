@@ -3,19 +3,47 @@ package de.northcodes.course.jsfspring.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+    private long id;
+    
+    @Column(name = "name", nullable = false, unique = true)
     private String username;
+    
+    @Column(name = "password", nullable = false)
     private String password;
+    
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    
+    @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
+    
+    @Column(name = "phone_number", nullable = true)
     private String phoneNumber;
+    
+    @Column(name = "birth_date", nullable = false)
     private Date birthDate;
+    
+    @Column(name = "subscribed_to_newsletter", nullable = false)
     private Boolean subscribedToNewsletter;
 
+    public User() {}
+    
     public String getUsername() {
         return username;
     }
@@ -78,5 +106,9 @@ public class User implements Serializable {
 
     public void setSubscribedToNewsletter(Boolean subscribedToNewsletter) {
         this.subscribedToNewsletter = subscribedToNewsletter;
+    }
+    
+    public long getId() {
+        return id;
     }
 }

@@ -22,10 +22,10 @@
         </section>
     </ui:define>
     <ui:define name="panel-main">
-        <ui:fragment rendered="#{not empty shoppingCart.lines}">
+        <ui:fragment rendered="#{not empty shoppingCart.items}">
             <section>
                 <h:form>
-                    <h:dataTable value="#{shoppingCart.lines}" var="line"
+                    <h:dataTable value="#{shoppingCart.items}" var="item"
                                  styleClass="shoppingcart-table"
                                  headerClass="shoppingcart-header"
                                  rowClasses="shoppingcart-row-odd,shoppingcart-row-even"
@@ -34,23 +34,23 @@
                         <h:column>
                             <f:facet name="header">Product</f:facet>
                             <h:outputLink value="product-details.xhtml">
-                                <f:param name="productId" value="#{line.product.id}"/>
-                                #{line.product.name}
+                                <f:param name="productId" value="#{item.product.id}"/>
+                                #{item.product.name}
                             </h:outputLink>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Price</f:facet>
-                            #{line.product.price}
+                            #{item.product.price}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
-                            #{line.quantity}
-                            <h:commandButton value="+" action="#{shoppingCart.addProduct(line.product)}"/>
-                            <h:commandButton value="-" action="#{shoppingCart.removeProduct(line.product)}"/>
+                            #{item.quantity}
+                            <h:commandButton value="+" action="#{shoppingCart.addProduct(item.product)}"/>
+                            <h:commandButton value="-" action="#{shoppingCart.removeProduct(item.product)}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Amount</f:facet>
-                            #{line.amount}
+                            #{item.amount}
                             <f:facet name="footer">#{shoppingCart.totalAmount}</f:facet>
                         </h:column>
                     </h:dataTable>

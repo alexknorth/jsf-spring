@@ -1,24 +1,29 @@
 package de.northcodes.course.jsfspring.service;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.northcodes.course.jsfspring.model.User;
+import de.northcodes.course.jsfspring.persistence.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final Map<String, User> users = new ConcurrentHashMap<>();
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public User getUser(String username) {
-        return users.get(username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public void saveUser(User user) {
-        users.put(user.getUsername(), user);
+    	userRepository.save(user);
     }
+
+	@Override
+	public boolean isEmailAlreadyExisting(String emailAddress) {
+		return userRepository.findByEmailAddress(emailAddress) != null;
+	}
 }

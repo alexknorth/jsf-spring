@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 <ui:composition template="/templates/page-template.xhtml">
+    <f:metadata>
+        <f:viewAction action="#{userDetails.onload}"/>
+    </f:metadata>
     <ui:param name="pageTitle" value="User Details"/>
     <ui:define name="panel-top">
         <section>
@@ -13,7 +18,86 @@
         </section>
     </ui:define>
     <ui:define name="panel-main">
-        <!-- TODO: Add user details form here -->
+        <section>
+            <h:messages styleClass="validation-messages"/>
+            <h:form>
+                <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
+                    <h:outputLabel for="username">Username</h:outputLabel>
+                    <h:inputText id="username" 
+                    			 value="#{userDetails.user.username}" 
+                    			 size="20"
+                    			 required="true" 
+                    			 requiredMessage="Please enter a username."
+                                 readonly="#{userManager.signedIn}"
+                                 validatorMessage="Please enter a username consisting of only letters and digits, between 2 and 20 characters long.">
+                        <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="password">Password</h:outputLabel>
+                    <h:inputSecret id="password" 
+                    			   value="#{userDetails.user.password}" 
+                    			   size="20"
+                                   required="true" 
+                                   requiredMessage="Please enter a password."/>
+
+                    <h:outputLabel for="firstName">First name</h:outputLabel>
+                    <h:inputText id="firstName" 
+                                 value="#{userDetails.user.firstName}" 
+                                 size="30"
+                                 required="true"
+                                 requiredMessage="Please enter your first name."
+                                 validatorMessage="Please enter a first name between 1 and 30 characters long.">
+                        <f:validateLength minimum="1" maximum="30"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="lastName">Last name</h:outputLabel>
+                    <h:inputText id="lastName" 
+                                 value="#{userDetails.user.lastName}" 
+                                 size="30"
+                                 required="true" 
+                                 requiredMessage="Please enter your last name."
+                                 validatorMessage="Please enter a last name between 1 and 30 characters long.">
+                        <f:validateLength minimum="1" maximum="30"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="emailAddress">E-mail address</h:outputLabel>
+                    <h:inputText id="emailAddress" 
+                                 value="#{userDetails.user.emailAddress}" 
+                                 size="20"
+                                 required="true" 
+                                 requiredMessage="Please enter your mail address."
+                                 validator="#{userDetails.validateEmail}"/>
+
+                    <h:outputLabel for="phoneNumber">Phone number</h:outputLabel>
+                    <h:inputText id="phoneNumber" 
+                                 value="#{userDetails.user.phoneNumber}" 
+                                 size="20"
+                                 validator="#{userDetails.validatePhoneNumber}"/>
+
+                    <h:outputLabel for="birthDate">Birth date</h:outputLabel>
+                    <h:inputText id="birthDate" 
+                    			 p:type="date"
+                    			 required="true"
+                                 requiredMessage="Please select your birthdate."
+                    			 value="#{userDetails.user.birthDate}" 
+                    			 validator="#{userDetails.validateBirthDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="subscribedToNewsletter">Subscribe to the newsletter?</h:outputLabel>
+                    <h:selectOneRadio id="subscribedToNewsletter"
+                                      value="#{userDetails.user.subscribedToNewsletter}"
+                                      required="true"
+                                      requiredMessage="Please select if you want to subscribe for the newsletter.">
+                        <f:selectItem itemValue="#{true}" itemLabel="Yes"/>
+                        <f:selectItem itemValue="#{false}" itemLabel="No"/>
+                    </h:selectOneRadio>
+
+                    <h:outputText value=""/>
+                    <h:commandButton value="Submit" action="#{userDetails.submit}"/>
+                </h:panelGrid>
+            </h:form>
+        </section>
     </ui:define>
 </ui:composition>
 </html>

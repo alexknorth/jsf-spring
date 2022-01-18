@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.bean;
 
 import javax.annotation.ManagedBean;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -35,6 +36,8 @@ public class UserManager implements Serializable {
     public String signIn(String username, String password) {
         User user = userService.getUser(username);
         if (user == null || !password.equals(user.getPassword())) {
+        	 FacesContext.getCurrentInstance().addMessage(null,
+                     new FacesMessage("Please enter a valid username and password."));
             return "sign-in";
         }
 

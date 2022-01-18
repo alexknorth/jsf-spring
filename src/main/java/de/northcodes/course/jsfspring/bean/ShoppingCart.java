@@ -1,13 +1,12 @@
 package de.northcodes.course.jsfspring.bean;
 
 import javax.annotation.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 import org.springframework.stereotype.Component;
 
 import de.northcodes.course.jsfspring.model.Product;
-import de.northcodes.course.jsfspring.model.ShoppingCartLine;
+import de.northcodes.course.jsfspring.model.ShoppingCartItem;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,14 +21,14 @@ public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<ShoppingCartLine> lines = new ArrayList<>();
+    private final List<ShoppingCartItem> items = new ArrayList<>();
 
     private int totalQuantity = 0;
 
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
-    public List<ShoppingCartLine> getLines() {
-        return lines;
+    public List<ShoppingCartItem> getItems() {
+        return items;
     }
 
     public int getTotalQuantity() {
@@ -42,29 +41,29 @@ public class ShoppingCart implements Serializable {
 
     public void addProduct(Product product) {
     	System.out.println("ShoppingCart.addProduct called");
-        // Find the line for this product, increment quantity and amount if found
-        for (ShoppingCartLine line : lines) {
-            if (line.getProduct().getId() == product.getId()) {
-                line.incrementQuantityAndAmount();
-                incrementTotalQuantityAndAmount(line.getProduct().getPrice());
+        // Find the item for this product, increment quantity and amount if found
+        for (ShoppingCartItem item : items) {
+            if (item.getProduct().getId() == product.getId()) {
+                item.incrementQuantityAndAmount();
+                incrementTotalQuantityAndAmount(item.getProduct().getPrice());
                 return;
             }
         }
 
-        // No line for this product yet, add a new line
-        lines.add(new ShoppingCartLine(product));
+        // No item for this product yet, add a new item
+        items.add(new ShoppingCartItem(product));
         incrementTotalQuantityAndAmount(product.getPrice());
     }
 
     public void removeProduct(Product product) {
-        Iterator<ShoppingCartLine> it = lines.iterator();
+        Iterator<ShoppingCartItem> it = items.iterator();
         while (it.hasNext()) {
-            ShoppingCartLine line = it.next();
+            ShoppingCartItem item = it.next();
 
-            // If this is the line for this product, decrement quantity and amount;
-            // remove the line if the quantity has become 0
-            if (line.getProduct().getId() == product.getId()) {
-                if (line.decrementQuantityAndAmount()) {
+            // If this is the item for this product, decrement quantity and amount;
+            // remove the item if the quantity has become 0
+            if (item.getProduct().getId() == product.getId()) {
+                if (item.decrementQuantityAndAmount()) {
                     it.remove();
                 }
 

@@ -27,7 +27,7 @@ public final class Product implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
     
-    @Column(name = "imageName", nullable = false)
+    @Column(name = "image_name", nullable = false)
     private String imageName;
 
     protected Product() {}

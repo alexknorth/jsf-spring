@@ -28,7 +28,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- Dependencies to get required JSF dependencies-->
+		<!-- Dependencies to get required JSF packages-->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
@@ -45,6 +45,7 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 
 		<!-- Dependency to for unit testing -->
 		<dependency>

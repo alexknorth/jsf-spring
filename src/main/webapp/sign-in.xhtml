@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/templates/page-template.xhtml">
@@ -26,13 +27,18 @@
     <ui:define name="panel-main">
         <ui:fragment rendered="#{not userManager.signedIn}">
             <section>
+                <h:messages styleClass="validation-messages"/>
                 <h:form>
                     <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
                         <h:outputLabel for="username">Username</h:outputLabel>
-                        <h:inputText id="username" value="#{signIn.username}"/>
+                        <h:inputText id="username" value="#{signIn.username}" size="20"
+                                     validatorMessage="Please enter a username consisting of only letters and digits, between 2 and 20 characters long.">
+                            <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
+                        </h:inputText>
 
                         <h:outputLabel for="password">Password</h:outputLabel>
-                        <h:inputSecret id="password" value="#{signIn.password}"/>
+                        <h:inputSecret id="password" value="#{signIn.password}" size="20"
+                                       required="true" requiredMessage="Please enter your password."/>
 
                         <h:outputText value=""/>
                         <h:commandButton value="Submit" action="#{signIn.submit}"/>
