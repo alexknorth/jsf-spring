@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getPopularProducts() {
-		//log.info("getPopularProducts called: " + productRepository.findAll().iterator().next().toString());
+		log.info("getPopularProducts called");
 		return StreamSupport.stream(productRepository.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 

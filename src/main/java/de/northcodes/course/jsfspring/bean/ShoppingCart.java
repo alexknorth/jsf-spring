@@ -3,10 +3,13 @@ package de.northcodes.course.jsfspring.bean;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import de.northcodes.course.jsfspring.model.Order;
 import de.northcodes.course.jsfspring.model.Product;
 import de.northcodes.course.jsfspring.model.ShoppingCartItem;
+import de.northcodes.course.jsfspring.service.OrderService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,6 +29,12 @@ public class ShoppingCart implements Serializable {
     private int totalQuantity = 0;
 
     private BigDecimal totalAmount = BigDecimal.ZERO;
+    
+    @Autowired
+    private UserManager userManager;
+    
+    @Autowired
+    OrderService orderService;
 
     public List<ShoppingCartItem> getItems() {
         return items;
@@ -80,5 +89,16 @@ public class ShoppingCart implements Serializable {
     private void decrementTotalQuantityAndAmount(BigDecimal productPrice) {
         totalQuantity--;
         totalAmount = totalAmount.subtract(productPrice);
+    }
+    
+    public void orderNow() {
+    	orderService.orderNow(userManager.getCurrentUser(), items);
+    	totalQuantity = 0;
+    	totalAmount = BigDecimal.ZERO;
+    	items.removeAll(items);
+    }
+    
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrdersByUser(userManager.getCurrentUser());
     }
 }

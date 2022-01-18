@@ -54,6 +54,26 @@
                             <f:facet name="footer">#{shoppingCart.totalAmount}</f:facet>
                         </h:column>
                     </h:dataTable>
+                    <h:commandButton value="Order Now!" action="#{shoppingCart.orderNow}"/>
+                    
+                     <h:dataTable value="#{shoppingCart.allOrders}" var="order"
+                                 styleClass="order-table"
+                                 headerClass="order-header"
+                                 rowClasses="order-row-odd,order-row-even"
+                                 columnClasses="order-col-name,order-col-price,order-col-quantity,order-col-amount">
+                        <h:column>
+                            <f:facet name="header">Order ID</f:facet>
+                             #{order.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Order date</f:facet>
+                             #{order.orderDate}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Order state</f:facet>
+                             #{order.orderState}
+                        </h:column>
+                    </h:dataTable>
                 </h:form>
             </section>
         </ui:fragment>

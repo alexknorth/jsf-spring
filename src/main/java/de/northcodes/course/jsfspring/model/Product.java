@@ -5,19 +5,15 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
-public final class Product implements Serializable {
+@Table(name = AbstractEntity.SHOP_PREFIX + "product")
+public final class Product extends AbstractEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    
     @Column(name = "name", nullable = false)
     private String name;
     
@@ -37,10 +33,6 @@ public final class Product implements Serializable {
         this.description = description;
         this.price = price;
         this.imageName = imageName;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getName() {
