@@ -10,5 +10,7 @@ public interface OrderService {
 
 	public void orderNow(User orderer, List<ShoppingCartItem> items);
 
+	public Order getOrderById(long id);
+
 	public List<Order> getAllOrdersByUser(User orderer);
 }

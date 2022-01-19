@@ -19,7 +19,7 @@ public class Order extends AbstractEntity{
 	@Column(name = "order_date", nullable = false)
 	private Date orderDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn (name="fk_orderer",referencedColumnName="id",nullable=false,unique=false)
 	private User orderer;
 
@@ -50,6 +50,10 @@ public class Order extends AbstractEntity{
 
 	public User getOrderer() {
 		return orderer;
+	}
+
+	public String getOrdererName() {
+		return orderer.getFirstName() + " " + orderer.getLastName();
 	}
 
 	public void setOrderer(User orderer) {

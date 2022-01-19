@@ -92,10 +92,15 @@ public class ShoppingCart implements Serializable {
     }
     
     public void orderNow() {
-    	orderService.orderNow(userManager.getCurrentUser(), items);
-    	totalQuantity = 0;
-    	totalAmount = BigDecimal.ZERO;
-    	items.removeAll(items);
+        boolean isOk = userManager.getCurrentUser() != null;
+
+        if (isOk) {
+            orderService.orderNow(userManager.getCurrentUser(), items);
+            totalQuantity = 0;
+            totalAmount = BigDecimal.ZERO;
+            items.removeAll(items);
+        }
+
     }
     
     public List<Order> getAllOrders() {

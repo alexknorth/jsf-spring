@@ -13,6 +13,9 @@ import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.persistence.OrderRepository;
 import de.northcodes.course.jsfspring.persistence.ShoppingCartItemRepository;
 
+import javax.faces.application.FacesMessage;
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class OrderServiceImpl implements OrderService{
 
@@ -35,6 +38,11 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public List<Order> getAllOrdersByUser(User orderer) {
 		return orderRepository.findByOrderer(orderer);
+	}
+
+	@Override
+	public Order getOrderById(long id) {
+		return this.orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found."));
 	}
 
 }
