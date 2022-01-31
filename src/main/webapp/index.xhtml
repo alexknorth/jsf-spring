@@ -4,17 +4,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/templates/page-template.xhtml">
-    <ui:param name="pageTitle" value="Popular Products"/>
+    <ui:param name="pageTitle" value="All Recipes"/>
     <ui:define name="panel-main">
         <section>
-            <h1>Popular Products</h1>
+            <h1>Your Recipes</h1>
             <ui:debug hotkey="e"/>
             <h:form>
-                <ui:repeat value="#{popularProducts.products}" var="product">
-                    <ui:decorate template="templates/product-summary.xhtml">
-                        <ui:param name="product" value="#{product}"/>
-                        <ui:define name="product-description">
-                            <p>#{product.shortDescription}</p>
+                <ui:repeat value="#{allRecipes.recipes}" var="recipe">
+                    <ui:decorate template="templates/recipe-summary.xhtml">
+                        <ui:param name="recipe" value="#{recipe}"/>
+                        <ui:define name="recipe-description">
                         </ui:define>
                     </ui:decorate>
                 </ui:repeat>
