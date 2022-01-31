@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.service;
 
 import de.northcodes.course.jsfspring.model.Recipe;
+import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.persistence.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe getRecipeIfUserIsOwner(long recipeId, long userId) {
-        return recipeRepository.findByIdAndUserId(recipeId, userId);
+    public Recipe getRecipeIfUserIsOwner(long recipeId, User user) {
+        return user.getRecipes().stream().filter(recipe -> recipe.getId() == recipeId).findFirst().orElse(new Recipe());
     }
 }

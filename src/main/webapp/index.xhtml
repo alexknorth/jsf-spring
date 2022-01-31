@@ -10,7 +10,7 @@
             <h1>Your Recipes</h1>
             <ui:debug hotkey="e"/>
             <h:form>
-                <ui:repeat value="#{allRecipes.recipes}" var="recipe">
+                <ui:repeat value="#{allRecipes.allRecipes}" var="recipe">
                     <ui:decorate template="templates/recipe-summary.xhtml">
                         <ui:param name="recipe" value="#{recipe}"/>
                         <ui:define name="recipe-description">

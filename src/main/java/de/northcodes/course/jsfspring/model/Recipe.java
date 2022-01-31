@@ -32,17 +32,22 @@ public class Recipe implements Serializable {
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="fk_creator",referencedColumnName="id",nullable=false,unique=false)
+    private User creator;
+
 
     public Recipe() {
     }
 
-    public Recipe(String recipeName, Number portion, String ingredients, String preparation, String cookingTime, Date createDate) {
+    public Recipe(String recipeName, Number portion, String ingredients, String preparation, String cookingTime, Date createDate, User creator) {
         this.recipeName = recipeName;
         this.portion = portion;
         this.preparation = preparation;
         this.ingredients = ingredients;
         this.cookingTime = cookingTime;
         this.createDate = createDate;
+        this.creator = creator;
     }
 
     public String getRecipeName() {
@@ -91,6 +96,14 @@ public class Recipe implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     @Override

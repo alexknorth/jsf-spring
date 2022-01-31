@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.bean;
 
-import de.northcodes.course.jsfspring.model.Recipe;
+import de.northcodes.course.jsfspring.bean.readmodel.Recipe;
+import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.RecipeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestScoped
 @Component
@@ -19,11 +22,23 @@ public class AllRecipes {
 	@Autowired
 	private RecipeService recipeService;
 
+	@Autowired
+	private UserManager userManager;
+
 	private static final Logger log = LoggerFactory.getLogger(AllRecipes.class);
 
-	public List<Recipe> getRecipes() {
-		log.info("Get All Recipes");
-		recipeService.getAllRecipes().forEach(recipe -> log.info(recipe.toString()));
-		return recipeService.getAllRecipes();
+	public List<de.northcodes.course.jsfspring.bean.readmodel.Recipe> getAllRecipes() {
+		log.info("Get All Other Recipes");
+		if (userManager.isSignedIn()) {
+			return recipeService.getAllRecipes()
+					.stream()
+					.map(recipe -> new de.northcodes.course.jsfspring.bean.readmodel.Recipe(recipe, recipe.getCreator().getId() == userManager.getCurrentUser().getId()))
+					.collect(Collectors.toList());
+		} else {
+			return recipeService.getAllRecipes()
+					.stream()
+					.map(recipe -> new de.northcodes.course.jsfspring.bean.readmodel.Recipe(recipe,false))
+					.collect(Collectors.toList());
+		}
 	}
 }

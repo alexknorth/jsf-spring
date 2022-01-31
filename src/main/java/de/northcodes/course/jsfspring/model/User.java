@@ -1,13 +1,11 @@
 package de.northcodes.course.jsfspring.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User implements Serializable {
@@ -36,8 +34,20 @@ public class User implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Recipe> recipes = new ArrayList<Recipe>();
+
     public User() {}
-    
+
+    public User(String username, String password, String firstName, String lastName, String emailAddress, Date birthDate) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.birthDate = birthDate;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -90,5 +100,11 @@ public class User implements Serializable {
         return id;
     }
 
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
 
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
 }

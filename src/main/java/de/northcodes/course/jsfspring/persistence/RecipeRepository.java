@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 	public Recipe findByRecipeName(String recipeName);
-
-    List <Recipe>findByIdAndUserId(long recipeId, long userId);
 }

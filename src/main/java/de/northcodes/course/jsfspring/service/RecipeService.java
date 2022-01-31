@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.service;
 
 import de.northcodes.course.jsfspring.model.Recipe;
+import de.northcodes.course.jsfspring.model.User;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface RecipeService {
 
     void saveRecipe(Recipe recipe);
 
-    public Recipe getRecipeIfUserIsOwner(long recipeId, long userId);
+    public Recipe getRecipeIfUserIsOwner(long recipeId, User user);
+}

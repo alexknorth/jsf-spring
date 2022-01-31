@@ -26,7 +26,7 @@ public class RecipeDetails implements Serializable {
 
 	private long recipeId;
 
-	private Recipe recipe;
+	private de.northcodes.course.jsfspring.bean.readmodel.Recipe recipe;
 
 	public long getRecipeId() {
 		return recipeId;
@@ -41,10 +41,10 @@ public class RecipeDetails implements Serializable {
 	}
 
 	public void onload() {
-		recipe = new Recipe();
+		recipe = new de.northcodes.course.jsfspring.bean.readmodel.Recipe();
 
 		if (userManager.isSignedIn()) {
-			recipe = recipeService.getRecipeIfUserIsOwner(recipeId, userManager.getCurrentUser().getId());
+			recipe = new de.northcodes.course.jsfspring.bean.readmodel.Recipe(recipeService.getRecipeIfUserIsOwner(recipeId, userManager.getCurrentUser()), true);
 		}
 	}
 

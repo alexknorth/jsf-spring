@@ -11,12 +11,15 @@
         <p>#{recipe.portion}</p>
         <p>#{recipe.cookingTime}</p>
         <p>#{recipe.createDate}</p>
-        <p>
-            <h:outputLink value="recipe-details.xhtml">
-                <f:param name="recipeId" value="#{recipe.id}"/>
-                Recipe Details
-            </h:outputLink>
-        </p>
+
+        <ui:fragment rendered="#{recipe.detailsVisible}">
+            <p>
+                <h:outputLink value="recipe-details.xhtml">
+                    <f:param name="recipeId" value="#{recipe.id}"/>
+                    Recipe Details
+                </h:outputLink>
+            </p>
+        </ui:fragment>
     </section>
 </ui:composition>
 </html>
