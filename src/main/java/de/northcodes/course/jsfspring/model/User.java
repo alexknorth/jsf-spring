@@ -10,10 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = AbstractEntity.SHOP_PREFIX + "user")
 public class User extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,17 +31,14 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
     
-    @Column(name = "phone_number", nullable = true)
+    @Column(name = "phone_number")
     private String phoneNumber;
     
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
-    
-    @Column(name = "subscribed_to_newsletter", nullable = false)
-    private Boolean subscribedToNewsletter;
 
-    @OneToMany(mappedBy = "orderer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Order> orders = new ArrayList<Order>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Plan> planList = new ArrayList<>();
     
     public User() {}
 
@@ -103,20 +98,12 @@ public class User extends AbstractEntity implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public Boolean getSubscribedToNewsletter() {
-		return subscribedToNewsletter;
+	public List<Plan> getPlanList() {
+		return planList;
 	}
 
-	public void setSubscribedToNewsletter(Boolean subscribedToNewsletter) {
-		this.subscribedToNewsletter = subscribedToNewsletter;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setPlanList(List<Plan> planList) {
+		this.planList = planList;
 	}
 
 	public static long getSerialversionuid() {

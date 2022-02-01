@@ -1,11 +1,15 @@
 package de.northcodes.course.jsfspring;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 
+import de.northcodes.course.jsfspring.model.Muskelgruppe;
+import de.northcodes.course.jsfspring.model.Uebung;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +19,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-import de.northcodes.course.jsfspring.model.Product;
-import de.northcodes.course.jsfspring.persistence.ProductRepository;
+import de.northcodes.course.jsfspring.persistence.UebungRepository;
 
 @SpringBootApplication
 public class JsfSpringApplication extends SpringBootServletInitializer {
@@ -35,9 +38,9 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
 
         //FacesServlet registration
-        ServletRegistrationBean<FacesServlet> srb = new ServletRegistrationBean<FacesServlet>();
+        ServletRegistrationBean<FacesServlet> srb = new ServletRegistrationBean<>();
         srb.setServlet(new FacesServlet());
-        srb.setUrlMappings(Arrays.asList("*.xhtml"));
+        srb.setUrlMappings(Collections.singletonList("*.xhtml"));
         srb.setLoadOnStartup(1);
         return srb;
     }
@@ -45,30 +48,36 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
     
     //Only need for development initialization purposes
     @Bean
-    public CommandLineRunner demo(ProductRepository repository) {
+    public CommandLineRunner demo(UebungRepository uebungRepository) {
       return (args) -> {
         // save a few products
 
-        repository.save( new Product("Microphone", "Essential for every vocalist - this microphone makes your voice sound great. Suitable for any kind of music and any voice.", new BigDecimal("95.00"), "microphone"));
-        repository.save( new Product("Guitar", "This guitar sounds great and looks cool. Rock, blues or jazz, this guitar does it all.", new BigDecimal("995.00"), "guitar"));
-        repository.save( new Product("Saxophone", "Steal the show with this cool saxophone. Suitable for beginners as well as for advanced players.", new BigDecimal("1195.00"), "saxophone"));
-        repository.save( new Product("Bass Guitar", "Every band needs a solid bass guitar. This one will never let you down.", new BigDecimal("895.00"), "bassguitar"));
-        repository.save( new Product("Drum Kit", "This complete drum kit provides everything a drummer needs. Including an extra pair of sticks.", new BigDecimal("1249.00"), "drumkit"));
+        uebungRepository.save(new Uebung(
+                "Squats",
+                "Zu deutsch: Kniebeugen. Gute overall Beinübung.",
+                Arrays.asList(Muskelgruppe.GESAESS, Muskelgruppe.UNTERERRUECKEN, Muskelgruppe.OBERSCHENKEL),
+                "guitar"));
+
+          uebungRepository.save(new Uebung(
+                  "Hip Thrusts",
+                  "Übung, die die Gesäßmuskulatur beansprucht.",
+                  Arrays.asList(Muskelgruppe.GESAESS, Muskelgruppe.OBERSCHENKEL),
+                  "bassguitar"));
 
         // fetch all products
-        log.info("Products found with findAll():");
-        log.info("-------------------------------");
-        for (Product product : repository.findAll()) {
-          log.info(product.toString());
-        }
-        log.info("");
-
-        // fetch an individual product by ID
-        Product product = repository.findById(1L).get();
-        log.info("Product found with findById(1L):");
-        log.info("--------------------------------");
-        log.info(product.toString());
-        log.info("");
+//        log.info("Products found with findAll():");
+//        log.info("-------------------------------");
+//        for (Uebung excercise : repository.findAll()) {
+//          log.info(excercise.toString());
+//        }
+//        log.info("");
+//
+//        // fetch an individual product by ID
+//        Uebung excercise = repository.findById(1L).get();
+//        log.info("Product found with findById(1L):");
+//        log.info("--------------------------------");
+//        log.info(excercise.toString());
+//        log.info("");
 
       };
     }
