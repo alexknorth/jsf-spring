@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+  <ui:composition>
+    <h:form style="overflow: hidden">
+    <p:growl id="messages" showDetail="true"/>
+      <div class="card" style="height: 100vh">
+        <p:graphicImage name="images/guitar-120x120.jpg" library="musicshop" style="width: 100%;"/>
+        <p:menu style="width: 100%">
+          <p:submenu label="Dein Fitnesstracker">
+            <p:menuitem value="Übungskatalog" outcome="/uebung/uebung-katalog.xhtml" update="messages" ajax="false"
+                        icon="pi pi-save"/>
+            <p:menuitem value="Trainingspläne" outcome="/plan-list.xhtml" update="messages" icon="pi pi-refresh"/>
+            <p:menuitem value="Meilensteine" outcome="/meilenstein-uebersicht.xhtml" update="messages" icon="pi pi-times"/>
+          </p:submenu>
+        </p:menu>
+        <div class="card" style="height: 20%">
+          <p:avatar icon="pi pi-user" styleClass="p-mr-2" size="xlarge" shape="circle" />
+          <p>Name</p>
+        </div>
+      </div>
+    </h:form>
+  </ui:composition>
+</html>

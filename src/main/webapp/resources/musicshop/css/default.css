@@ -31,7 +31,7 @@ a:hover, a:active {
 body > header {
     padding: 1em;
     clear: both;
-    background-color: #f15b2a;
+    background-color: #4cb598;
     color: white;
     text-align: center;
 }
@@ -51,7 +51,7 @@ body > section {
 body > footer {
     padding: 0.5em;
     clear: both;
-    background-color: #2a9fbc;
+    background-color: #1b7260;
     color: #e5e5e5;
     font-size: 0.8em;
     text-align: center;
@@ -76,3 +76,4 @@ body > footer > p {
     float: left;
     padding-right: 1em;
 }
+
