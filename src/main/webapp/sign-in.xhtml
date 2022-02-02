@@ -10,7 +10,7 @@
         <section>
             <ui:fragment rendered="#{not userManager.signedIn}">
                 <h1>Sign In</h1>
-                <p>Please enter your username.</p>
+                <p>Please enter your bank account number.</p>
             </ui:fragment>
 
             <ui:fragment rendered="#{userManager.signedIn}">
@@ -30,10 +30,10 @@
                 <h:messages styleClass="validation-messages"/>
                 <h:form>
                     <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
-                        <h:outputLabel for="username">Username</h:outputLabel>
-                        <h:inputText id="username" value="#{signIn.username}" size="20"
-                                     validatorMessage="Please enter a username consisting of only letters and digits, between 2 and 20 characters long.">
-                            <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
+                        <h:outputLabel for="bankAccountNumber">Bank Account Number</h:outputLabel>
+                        <h:inputText id="bankAccountNumber" value="#{signIn.bankAccountNumber}" size="8"
+                                     validatorMessage="Please enter a Bank Account Number consisting of only digits, between 1 and 8 characters long.">
+                            <f:validateRegex pattern="[0-9]{1,8}"/>
                         </h:inputText>
 
                         <h:outputLabel for="password">Password</h:outputLabel>

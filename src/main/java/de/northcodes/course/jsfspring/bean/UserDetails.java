@@ -32,15 +32,14 @@ public class UserDetails implements Serializable {
 
 	private User user;
 
-	public User getUser() {
-		return user;
-	}
+	private String bankAccountNumber;
 
 	public void onload() {
 		user = userManager.isSignedIn() ? userManager.getCurrentUser() : new User();
 	}
 
 	public String submit() {
+		user.setBankAccountNumber(Integer.parseInt(this.bankAccountNumber));
 		return userManager.save(user);
 	}
 
@@ -75,5 +74,17 @@ public class UserDetails implements Serializable {
 		if (birthDate == null || !birthDate.before(new Date())) {
 			throw new ValidatorException(new FacesMessage("Please enter a valid birth date."));
 		}
+	}
+
+	public String getBankAccountNumber() {
+		return bankAccountNumber;
+	}
+
+	public void setBankAccountNumber(String bankAccountNumber) {
+		this.bankAccountNumber = bankAccountNumber;
+	}
+
+	public User getUser() {
+		return user;
 	}
 }

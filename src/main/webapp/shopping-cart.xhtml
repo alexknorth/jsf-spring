@@ -8,24 +8,14 @@
     <ui:param name="pageTitle" value="Shopping Cart"/>
     <ui:define name="panel-top">
         <section>
-            <h1>Shopping Cart</h1>
-            <ui:fragment rendered="#{shoppingCart.totalQuantity == 0}">
-                <p>Your shopping cart is empty.</p>
-            </ui:fragment>
-            <ui:fragment rendered="#{shoppingCart.totalQuantity == 1}">
-                <p>Your shopping cart contains one item.</p>
-            </ui:fragment>
-            <ui:fragment rendered="#{shoppingCart.totalQuantity > 1}">
-                <p>Your shopping cart contains #{shoppingCart.totalQuantity} items.</p>
-            </ui:fragment>
-            <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
+            <p><h:outputLink value="index.xhtml">Back to main page</h:outputLink></p>
         </section>
     </ui:define>
     <ui:define name="panel-main">
-        <ui:fragment rendered="#{not empty shoppingCart.items}">
+        <ui:fragment rendered="#{not empty moneyTransfer.allTransfers}">
             <section>
                 <h:form>
-                    <h:dataTable value="#{shoppingCart.items}" var="item"
+                    <h:dataTable value="#{moneyTransfer.allTransfers}" var="item"
                                  styleClass="shoppingcart-table"
                                  headerClass="shoppingcart-header"
                                  rowClasses="shoppingcart-row-odd,shoppingcart-row-even"
@@ -33,9 +23,9 @@
                                  footerClass="shoppingcart-footer">
                         <h:column>
                             <f:facet name="header">Product</f:facet>
-                            <h:outputLink value="product-details.xhtml">
-                                <f:param name="productId" value="#{item.product.id}"/>
-                                #{item.product.name}
+                            <h:outputLink value="user-details.xhtml">
+                                <f:param name="amount" value="#{item.amount}"/>
+                                #{item.amount}
                             </h:outputLink>
                         </h:column>
                         <h:column>
@@ -45,33 +35,36 @@
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
                             #{item.quantity}
-                            <h:commandButton value="+" action="#{shoppingCart.addProduct(item.product)}"/>
-                            <h:commandButton value="-" action="#{shoppingCart.removeProduct(item.product)}"/>
+                            <h:commandButton value="+" action="#{moneyTransfer.addNewTransfer(item.product)}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Amount</f:facet>
                             #{item.amount}
-                            <f:facet name="footer">#{shoppingCart.totalAmount}</f:facet>
+                            <f:facet name="footer">#{moneyTransfer.totalAmount}</f:facet>
                         </h:column>
                     </h:dataTable>
-                    <h:commandButton value="Order Now!" action="#{shoppingCart.orderNow}"/>
+                    <h:inputText id="amount" value="#{moneyTransfer.transferDetails.amount}" size="20"
+                                 validatorMessage="Please enter amount only by digits, e.g. 214.65">
+                        <f:validateRegex pattern="[0-9]"/>
+                    </h:inputText>
+                    <h:commandButton value="Transfer Now!" action="#{moneyTransfer.transferNow}"/>
                     
-                     <h:dataTable value="#{shoppingCart.allOrders}" var="order"
-                                 styleClass="order-table"
-                                 headerClass="order-header"
-                                 rowClasses="order-row-odd,order-row-even"
-                                 columnClasses="order-col-name,order-col-price,order-col-quantity,order-col-amount">
+                     <h:dataTable value="#{moneyTransfer.allTransfers}" var="transferDetails"
+                                  styleClass="transferDetails-table"
+                                  headerClass="transferDetails-header"
+                                  rowClasses="transferDetails-row-odd,transferDetails-row-even"
+                                  columnClasses="transferDetails-col-name,transferDetails-col-price,transferDetails-col-quantity,transferDetails-col-amount">
                         <h:column>
-                            <f:facet name="header">Order ID</f:facet>
-                             #{order.id}
+                            <f:facet name="header">Transfer ID</f:facet>
+                             #{transferDetails.id}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Order date</f:facet>
-                             #{order.orderDate}
+                            <f:facet name="header">Transfer date</f:facet>
+                             #{transferDetails.transferDate}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Order state</f:facet>
-                             #{order.orderState}
+                            <f:facet name="header">Transfer state</f:facet>
+                             #{transferDetails.transferState}
                         </h:column>
                     </h:dataTable>
                 </h:form>

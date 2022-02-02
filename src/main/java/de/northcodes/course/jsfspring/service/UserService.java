@@ -4,7 +4,7 @@ import de.northcodes.course.jsfspring.model.User;
 
 public interface UserService {
 
-    User getUser(String username);
+    User getUser(int bankAccountNumber);
 
     void saveUser(User user);
 

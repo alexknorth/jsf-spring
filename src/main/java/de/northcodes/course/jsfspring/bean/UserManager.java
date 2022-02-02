@@ -33,8 +33,8 @@ public class UserManager implements Serializable {
         return currentUser;
     }
 
-    public String signIn(String username, String password) {
-        User user = userService.getUser(username);
+    public String signIn(int bankAccountNumber, String password) {
+        User user = userService.getUser(bankAccountNumber);
         if (user == null || !password.equals(user.getPassword())) {
         	 FacesContext.getCurrentInstance().addMessage(null,
                      new FacesMessage("Please enter a valid username and password."));

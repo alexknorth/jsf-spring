@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<ui:composition template="/templates/page-template.xhtml">
+    <f:metadata>
+        <f:viewAction action="#{userDetails.onload}"/>
+    </f:metadata>
+    <ui:param name="pageTitle" value="User Details"/>
+    <ui:define name="panel-top">
+        <section>
+            <h1>New Money Transfer</h1>
+            <p>Please enter some details for the Transfer.</p>
+            <p><h:outputLink value="index.xhtml">Back to main page</h:outputLink></p>
+        </section>
+    </ui:define>
+    <ui:define name="panel-main">
+        <section>
+            <h:messages styleClass="validation-messages"/>
+            <h:form>
+                <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
+
+                    <h:outputLabel for="amount">Amount (in €)</h:outputLabel>
+                    <h:inputText id="amount"
+                    			 value="#{moneyTransfer.amount}"
+                    			 required="true" 
+                    			 requiredMessage="Please enter the amount that should be transferred."
+                                 readonly="#{userManager.signedIn}"
+                                 validatorMessage="Please enter an amount consisting of only digits.">
+                        <!-- <f:validateRegex pattern="[0-9]"/> -->
+                    </h:inputText>
+
+                    <h:outputLabel for="transferTo">Bank Account Number from receiver</h:outputLabel>
+                    <h:inputText id="transferTo"
+                                 value="#{moneyTransfer.bankAccountNumberReceiver}"
+                                 required="true"
+                                 requiredMessage="Please enter the Bank Account Number."
+                                 readonly="#{userManager.signedIn}"
+                                 validatorMessage="Please enter an amount consisting of only digits.">
+                        <f:validateRegex pattern="[0-9]"/>
+                    </h:inputText>
+
+                    <h:outputText value=""/>
+                    <h:commandButton value="Transfer now" action="#{moneyTransfer.transferNow}"/>
+                </h:panelGrid>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

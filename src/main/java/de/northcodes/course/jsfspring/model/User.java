@@ -13,13 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = AbstractEntity.SHOP_PREFIX + "user")
+@Table(name = AbstractEntity.BANK_PREFIX + "user")
 public class User extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "name", nullable = false, unique = true)
-    private String username;
+    @Column(name = "bank_account_number", nullable = false, unique = true)
+    private int bankAccountNumber;
     
     @Column(name = "password", nullable = false)
     private String password;
@@ -39,20 +39,43 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
     
-    @Column(name = "subscribed_to_newsletter", nullable = false)
-    private Boolean subscribedToNewsletter;
+    @Column(name = "balance", nullable = false)
+    private double balance;
 
-    @OneToMany(mappedBy = "orderer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Order> orders = new ArrayList<Order>();
+    @OneToMany(mappedBy = "transferredBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TransferDetails> transferredByDetails = new ArrayList<>();
+
+	@OneToMany(mappedBy = "transferredTo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TransferDetails> transferredToDetails = new ArrayList<>();
     
     public User() {}
 
-	public String getUsername() {
-		return username;
+	public User(
+		int bankAccountNumber,
+		String password,
+		String firstName,
+		String lastName,
+		String emailAddress,
+		String phoneNumber,
+		Date birthDate,
+		double balance
+	) {
+		this.bankAccountNumber = bankAccountNumber;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.emailAddress = emailAddress;
+		this.phoneNumber = phoneNumber;
+		this.birthDate = birthDate;
+		this.balance = balance;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public int getBankAccountNumber() {
+		return bankAccountNumber;
+	}
+
+	public void setBankAccountNumber(int bankAccountNumber) {
+		this.bankAccountNumber = bankAccountNumber;
 	}
 
 	public String getPassword() {
@@ -103,20 +126,28 @@ public class User extends AbstractEntity implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public Boolean getSubscribedToNewsletter() {
-		return subscribedToNewsletter;
+	public double getBalance() {
+		return balance;
 	}
 
-	public void setSubscribedToNewsletter(Boolean subscribedToNewsletter) {
-		this.subscribedToNewsletter = subscribedToNewsletter;
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
+	public List<TransferDetails> getTransferredByDetails() {
+		return transferredByDetails;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setTransferredByDetails(List<TransferDetails> transferredByDetails) {
+		this.transferredByDetails = transferredByDetails;
+	}
+
+	public List<TransferDetails> getTransferredToDetails() {
+		return transferredToDetails;
+	}
+
+	public void setTransferredToDetails(List<TransferDetails> transferredToDetails) {
+		this.transferredToDetails = transferredToDetails;
 	}
 
 	public static long getSerialversionuid() {

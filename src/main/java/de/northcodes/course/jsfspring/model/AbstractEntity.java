@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractEntity {
 	
-	public static final String SHOP_PREFIX = "shop_";
+	public static final String BANK_PREFIX = "bank_";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

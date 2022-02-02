@@ -14,7 +14,7 @@
         <section>
             <h1>Tell us about yourself</h1>
             <p>Please enter some details about yourself.</p>
-            <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
+            <p><h:outputLink value="index.xhtml">Back to main page</h:outputLink></p>
         </section>
     </ui:define>
     <ui:define name="panel-main">
@@ -22,15 +22,15 @@
             <h:messages styleClass="validation-messages"/>
             <h:form>
                 <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
-                    <h:outputLabel for="username">Username</h:outputLabel>
-                    <h:inputText id="username" 
-                    			 value="#{userDetails.user.username}" 
+                    <h:outputLabel for="bankAccountNumber">Bank Account Number</h:outputLabel>
+                    <h:inputText id="bankAccountNumber"
+                    			 value="#{userDetails.bankAccountNumber}"
                     			 size="20"
                     			 required="true" 
                     			 requiredMessage="Please enter a username."
                                  readonly="#{userManager.signedIn}"
-                                 validatorMessage="Please enter a username consisting of only letters and digits, between 2 and 20 characters long.">
-                        <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
+                                 validatorMessage="Please enter a Bank Account Number consisting of only digits, between 1 and 8 characters long.">
+                        <f:validateRegex pattern="[0-9]{1,8}"/>
                     </h:inputText>
 
                     <h:outputLabel for="password">Password</h:outputLabel>
@@ -84,14 +84,7 @@
                         <f:convertDateTime pattern="yyyy-MM-dd"/>
                     </h:inputText>
 
-                    <h:outputLabel for="subscribedToNewsletter">Subscribe to the newsletter?</h:outputLabel>
-                    <h:selectOneRadio id="subscribedToNewsletter"
-                                      value="#{userDetails.user.subscribedToNewsletter}"
-                                      required="true"
-                                      requiredMessage="Please select if you want to subscribe for the newsletter.">
-                        <f:selectItem itemValue="#{true}" itemLabel="Yes"/>
-                        <f:selectItem itemValue="#{false}" itemLabel="No"/>
-                    </h:selectOneRadio>
+                    <h:outputLabel>Your default Balance will be 500.00€</h:outputLabel>
 
                     <h:outputText value=""/>
                     <h:commandButton value="Submit" action="#{userDetails.submit}"/>

@@ -31,7 +31,7 @@ a:hover, a:active {
 body > header {
     padding: 1em;
     clear: both;
-    background-color: #f15b2a;
+    background-color: #87cefa;
     color: white;
     text-align: center;
 }
@@ -51,8 +51,8 @@ body > section {
 body > footer {
     padding: 0.5em;
     clear: both;
-    background-color: #2a9fbc;
-    color: #e5e5e5;
+    background-color: lightgray;
+    color: black;
     font-size: 0.8em;
     text-align: center;
 }

@@ -14,15 +14,15 @@ public class SignIn {
     @Autowired
     private UserManager userManager;
 
-    private String username;
+    private String bankAccountNumber;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
     }
 
     public String getPassword() {
@@ -34,6 +34,6 @@ public class SignIn {
     }
 
     public String submit() {
-        return userManager.signIn(username, password);
+        return userManager.signIn(Integer.parseInt(bankAccountNumber), password);
     }
 }

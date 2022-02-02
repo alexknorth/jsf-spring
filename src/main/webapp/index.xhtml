@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
 <ui:composition template="/templates/page-template.xhtml">
-    <ui:param name="pageTitle" value="Popular Products"/>
+    <ui:param name="pageTitle" value="Your Balance"/>
     <ui:define name="panel-main">
-        <section>
-            <h1>Popular Products</h1>
-            <ui:debug hotkey="e"/>
-            <h:form>
-                <ui:repeat value="#{popularProducts.products}" var="product">
-                    <ui:decorate template="templates/product-summary.xhtml">
-                        <ui:param name="product" value="#{product}"/>
-                        <ui:define name="product-description">
-                            <p>#{product.shortDescription}</p>
-                        </ui:define>
-                    </ui:decorate>
-                </ui:repeat>
-            </h:form>
-        </section>
+        <ui:fragment rendered="#{userManager.signedIn}">
+            <section>
+                <h3>Your Balance</h3>
+                <p>#{userManager.currentUser.balance}</p>
+                <ui:debug hotkey="e"/>
+                <!-- TODO TRANSFER-HISTORY
+                <h1>Your Transfers</h1>
+                <h:form>
+                    <ui:repeat value="#{History.allTreansfers}" var="allTransfers">
+                        <ui:decorate template="templates/product-summary.xhtml">
+                            <ui:param name="Transfer" value="#{allTransfers}"/>
+                            <ui:define name="transfer">
+                                <p>#{allTransfers.getAmount}</p>
+                            </ui:define>
+                        </ui:decorate>
+                    </ui:repeat>
+                </h:form>
+                -->
+            </section>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{userManager.signedIn}">
+            <section>
+                <ui:debug hotkey="e"/>
+
+                <p>Create <h:outputLink value="transfer-details.xhtml">new Transaction</h:outputLink>.</p>
+                <h:commandButton value="New Transaction" action="#{moneyTransfer.addNewTransfer(item.product)}"/>
+            </section>
+        </ui:fragment>
     </ui:define>
 </ui:composition>
 </html>
