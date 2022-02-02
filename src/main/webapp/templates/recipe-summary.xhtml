@@ -8,9 +8,11 @@
     <section class="product-summary">
         <!--<h:graphicImage library="recipe" name="images/#{product.imageName}-120x120.jpg" alt="#{recipe.recipeName}"/> -->
         <h2>#{recipe.recipeName}</h2>
-        <p>#{recipe.portion}</p>
-        <p>#{recipe.cookingTime}</p>
-        <p>#{recipe.createDate}</p>
+        <p>Portion: #{recipe.portion}</p>
+        <p>Cooking Time: #{recipe.cookingTime}</p>
+        <p>Create Date: <h:outputText value="#{recipe.createDate}" >
+            <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+        </h:outputText></p>
 
         <ui:fragment rendered="#{recipe.detailsVisible}">
             <p>

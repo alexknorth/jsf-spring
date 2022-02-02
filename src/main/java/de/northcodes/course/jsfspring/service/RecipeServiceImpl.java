@@ -18,7 +18,6 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getAllRecipes() {
-        //log.info("getAllRecipes called: " + recipeRepository.findAll().iterator().next().toString());
         return StreamSupport.stream(recipeRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
@@ -34,8 +33,13 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void saveRecipe(Recipe recipe) {
+    public void save(Recipe recipe) {
         recipeRepository.save(recipe);
+    }
+
+    @Override
+    public void delete(Recipe recipe) {
+        recipeRepository.delete(recipe);
     }
 
     @Override

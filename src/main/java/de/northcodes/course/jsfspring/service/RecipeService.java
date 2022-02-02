@@ -13,7 +13,9 @@ public interface RecipeService {
 
     Recipe getRecipeName(String recipeName);
 
-    void saveRecipe(Recipe recipe);
+    void save(Recipe recipe);
 
-    public Recipe getRecipeIfUserIsOwner(long recipeId, User user);
+    void delete(Recipe recipe);
+
+    Recipe getRecipeIfUserIsOwner(long recipeId, User user);
 }

@@ -13,23 +13,22 @@ public class Recipe implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "recipe_name", nullable = false, unique = true)
+    @Column(name = "recipe_name", nullable = false)
     private String recipeName;
 
-    @Column(name = "portion", nullable = true)
-    private Number portion;
+    @Column(name = "portion")
+    private String portion;
 
-    @Column(name = "ingredients", nullable = false)
+    @Column(name = "ingredients")
     private String ingredients;
 
-    @Column(name = "preparation", nullable = false)
+    @Column(name = "preparation")
     private String preparation;
 
-
-    @Column(name = "cooking_time", nullable = false)
+    @Column(name = "cooking_time")
     private String cookingTime;
 
-    @Column(name = "create_date", nullable = false)
+    @Column(name = "create_date")
     private Date createDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,7 +39,7 @@ public class Recipe implements Serializable {
     public Recipe() {
     }
 
-    public Recipe(String recipeName, Number portion, String ingredients, String preparation, String cookingTime, Date createDate, User creator) {
+    public Recipe(String recipeName, String portion, String ingredients, String preparation, String cookingTime, Date createDate, User creator) {
         this.recipeName = recipeName;
         this.portion = portion;
         this.preparation = preparation;
@@ -58,11 +57,11 @@ public class Recipe implements Serializable {
         this.recipeName = recipeName;
     }
 
-    public Number getPortion() {
+    public String getPortion() {
         return portion;
     }
 
-    public void setPortion(Number portion) {
+    public void setPortion(String portion) {
         this.portion = portion;
     }
 
@@ -96,6 +95,10 @@ public class Recipe implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public User getCreator() {

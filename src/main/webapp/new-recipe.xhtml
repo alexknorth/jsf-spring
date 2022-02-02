@@ -24,7 +24,7 @@
                 <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
                     <h:outputLabel for="recipeName">Recipe Name</h:outputLabel>
                     <h:inputText id="recipeName"
-                    			 value="#{recipeDetails.recipe.recipeName}"
+                    			 value="#{recipeDetails.recipeDetails.recipeName}"
                     			 size="30"
                     			 required="true" 
                     			 requiredMessage="Please enter a Recipe Name."
@@ -34,36 +34,28 @@
 
                     <h:outputLabel for="portion">Portion</h:outputLabel>
                     <h:inputText id="portion"
-                                 value="#{recipeDetails.recipe.portion}"
+                                 value="#{recipeDetails.recipeDetails.portion}"
                                  size="20"
                                  style="width: 10%;">
                     </h:inputText>
 
                     <h:outputLabel for="ingredients">Ingredients</h:outputLabel>
                     <h:inputText id="ingredients"
-                                   value="#{recipeDetails.recipe.ingredients}"
+                                   value="#{recipeDetails.recipeDetails.ingredients}"
                                    size="150"
                                    style="width: 60%; height: 100px"/>
 
                     <h:outputLabel for="preparation">Preparation</h:outputLabel>
                     <h:inputText id="preparation"
-                    			   value="#{recipeDetails.recipe.preparation}"
+                    			   value="#{recipeDetails.recipeDetails.preparation}"
                     			   size="200"
                                    style="width: 60%; height: 100px"/>
 
                     <h:outputLabel for="cooking_time">Cooking Time</h:outputLabel>
                     <h:inputText id="cooking_time"
-                                 value="#{recipeDetails.recipe.cookingTime}"
+                                 value="#{recipeDetails.recipeDetails.cookingTime}"
                                  size="30"
                                  style="width: 10%;">
-                    </h:inputText>
-
-                    <h:outputLabel for="createDate">Create date</h:outputLabel>
-                    <h:inputText id="createDate"
-                    			 p:type="date"
-                    			 value="#{recipeDetails.recipe.createDate}"
-                    			 validator="#{recipeDetails.validateCreateDate}">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
                     </h:inputText>
 
                     <h:outputText value=""/>

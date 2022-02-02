@@ -14,11 +14,12 @@
         <section class="product-details">
             <h:form>
                 <h1>#{recipeDetails.recipe.recipeName}</h1>
-                <p>#{recipeDetails.recipe.portion}</p>
-                <p>#{recipeDetails.recipe.ingredients}</p>
-                <p>#{recipeDetails.recipe.preparation}</p>
-                <p>#{recipeDetails.recipe.cookingTime}</p>
-                <p>#{recipeDetails.recipe.createDate}</p>
+                <p>Portion: #{recipeDetails.recipe.portion}</p>
+                <p>Ingredients: #{recipeDetails.recipe.ingredients}</p>
+                <p>Preparation: #{recipeDetails.recipe.preparation}</p>
+                <p>Cooking Time: #{recipeDetails.recipe.cookingTime}</p>
+                <p>Create Date: #{recipeDetails.recipe.createDate}</p>
+                <h:commandButton value="Delete Recipe" action="#{recipeDetails.delete}"/>
                 <p><h:outputLink value="index.xhtml">Back to All Recipes</h:outputLink></p>
             </h:form>
         </section>

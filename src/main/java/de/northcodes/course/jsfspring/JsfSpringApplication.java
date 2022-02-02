@@ -56,9 +56,9 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
           User userB = userRepository.save(new User("TestB", "test1234", "Tester", "Tester", "test@gmx.de", new Date()));
         // save a few recipes
 
-        repository.save( new Recipe("Spaghetti Bolognese", 5, "spagehetti & soße", "blabla", "20min", new Date(), userA));
-        repository.save( new Recipe("Lasagne", 4, "bla", "bla", "1h", new Date(), userA));
-        repository.save( new Recipe("Ofenkartoffeln", 4, "bla", "bla", "30min", new Date(), userB));
+        repository.save( new Recipe("Spaghetti Bolognese", "5", "spagehetti & soße", "blabla", "20min", new Date(), userA));
+        repository.save( new Recipe("Lasagne", "4", "bla", "bla", "1h", new Date(), userA));
+        repository.save( new Recipe("Ofenkartoffeln", "4", "bla", "bla", "30min", new Date(), userB));
 
         // fetch all recipes
         log.info("Recipes found with findAll():");
