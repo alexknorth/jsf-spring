@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "plan_item")
-public class PlanItem extends AbstractEntity {
+public class TrainingsplanItem extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn (name = "fk_uebung", referencedColumnName = "id", nullable = false)
@@ -16,17 +16,17 @@ public class PlanItem extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_plan", referencedColumnName = "id", nullable = false)
-	private Plan plan;
+	private Trainingsplan trainingsplan;
 
 	private int anzahlSets;
 	private int anzahlReps;
 	private double gewicht;
     
-	protected PlanItem() {
+	protected TrainingsplanItem() {
 	}
 
-	public PlanItem(Plan plan, Uebung uebung, int anzahlSets, int anzahlReps, double gewicht) {
-		this.plan = plan;
+	public TrainingsplanItem(Trainingsplan trainingsplan, Uebung uebung, int anzahlSets, int anzahlReps, double gewicht) {
+		this.trainingsplan = trainingsplan;
 		this.uebung = uebung;
 		this.anzahlSets = anzahlSets;
 		this.anzahlReps = anzahlReps;
@@ -49,7 +49,7 @@ public class PlanItem extends AbstractEntity {
 		return gewicht;
 	}
 
-	public Plan getPlan() {
-		return plan;
+	public Trainingsplan getPlan() {
+		return trainingsplan;
 	}
 }

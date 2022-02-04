@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Plan extends AbstractEntity {
+public class Trainingsplan extends AbstractEntity {
 
 	private String name;
 
@@ -15,27 +15,27 @@ public class Plan extends AbstractEntity {
 	@Column(name = "end_datum")
 	private LocalDate endDatum;
 
-	@OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<PlanItem> planItemList;
+	@OneToMany(mappedBy = "trainingsplan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<TrainingsplanItem> trainingsplanItemList;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_user", referencedColumnName = "id", nullable = false)
 	private User user;
 
-	protected Plan() {
+	protected Trainingsplan() {
 	}
 
-	public Plan(String name, LocalDate startDatum, LocalDate endDatum, List<PlanItem> planItemList) {
+	public Trainingsplan(String name, LocalDate startDatum, LocalDate endDatum, List<TrainingsplanItem> trainingsplanItemList) {
 		this.name = name;
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
-		this.planItemList = planItemList;
+		this.trainingsplanItemList = trainingsplanItemList;
 	}
 
-	public Plan(String name, LocalDate startDatum, List<PlanItem> planItemList) {
+	public Trainingsplan(String name, LocalDate startDatum, List<TrainingsplanItem> trainingsplanItemList) {
 		this.name = name;
 		this.startDatum = startDatum;
-		this.planItemList = planItemList;
+		this.trainingsplanItemList = trainingsplanItemList;
 	}
 
 	public String getName() {
@@ -50,8 +50,8 @@ public class Plan extends AbstractEntity {
 		return endDatum;
 	}
 
-	public List<PlanItem> getPlanItemList() {
-		return planItemList;
+	public List<TrainingsplanItem> getPlanItemList() {
+		return trainingsplanItemList;
 	}
 
 	public User getUser() {
