@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 public class Meilenstein extends AbstractEntity{
@@ -24,8 +23,8 @@ public class Meilenstein extends AbstractEntity{
 	@CreationTimestamp
 	private LocalDate datum;
 
-	public Meilenstein(PlanItem planItem, int anzahlSets, int anzahlReps, double gewicht) {
-		this.uebung = planItem.getUebung();
+	public Meilenstein(TrainingsplanItem trainingsplanItem, int anzahlSets, int anzahlReps, double gewicht) {
+		this.uebung = trainingsplanItem.getUebung();
 		this.anzahlSets = anzahlSets;
 		this.anzahlReps = anzahlReps;
 		this.gewicht = gewicht;
