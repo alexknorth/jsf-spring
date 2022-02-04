@@ -31,8 +31,8 @@ public class UebungServiceImpl implements UebungService {
 	}
 
 	@Override
-	public Uebung getUebungById(long uebungId) {
-		return this.uebungRepository.findById(uebungId).orElse(null);
+	public Uebung getUebungById(long id) {
+		return this.uebungRepository.findById(id).orElse(null);
 	}
 
 }

@@ -1,4 +1,4 @@
-package de.northcodes.course.jsfspring.bean;
+package de.northcodes.course.jsfspring;
 
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 
+import de.northcodes.course.jsfspring.bean.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

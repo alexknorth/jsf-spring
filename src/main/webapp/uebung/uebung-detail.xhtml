@@ -10,17 +10,34 @@
         <f:viewAction action="#{uebungDetails.onload}"/>
     </f:metadata>
     <ui:param name="pageTitle" value="Übung Details"/>
-    <ui:composition template="../templates/page-template.xhtml">
-        <ui:define name="panel-main">
-            <div style="background-color: white; padding: 10px;width: 100%; display: grid; grid-template-columns: min-content auto; grid-gap: 10px; align-items: center">
-                <p:linkButton outcome="uebung-katalog.xhtml" icon="pi pi-arrow-left"/>
-                <p style="padding: 0; margin: 0"> #{uebungDetails.uebung.name}</p>
-            </div>
-            <div>
-                <h1>#{uebungDetails.uebung.name}</h1>
-                <h1>#{uebungDetails.uebung.beschreibung}</h1>
-                <h1>#{uebungDetails.uebung.muskelgruppenStr}</h1>
-            </div>
+    <ui:param name="savemethod" value="#{uebungDetails.save}"/>
+    <ui:composition template="../templates/detail-template.xhtml">
+        <ui:param name="masteroutcome" value="uebung-list.xhtml"/>
+        <ui:define name="detail-name">
+            #{uebungDetails.uebung.name}
+        </ui:define>
+        <ui:define name="detail-content">
+            <section style="display: grid; grid-gap: 20px">
+                <div>
+                    <h5>Name</h5>
+                    <p:inputText placeholder="Name" value="#{uebungDetails.uebung.name}"/>
+                </div>
+                <div>
+                    <h5>Beschreibung</h5>
+                    <p:inputTextarea rows="5" cols="30" maxlength="125"
+                                     value="#{uebungDetails.uebung.beschreibung}"
+                                     counterTemplate="{0} characters remaining." autoResize="false"/>
+                </div>
+
+                <div>
+                    <h5>Beanspruchte Muskelgruppen</h5>
+                    <p:autoComplete id="muskelgruppen" multiple="true" value="#{uebungDetails.muskelgruppeList}"
+                                    completeMethod="#{uebungDetails.completeMuskelgruppe}"
+                                    var="muskelgruppe" itemLabel="#{muskelgruppe.name}" itemValue="#{muskelgruppe}"
+                                    forceSelection="true" scrollHeight="250">
+                    </p:autoComplete>
+                </div>
+            </section>
         </ui:define>
     </ui:composition>
 </html>

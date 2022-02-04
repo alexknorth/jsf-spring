@@ -77,6 +77,26 @@ public final class Uebung extends AbstractEntity implements Serializable {
         return String.join(", ", muskelgruppenAsString);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public void setBeanpruchteMuskelgruppeList(List<Muskelgruppe> beanpruchteMuskelgruppeList) {
+        this.beanpruchteMuskelgruppeList = beanpruchteMuskelgruppeList;
+    }
+
+    public void setMeilensteinList(List<Meilenstein> meilensteinList) {
+        this.meilensteinList = meilensteinList;
+    }
+
     @Override
     public String toString() {
     	return "Product ID: " + this.getId() + ", name: " + this.getName() +", description: " + this.getBeschreibung();

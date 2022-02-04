@@ -38,7 +38,7 @@ public class User extends AbstractEntity implements Serializable {
     private Date birthDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Plan> planList = new ArrayList<>();
+    private List<Trainingsplan> trainingsplanList = new ArrayList<>();
     
     public User() {}
 
@@ -98,12 +98,12 @@ public class User extends AbstractEntity implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public List<Plan> getPlanList() {
-		return planList;
+	public List<Trainingsplan> getPlanList() {
+		return trainingsplanList;
 	}
 
-	public void setPlanList(List<Plan> planList) {
-		this.planList = planList;
+	public void setPlanList(List<Trainingsplan> trainingsplanList) {
+		this.trainingsplanList = trainingsplanList;
 	}
 
 	public static long getSerialversionuid() {
