@@ -9,7 +9,7 @@
     <f:metadata>
         <f:viewAction action="#{userDetails.onload}"/>
     </f:metadata>
-    <ui:param name="pageTitle" value="User Details"/>
+    <ui:param name="pageTitle" value="New Transaction"/>
     <ui:define name="panel-top">
         <section>
             <h1>New Money Transfer</h1>
@@ -24,23 +24,18 @@
                 <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
 
                     <h:outputLabel for="amount">Amount (in €)</h:outputLabel>
-                    <h:inputText id="amount"
+                    <h:inputText name="moneyTransfer" id="amount"
                     			 value="#{moneyTransfer.amount}"
                     			 required="true" 
                     			 requiredMessage="Please enter the amount that should be transferred."
-                                 readonly="#{userManager.signedIn}"
-                                 validatorMessage="Please enter an amount consisting of only digits.">
-                        <!-- <f:validateRegex pattern="[0-9]"/> -->
+                                 converterMessage="Please enter an amount consisting of only digits.">
                     </h:inputText>
 
                     <h:outputLabel for="transferTo">Bank Account Number from receiver</h:outputLabel>
                     <h:inputText id="transferTo"
                                  value="#{moneyTransfer.bankAccountNumberReceiver}"
                                  required="true"
-                                 requiredMessage="Please enter the Bank Account Number."
-                                 readonly="#{userManager.signedIn}"
-                                 validatorMessage="Please enter an amount consisting of only digits.">
-                        <f:validateRegex pattern="[0-9]"/>
+                                 requiredMessage="Please enter the Bank Account Number.">
                     </h:inputText>
 
                     <h:outputText value=""/>

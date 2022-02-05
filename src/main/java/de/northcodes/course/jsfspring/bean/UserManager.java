@@ -48,6 +48,7 @@ public class UserManager implements Serializable {
     public String signOut() {
         // End the session, removing any session state, including the current user and content of the shopping cart
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        currentUser = null;
 
         // Redirect is necessary to let the browser make a new GET request
         return "index?faces-redirect=true";

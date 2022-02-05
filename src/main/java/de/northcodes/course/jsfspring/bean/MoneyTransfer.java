@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 public class MoneyTransfer implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Autowired
     private UserManager userManager;
-    
+
     @Autowired
     TransferService transferService;
 
@@ -34,18 +34,19 @@ public class MoneyTransfer implements Serializable {
 
     public TransferDetails createTransferDetails() {
         TransferDetails transferDetails = new TransferDetails();
-        transferService.transferNow(transferDetails);
         transferDetails.setTransferredBy(userManager.getCurrentUser());
         transferDetails.setTransferredTo(userService.getUser(Integer.parseInt(bankAccountNumberReceiver)));
         transferDetails.setTransferDate(new Date());
         transferDetails.setTransferState(TransferState.READY);
+        transferDetails.setAmount(amount);
+        transferService.transferNow(transferDetails);
         return transferDetails;
     }
 
     public void transferNow() {
     	transferService.transferNow(createTransferDetails());
     }
-    
+
     public List<TransferDetails> getAllTransfers() {
         return transferService.getAllTransfersByUser(userManager.getCurrentUser());
     }
