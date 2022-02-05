@@ -7,35 +7,27 @@
     <ui:define name="panel-main">
         <ui:fragment rendered="#{userManager.signedIn}">
             <section>
-                <h3>Your Balance</h3>
-                <h:outputText value = "#{userManager.currentUser.balance}">
-                    <f:convertNumber currencySymbol = "€" type = "currency" />
+                <h1>Your Balance</h1>
+                <h:outputText value="#{userManager.currentUser.balance}">
+                    <f:convertNumber currencySymbol="€" type="currency"/>
                 </h:outputText>
-                <!-- TODO TRANSFER-HISTORY
-                <h1>Your Transfers</h1>
-                <h:form>
-                    <ui:repeat value="#{History.allTreansfers}" var="allTransfers">
-                        <ui:decorate template="templates/transfer-summary.xhtml">
-                            <ui:param name="Transfer" value="#{allTransfers}"/>
-                            <ui:define name="transfer">
-                                <p>#{allTransfers.getAmount}</p>
-                            </ui:define>
-                        </ui:decorate>
-                    </ui:repeat>
-                </h:form>
-                -->
             </section>
         </ui:fragment>
-
         <ui:fragment rendered="#{userManager.signedIn}">
             <section>
-                <h3>Your Actions</h3>
-                <h:button value="New Transaction" outcome="transfer-details.xhtml"/>
-                <p> </p>
-                <h:button value="New long-term Transaction" outcome="transfer-details.xhtml"/>
-                <p> </p>
-                <h:button value="View your Transactions" outcome="transfer-details.xhtml"/>
+                <h1>Your Actions</h1>
+                <h:button value="New Transfer" outcome="transfer-details.xhtml"/>
+                <p/>
+                <h:button value="New long-term Transfer" outcome="transfer-details.xhtml"/>
             </section>
+        </ui:fragment>
+        <ui:fragment rendered="#{userManager.signedIn}">
+            <ui:fragment rendered="#{transferRepository.findByTransferredBy(userManager.currentUser) != null}"> <!--TODO dont show if no transfers where done-->
+                <section>
+                    <h1>Transfers that you send</h1>
+                    <ui:decorate template="templates/transfer-summary.xhtml"/>
+                </section>
+            </ui:fragment>
         </ui:fragment>
     </ui:define>
 </ui:composition>

@@ -37,7 +37,7 @@ public class UserManager implements Serializable {
         User user = userService.getUser(bankAccountNumber);
         if (user == null || !password.equals(user.getPassword())) {
         	 FacesContext.getCurrentInstance().addMessage(null,
-                     new FacesMessage("Please enter a valid username and password."));
+                     new FacesMessage("Please enter a valid bank account number and password."));
             return "sign-in";
         }
 
