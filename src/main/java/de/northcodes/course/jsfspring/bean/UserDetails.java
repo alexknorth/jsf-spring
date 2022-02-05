@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 public class UserDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	public static final int DEFAULT_BALANCE = 500;
 
 	@Autowired
 	private UserManager userManager;
@@ -40,6 +41,7 @@ public class UserDetails implements Serializable {
 
 	public String submit() {
 		user.setBankAccountNumber(Integer.parseInt(this.bankAccountNumber));
+		user.setBalance(DEFAULT_BALANCE);
 		return userManager.save(user);
 	}
 

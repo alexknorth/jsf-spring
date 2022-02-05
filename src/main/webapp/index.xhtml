@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Home"/>
     <ui:define name="panel-main">
         <ui:fragment rendered="#{userManager.signedIn}">
             <section>
                 <h3>Your Balance</h3>
-                <p>#{userManager.currentUser.balance}</p>
+                <h:outputText value = "#{userManager.currentUser.balance}">
+                    <f:convertNumber currencySymbol = "€" type = "currency" />
+                </h:outputText>
                 <!-- TODO TRANSFER-HISTORY
                 <h1>Your Transfers</h1>
                 <h:form>
