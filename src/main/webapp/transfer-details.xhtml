@@ -4,7 +4,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+>
 <ui:composition template="/templates/page-template.xhtml">
     <f:metadata>
         <f:viewAction action="#{userDetails.onload}"/>
@@ -14,6 +14,11 @@
         <section>
             <h1>New Money Transfer</h1>
             <p>Please enter some details for the Transfer.</p>
+            <p/>
+            <h3>Your maximum transfer amount is:</h3>
+            <h:outputText value="#{userManager.currentUser.balance}">
+                <f:convertNumber currencySymbol="€" type="currency"/>
+            </h:outputText>
             <p><h:outputLink value="index.xhtml">Back to main page</h:outputLink></p>
         </section>
     </ui:define>
@@ -25,9 +30,9 @@
 
                     <h:outputLabel for="amount">Amount (in €)</h:outputLabel>
                     <h:inputText name="moneyTransfer" id="amount"
-                    			 value="#{moneyTransfer.amount}"
-                    			 required="true" 
-                    			 requiredMessage="Please enter the amount that should be transferred."
+                                 value="#{moneyTransfer.amount}"
+                                 required="true"
+                                 requiredMessage="Please enter the amount that should be transferred."
                                  converterMessage="Please enter an amount consisting of only digits.">
                     </h:inputText>
 
