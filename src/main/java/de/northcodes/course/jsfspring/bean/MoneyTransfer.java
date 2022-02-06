@@ -35,7 +35,7 @@ public class MoneyTransfer implements Serializable {
     public TransferDetails createTransferDetails() {
         TransferDetails transferDetails = new TransferDetails();
         transferDetails.setTransferredBy(userManager.getCurrentUser());
-        if (userService.getUser(Integer.parseInt(bankAccountNumberReceiver)) != null && userManager.getCurrentUser().getBankAccountNumber() != Integer.parseInt(bankAccountNumberReceiver)) {
+        if (isValidReceiver()) {
             transferDetails.setTransferredTo(userService.getUser(Integer.parseInt(bankAccountNumberReceiver)));
             transferDetails.setTransferState(TransferState.READY);
         } else {
@@ -46,6 +46,10 @@ public class MoneyTransfer implements Serializable {
         transferDetails.setAmount(amount);
         transferService.transferNow(transferDetails);
         return transferDetails;
+    }
+
+    private boolean isValidReceiver() {
+        return userService.getUser(Integer.parseInt(bankAccountNumberReceiver)) != null && userManager.getCurrentUser().getBankAccountNumber() != Integer.parseInt(bankAccountNumberReceiver);
     }
 
     public void transferNow() {
