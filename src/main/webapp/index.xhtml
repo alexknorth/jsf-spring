@@ -21,12 +21,19 @@
                 <h:button value="New long-term Transfer" outcome="transfer-details.xhtml"/>
             </section>
         </ui:fragment>
-        <!--TODO also show transferres, that where received -> findByTransferredTo???-->
         <ui:fragment rendered="#{userManager.signedIn}">
-            <ui:fragment rendered="#{transferRepository.findByTransferredBy(userManager.currentUser) != null}"> <!--TODO dont show if no transfers where done-->
+            <ui:fragment rendered="#{transferRepository.findByTransferredBy(userManager.currentUser) != null}"> <!--TODO dont show if no transfers went out-->
                 <section>
                     <h1>Your outgoing Transfers</h1>
-                    <ui:decorate template="templates/transfer-summary.xhtml"/>
+                    <ui:decorate template="templates/incoming-transfer-summary.xhtml"/>
+                </section>
+            </ui:fragment>
+        </ui:fragment>
+        <ui:fragment rendered="#{userManager.signedIn}">
+            <ui:fragment rendered="#{transferRepository.findByTransferredTo(userManager.currentUser) != null}"> <!--TODO dont show if no transfers came in-->
+                <section>
+                    <h1>Your incoming Transfers</h1>
+                    <ui:decorate template="templates/outgoing-transfer-summary.xhtml"/>
                 </section>
             </ui:fragment>
         </ui:fragment>
