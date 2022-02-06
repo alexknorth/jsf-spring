@@ -7,12 +7,6 @@
     <h:form>
         <section>
             <ui:repeat value="#{transferRepository.findByTransferredBy(userManager.currentUser)}" var="transfer" varStatus="varStatus">
-                <!--
-                <p>Amount: #{transfer.amount}</p>
-                <p>Transferred to Bank Account Number: #{transfer.transferredTo.bankAccountNumber}</p>
-                <p>Date: #{transfer.transferDate}</p>
-                <p>State: #{transfer.transferState}</p>
-                -->
                 <h3>#{varStatus.index + 1}. Transfer</h3>
                 <table border="1" cellspacing="2" cellpadding="2">
                     <tr>

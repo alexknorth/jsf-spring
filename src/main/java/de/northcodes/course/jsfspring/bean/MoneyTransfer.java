@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @ManagedBean
 public class MoneyTransfer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    public static final int FALLBACK_USER = 0;
 
     @Autowired
     private UserManager userManager;
@@ -35,9 +35,14 @@ public class MoneyTransfer implements Serializable {
     public TransferDetails createTransferDetails() {
         TransferDetails transferDetails = new TransferDetails();
         transferDetails.setTransferredBy(userManager.getCurrentUser());
-        transferDetails.setTransferredTo(userService.getUser(Integer.parseInt(bankAccountNumberReceiver)));
+        if (userService.getUser(Integer.parseInt(bankAccountNumberReceiver)) != null && userManager.getCurrentUser().getBankAccountNumber() != Integer.parseInt(bankAccountNumberReceiver)) {
+            transferDetails.setTransferredTo(userService.getUser(Integer.parseInt(bankAccountNumberReceiver)));
+            transferDetails.setTransferState(TransferState.READY);
+        } else {
+            transferDetails.setTransferredTo(userService.getUser(FALLBACK_USER));
+            transferDetails.setTransferState(TransferState.FAILED);
+        }
         transferDetails.setTransferDate(new Date());
-        transferDetails.setTransferState(TransferState.READY);
         transferDetails.setAmount(amount);
         transferService.transferNow(transferDetails);
         return transferDetails;
