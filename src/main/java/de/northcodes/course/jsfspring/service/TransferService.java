@@ -7,7 +7,11 @@ import de.northcodes.course.jsfspring.model.User;
 
 public interface TransferService {
 
-	public TransferDetails transferNow(TransferDetails transferDetails);
+	TransferDetails transferNow(TransferDetails transferDetails);
 
-	public List<TransferDetails> getAllTransfersByUser(User transferredBy);
+	List<TransferDetails> getAllTransfersByUser(User transferredBy);
+
+	List<TransferDetails> getOutgoingTransfers(User currentUser);
+
+	List<TransferDetails> getIncomingTransfers(User currentUser);
 }

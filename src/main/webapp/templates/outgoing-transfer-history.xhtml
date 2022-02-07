@@ -6,7 +6,7 @@
 <ui:composition>
     <h:form>
         <section>
-            <ui:repeat value="#{transferRepository.findByTransferredTo(userManager.currentUser)}" var="transfer" varStatus="varStatus">
+            <ui:repeat value="#{transferHistory.outgoingTransfers}" var="transfer" varStatus="varStatus">
                 <h3>#{varStatus.index + 1}. Transfer</h3>
                 <table border="1" cellspacing="2" cellpadding="2">
                     <tr>
@@ -19,11 +19,11 @@
                     </tr>
                     <tr>
                         <td>Bank Account Number</td>
-                        <td>#{transfer.transferredBy.bankAccountNumber}</td>
+                        <td>#{transfer.transferredTo.bankAccountNumber}</td>
                     </tr>
                     <tr>
                         <td>Name</td>
-                        <td>#{transfer.transferredBy.firstName} #{transfer.transferredBy.lastName}</td>
+                        <td>#{transfer.transferredTo.firstName} #{transfer.transferredTo.lastName}</td>
                     </tr>
                     <tr>
                         <td>Date</td>

@@ -22,20 +22,16 @@
             </section>
         </ui:fragment>
         <ui:fragment rendered="#{userManager.signedIn}">
-            <ui:fragment rendered="#{transferRepository.findByTransferredBy(userManager.currentUser) != null}"> <!--TODO dont show if no transfers went out-->
-                <section>
-                    <h1>Your outgoing Transfers</h1>
-                    <ui:decorate template="templates/incoming-transfer-summary.xhtml"/>
-                </section>
-            </ui:fragment>
+            <section>
+                <h1>Your outgoing Transfers</h1>
+                <ui:decorate template="templates/outgoing-transfer-history.xhtml"/>
+            </section>
         </ui:fragment>
         <ui:fragment rendered="#{userManager.signedIn}">
-            <ui:fragment rendered="#{transferRepository.findByTransferredTo(userManager.currentUser) != null}"> <!--TODO dont show if no transfers came in-->
-                <section>
-                    <h1>Your incoming Transfers</h1>
-                    <ui:decorate template="templates/outgoing-transfer-summary.xhtml"/>
-                </section>
-            </ui:fragment>
+            <section>
+                <h1>Your incoming Transfers</h1>
+                <ui:decorate template="templates/incoming-transfer-history.xhtml"/>
+            </section>
         </ui:fragment>
     </ui:define>
 </ui:composition>

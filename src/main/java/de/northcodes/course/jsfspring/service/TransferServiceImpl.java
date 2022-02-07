@@ -51,4 +51,14 @@ public class TransferServiceImpl implements TransferService {
 		return transferRepository.findByTransferredBy(transferredBy);
 	}
 
+	@Override
+	public List<TransferDetails> getOutgoingTransfers(User currentUser) {
+		return transferRepository.findByTransferredBy(currentUser);
+	}
+
+	@Override
+	public List<TransferDetails> getIncomingTransfers(User currentUser) {
+		return transferRepository.findByTransferredTo(currentUser);
+	}
+
 }
