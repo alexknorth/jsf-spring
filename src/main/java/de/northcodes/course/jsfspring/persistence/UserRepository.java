@@ -5,5 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
     User findByBankAccountNumber(int bankAccountNumber);
+
     User findByEmailAddress(String emailAddress);
 }

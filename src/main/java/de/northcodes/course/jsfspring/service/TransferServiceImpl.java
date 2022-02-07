@@ -32,7 +32,7 @@ public class TransferServiceImpl implements TransferService {
 				transferDetails.setTransferState(TransferState.CANCELLED);
 			} else {
 				sender.setBalance(roundCurrency(sender.getBalance() - transferDetails.getAmount()));
-				receiver.setBalance(Math.round(receiver.getBalance() + transferDetails.getAmount()));
+				receiver.setBalance(roundCurrency(receiver.getBalance() + transferDetails.getAmount()));
 				userRepository.save(sender);
 				userRepository.save(receiver);
 				transferDetails.setTransferState(TransferState.TRANSMITTED);

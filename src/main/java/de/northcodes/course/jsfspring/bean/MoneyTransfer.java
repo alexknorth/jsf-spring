@@ -22,10 +22,8 @@ public class MoneyTransfer implements Serializable {
 
     @Autowired
     private UserManager userManager;
-
     @Autowired
     TransferService transferService;
-
     @Autowired
     UserService userService;
 
@@ -56,7 +54,7 @@ public class MoneyTransfer implements Serializable {
     }
 
     public void transferNow() {
-    	transferService.transferNow(createTransferDetails());
+        transferService.transferNow(createTransferDetails());
     }
 
     public List<TransferDetails> getAllTransfers() {

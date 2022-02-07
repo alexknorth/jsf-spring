@@ -6,7 +6,6 @@ import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import de.northcodes.course.jsfspring.model.TransferDetails;
-import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,16 +20,6 @@ public class TransferHistory implements Serializable {
 
     @Autowired
     private UserManager userManager;
-
-    private User currentUser;
-
-    public boolean isSignedIn() {
-        return currentUser != null;
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
-    }
 
     public List<TransferDetails> getOutgoingTransfers() {
         return transferService.getOutgoingTransfers(userManager.getCurrentUser());

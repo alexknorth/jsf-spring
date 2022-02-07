@@ -4,10 +4,8 @@ import java.util.Arrays;
 import java.util.Date;
 
 import javax.faces.webapp.FacesServlet;
-import javax.persistence.Column;
 import javax.servlet.ServletContext;
 
-import de.northcodes.course.jsfspring.bean.MoneyTransfer;
 import de.northcodes.course.jsfspring.model.TransferDetails;
 import de.northcodes.course.jsfspring.model.TransferState;
 import de.northcodes.course.jsfspring.model.User;

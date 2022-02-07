@@ -2,14 +2,14 @@ package de.northcodes.course.jsfspring.model;
 
 public enum TransferState {
 	
-	READY("Transaction is ready for processing"),
+	READY("Transfer is ready for processing"),
 	TRANSMITTED("Transmitted successfully"),
-	CANCELLED("Your balance is not allowing this Transmission"),
-	FAILED("Transaction failed");
+	CANCELLED("Your balance is not allowing this Transfer"),
+	FAILED("Transfer failed");
 
 	private final String description;
 	
-	private TransferState(String description) {
+	TransferState(String description) {
 		this.description = description;
 	}
 	
