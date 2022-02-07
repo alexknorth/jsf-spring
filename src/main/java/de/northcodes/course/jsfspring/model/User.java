@@ -34,7 +34,7 @@ public class User implements Serializable {
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
-    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     private List<Recipe> recipes = new ArrayList<Recipe>();
 
     public User() {}

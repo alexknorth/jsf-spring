@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition>
     <section>
        
@@ -21,7 +22,10 @@
         </ui:fragment>
 
 
-        <h:outputLink value="new-recipe.xhtml">Create new Recipe</h:outputLink>
+        <h:outputLink value="recipe-details.xhtml">
+            <f:param name="type" value="create"/>
+            Create new Recipe
+        </h:outputLink>
     </section>
 </ui:composition>
 </html>

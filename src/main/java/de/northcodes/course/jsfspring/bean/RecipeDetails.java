@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -20,6 +21,8 @@ import java.util.Date;
 @ManagedBean
 public class RecipeDetails implements Serializable {
 
+	private static final Logger log = LoggerFactory.getLogger(JsfSpringApplication.class);
+
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -29,6 +32,17 @@ public class RecipeDetails implements Serializable {
 	private RecipeService recipeService;
 
 	private long recipeId;
+
+	private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 
 	private de.northcodes.course.jsfspring.bean.readmodel.Recipe recipe;
 
@@ -55,13 +69,27 @@ public class RecipeDetails implements Serializable {
 	}
 
 	public void onload() {
+		type = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("type");
+		String recipeIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("recipeId");
+		if (recipeIdString == null){
+			recipeId = 0;
+		} else {
+			recipeId = Long.valueOf(recipeIdString);
+		}
+
 		recipe = new de.northcodes.course.jsfspring.bean.readmodel.Recipe();
 		recipeDetails = new de.northcodes.course.jsfspring.model.Recipe();
 
-		if (userManager.isSignedIn()) {
+		log.info("RecipeId {}", recipeId);
+		if (userManager.isSignedIn() && (type.equals("read") || type.equals("create"))) {
+			log.info("Onload called with signed-in User");
 			recipeDetails = recipeService.getRecipeIfUserIsOwner(recipeId, userManager.getCurrentUser());
 			recipe = new de.northcodes.course.jsfspring.bean.readmodel.Recipe(recipeDetails, true);
 		}
+	}
+
+	public boolean isEditable() {
+		return !type.equals("read");
 	}
 
 	public String submit() {
@@ -73,11 +101,9 @@ public class RecipeDetails implements Serializable {
 	}
 
 	public String delete() {
+		log.info("Deletion for Recipe {} called", recipeDetails.getId());
+		log.info("Deletion for RecipeId {} called", recipeId);
 		recipeService.delete(recipeDetails);
 		return "index";
-	}
-
-	public void validateCreateDate(FacesContext context, UIComponent component, Object value) {
-		System.out.println(java.time.LocalDate.now());
 	}
 }

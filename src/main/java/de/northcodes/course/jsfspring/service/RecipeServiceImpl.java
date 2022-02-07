@@ -3,6 +3,8 @@ package de.northcodes.course.jsfspring.service;
 import de.northcodes.course.jsfspring.model.Recipe;
 import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.persistence.RecipeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
+
+    private static final Logger log = LoggerFactory.getLogger(RecipeServiceImpl.class);
 
     @Autowired
     RecipeRepository recipeRepository;
@@ -44,6 +48,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipeIfUserIsOwner(long recipeId, User user) {
+        log.info("Size {}", user.getRecipes().size());
         return user.getRecipes().stream().filter(recipe -> recipe.getId() == recipeId).findFirst().orElse(new Recipe());
     }
 }
