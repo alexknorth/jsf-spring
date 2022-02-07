@@ -30,7 +30,7 @@ public class MoneyTransfer implements Serializable {
     private double amount;
     private String bankAccountNumberReceiver;
 
-    public TransferDetails createTransferDetails() {
+    private TransferDetails createTransferDetails() {
         TransferDetails transferDetails = new TransferDetails();
         transferDetails.setTransferredBy(userManager.getCurrentUser());
         if (isValidReceiver()) {
