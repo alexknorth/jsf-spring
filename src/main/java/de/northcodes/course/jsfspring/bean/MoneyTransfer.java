@@ -49,7 +49,10 @@ public class MoneyTransfer implements Serializable {
     }
 
     private boolean isValidReceiver() {
-        return userService.getUser(Integer.parseInt(bankAccountNumberReceiver)) != null && userManager.getCurrentUser().getBankAccountNumber() != Integer.parseInt(bankAccountNumberReceiver);
+        return userService.getUser(Integer.parseInt(bankAccountNumberReceiver)) != null &&
+               userManager.getCurrentUser().getBankAccountNumber() != Integer.parseInt(bankAccountNumberReceiver) &&
+               Integer.parseInt(bankAccountNumberReceiver) != 0 &&
+               userManager.getCurrentUser().getBankAccountNumber() != 0;
     }
 
     public void transferNow() {

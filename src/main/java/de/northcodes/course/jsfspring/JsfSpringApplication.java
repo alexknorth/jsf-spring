@@ -62,7 +62,7 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
     @Bean
     public CommandLineRunner demo() {
       return (args) -> {
-          User user = this.userRepository.save(new User(123, "1234", "teoman", "kinaci", "t.k.@gmail.de", "12234523", new Date(), 1230.12));
+          User user = this.userRepository.save(new User(123, "1234", "Teoman", "Kinaci", "t.k.@gmail.de", "12234523", new Date(), 1230.12));
           User user2 = this.userRepository.save(new User(456, "1234", "Zweiter", "User", "Zweiteruser@gmail.de", "12234523", new Date(), 2000.00));
           User fallbackUser = this.userRepository.save(new User(0, "0", "Fallback", "User", "fallback@gmail.de", "", new Date(), 0));
 
