@@ -3,6 +3,7 @@ package de.northcodes.course.jsfspring.model;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +22,7 @@ public class Meilenstein extends AbstractEntity{
 	private int anzahlReps;
 
 	@CreationTimestamp
-	private LocalDate datum;
+	private Date datum;
 
 	public Meilenstein(TrainingsplanItem trainingsplanItem, int anzahlSets, int anzahlReps, double gewicht) {
 		this.uebung = trainingsplanItem.getUebung();
@@ -30,7 +31,7 @@ public class Meilenstein extends AbstractEntity{
 		this.gewicht = gewicht;
 	}
 
-	protected Meilenstein() {
+	public Meilenstein() {
 	}
 
 	public Uebung getUebung() {
@@ -49,7 +50,27 @@ public class Meilenstein extends AbstractEntity{
 		return anzahlReps;
 	}
 
-	public LocalDate getDatum() {
+	public Date getDatum() {
 		return datum;
+	}
+
+	public void setUebung(Uebung uebung) {
+		this.uebung = uebung;
+	}
+
+	public void setGewicht(double gewicht) {
+		this.gewicht = gewicht;
+	}
+
+	public void setAnzahlSets(int anzahlSets) {
+		this.anzahlSets = anzahlSets;
+	}
+
+	public void setAnzahlReps(int anzahlReps) {
+		this.anzahlReps = anzahlReps;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 }
