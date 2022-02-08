@@ -2,4 +2,6 @@ This project contains a sample project for Java Server Faces (JSF 2.2) with Spri
 
 You need to have installed JDK 1.8+ and Maven
 
+Also please make sure to download the necessary TomcatWebServer 
+
 Start with "mvn spring-boot:run"
