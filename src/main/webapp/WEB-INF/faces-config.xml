@@ -8,5 +8,10 @@
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
     </application>
 
+    <converter>
+        <converter-id>muskelgruppeConverter</converter-id>
+        <converter-class>de.northcodes.course.jsfspring.bean.uebung.MuskelgruppeConverter</converter-class>
+    </converter>
+
 
 </faces-config>

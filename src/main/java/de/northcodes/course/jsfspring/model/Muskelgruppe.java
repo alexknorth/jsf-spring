@@ -23,5 +23,14 @@ public enum Muskelgruppe {
 	public String getName() {
 		return this.name;
 	}
+
+	public static Muskelgruppe byName(String name) {
+		for (Muskelgruppe m : Muskelgruppe.values()) {
+			if (m.name.equalsIgnoreCase(name)) {
+				return m;
+			}
+		}
+		return null;
+	}
 	
 }

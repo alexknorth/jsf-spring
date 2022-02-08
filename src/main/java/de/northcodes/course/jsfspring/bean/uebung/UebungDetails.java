@@ -10,7 +10,6 @@ import de.northcodes.course.jsfspring.model.Uebung;
 import de.northcodes.course.jsfspring.service.UebungService;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,45 +22,40 @@ public class UebungDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Muskelgruppe> muskelgruppeList = new ArrayList<>();
-
     @Autowired
     private UebungService uebungService;
 
-    private long uebungId;
+    private Long uebungId;
 
     private Uebung uebung;
 
-    public void onload() {
-        this.uebung = this.uebungService.getUebungById(this.uebungId);
-        this.muskelgruppeList = this.uebung.getBeanpruchteMuskelgruppeList();
+    public void onLoad() {
+        if (this.uebungId > 0) {
+            this.uebung = this.uebungService.getUebungById(this.uebungId);
+        } else {
+            this.uebung = new Uebung();
+        }
     }
 
     public void save() {
-        System.out.println(this.uebung.getName());
+        this.uebungService.saveUebung(this.uebung);
     }
 
     public List<Muskelgruppe> completeMuskelgruppe(String query) {
         String queryLowerCase = query.toLowerCase();
         List<Muskelgruppe> muskelgruppeList = Arrays.asList(Muskelgruppe.values());
 
-        System.out.println("Muskelgruppe Size: " + this.muskelgruppeList.size());
-        return muskelgruppeList.stream().filter(m -> m.getName().toLowerCase().contains(queryLowerCase)).collect(Collectors.toList());
+        return muskelgruppeList
+                .stream()
+                .filter(m -> m.getName().toLowerCase().contains(queryLowerCase))
+                .collect(Collectors.toList());
     }
 
-    public List<Muskelgruppe> getMuskelgruppeList() {
-        return muskelgruppeList;
-    }
-
-    public void setMuskelgruppeList(List<Muskelgruppe> muskelgruppeList) {
-        this.muskelgruppeList = muskelgruppeList;
-    }
-
-    public long getUebungId() {
+    public Long getUebungId() {
         return uebungId;
     }
 
-    public void setUebungId(long uebungId) {
+    public void setUebungId(Long uebungId) {
         this.uebungId = uebungId;
     }
 

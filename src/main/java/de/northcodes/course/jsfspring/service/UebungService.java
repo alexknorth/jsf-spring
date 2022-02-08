@@ -10,4 +10,6 @@ public interface UebungService {
 
     Uebung getUebungById(long uebungId);
 
+    void saveUebung(Uebung uebung);
+
 }

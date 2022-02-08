@@ -7,20 +7,19 @@
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
         <f:viewParam name="uebungId" value="#{uebungDetails.uebungId}"/>
-        <f:viewAction action="#{uebungDetails.onload}"/>
+        <f:viewAction action="#{uebungDetails.onLoad}"/>
     </f:metadata>
     <ui:param name="pageTitle" value="Übung Details"/>
-    <ui:param name="savemethod" value="#{uebungDetails.save}"/>
     <ui:composition template="../templates/detail-template.xhtml">
         <ui:param name="masteroutcome" value="uebung-list.xhtml"/>
         <ui:define name="detail-name">
             #{uebungDetails.uebung.name}
         </ui:define>
         <ui:define name="detail-content">
-            <section style="display: grid; grid-gap: 20px">
+            <div style="display: grid; grid-gap: 20px">
                 <div>
                     <h5>Name</h5>
-                    <p:inputText placeholder="Name" value="#{uebungDetails.uebung.name}"/>
+                    <p:inputText placeholder="Name" value="#{uebungDetails.uebung.name}" />
                 </div>
                 <div>
                     <h5>Beschreibung</h5>
@@ -31,13 +30,23 @@
 
                 <div>
                     <h5>Beanspruchte Muskelgruppen</h5>
-                    <p:autoComplete id="muskelgruppen" multiple="true" value="#{uebungDetails.muskelgruppeList}"
+                    <p:autoComplete id="muskelgruppen"
+                                    multiple="true"
+                                    value="#{uebungDetails.uebung.beanpruchteMuskelgruppeList}"
                                     completeMethod="#{uebungDetails.completeMuskelgruppe}"
-                                    var="muskelgruppe" itemLabel="#{muskelgruppe.name}" itemValue="#{muskelgruppe}"
-                                    forceSelection="true" scrollHeight="250">
+                                    converter="muskelgruppeConverter"
+                                    var="muskelgruppe"
+                                    itemLabel="#{muskelgruppe.name}"
+                                    itemValue="#{muskelgruppe}"
+                                    forceSelection="true"
+                                    scrollHeight="250">
                     </p:autoComplete>
                 </div>
-            </section>
+            </div>
+        </ui:define>
+
+        <ui:define name="save_btn">
+            <p:commandButton value="Speichern" action="#{uebungDetails.save}"/>
         </ui:define>
     </ui:composition>
 </html>

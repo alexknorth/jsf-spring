@@ -10,11 +10,18 @@
             <p>Übungskatalog</p>
         </ui:define>
         <ui:define name="master-content">
-                <p:dataList value="#{uebungList.uebungList}" var="uebung" type="ordered">
-                    <ui:decorate template="../templates/uebung/uebung-list-item.xhtml">
-                        <ui:param name="uebung" value="#{uebung}"/>
-                    </ui:decorate>
-                </p:dataList>
+            <p:dataList value="#{uebungList.uebungList}" var="uebung" type="ordered">
+                <ui:decorate template="../templates/uebung/uebung-list-item.xhtml">
+                    <ui:param name="uebung" value="#{uebung}"/>
+                </ui:decorate>
+            </p:dataList>
+
+            <p:button icon="pi pi-plus"
+                      styleClass="rounded-button ui-button-secondary"
+                      style="position: fixed; bottom: 10px; right: 10px" outcome="uebung-detail.xhtml">
+                <f:param name="uebungId" value="#{0}"/>
+            </p:button>
+
         </ui:define>
     </ui:composition>
 </html>

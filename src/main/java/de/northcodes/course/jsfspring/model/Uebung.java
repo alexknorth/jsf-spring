@@ -19,7 +19,7 @@ public final class Uebung extends AbstractEntity implements Serializable {
     @Column(name = "description", nullable = false)
     private String beschreibung;
     
-    @Column(name = "image_name", nullable = false)
+    @Column(name = "image_name")
     private String imageName;
 
     @Column(name = "muskelgruppe", nullable = false)
@@ -30,7 +30,7 @@ public final class Uebung extends AbstractEntity implements Serializable {
     @OneToMany(mappedBy = "uebung", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Meilenstein> meilensteinList = new ArrayList<>();
 
-    protected Uebung() {}
+    public Uebung() {}
     
     public Uebung(String name, String beschreibung, List<Muskelgruppe> beanspruchteMuskelgruppeList, String imageName) {
         this.name = name;

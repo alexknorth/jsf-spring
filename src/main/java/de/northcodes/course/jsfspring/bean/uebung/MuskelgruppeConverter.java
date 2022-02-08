@@ -16,7 +16,7 @@ public class MuskelgruppeConverter implements Converter {
     public Muskelgruppe getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-                return Muskelgruppe.valueOf(value);
+                return Muskelgruppe.byName(value);
             }
             catch (NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid Muskelgruppe."));

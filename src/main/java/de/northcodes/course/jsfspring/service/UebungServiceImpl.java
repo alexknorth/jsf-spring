@@ -35,4 +35,9 @@ public class UebungServiceImpl implements UebungService {
 		return this.uebungRepository.findById(id).orElse(null);
 	}
 
+	@Override
+	public void saveUebung(Uebung uebung) {
+		this.uebungRepository.save(uebung);
+	}
+
 }
