@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WelcomePageRedirect implements WebMvcConfigurer {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("forward:/index.xhtml");
+		registry.addViewController("/").setViewName("forward:/uebung/uebung-list.xhtml");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
 }

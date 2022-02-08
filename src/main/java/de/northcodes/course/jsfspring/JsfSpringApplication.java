@@ -55,14 +55,12 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
         uebungRepository.save(new Uebung(
                 "Squats",
                 "Zu deutsch: Kniebeugen. Gute overall Beinübung.",
-                Arrays.asList(Muskelgruppe.GESAESS, Muskelgruppe.UNTERERRUECKEN, Muskelgruppe.OBERSCHENKEL),
-                "guitar"));
+                Arrays.asList(Muskelgruppe.GESAESS, Muskelgruppe.UNTERERRUECKEN, Muskelgruppe.OBERSCHENKEL)));
 
           uebungRepository.save(new Uebung(
                   "Hip Thrusts",
                   "Übung, die die Gesäßmuskulatur beansprucht.",
-                  Arrays.asList(Muskelgruppe.GESAESS, Muskelgruppe.OBERSCHENKEL),
-                  "bassguitar"));
+                  Arrays.asList(Muskelgruppe.GESAESS, Muskelgruppe.OBERSCHENKEL)));
 
         // fetch all products
 //        log.info("Products found with findAll():");

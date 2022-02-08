@@ -2,33 +2,32 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-<ui:composition template="page-template.xhtml">
-    <ui:define name="panel-main">
-            <p:menubar>
-                <p:menuitem value="Zurück" icon="pi pi-arrow-left" outcome="#{masteroutcome}"/>
-                <p:menuitem disabled="true">
-                    <ui:insert name="detail-name">
-                        Placeholder name
+    <ui:composition template="page-template.xhtml">
+        <ui:define name="panel-main">
+                <p:menubar>
+                    <p:menuitem value="Zurück" icon="pi pi-arrow-left" outcome="#{masteroutcome}"/>
+                    <p:menuitem disabled="true">
+                        <ui:insert name="detail-name">
+                            Placeholder name
+                        </ui:insert>
+                    </p:menuitem>
+                </p:menubar>
+
+            <h:form id="form">
+                <div style="padding: 20px">
+                    <ui:insert name="detail-content">
+                        Detail Content
                     </ui:insert>
-                </p:menuitem>
-            </p:menubar>
+                </div>
 
-        <h:form>
-            <div style="padding: 20px">
-                <ui:insert name="detail-content">
-                    Detail Content
-                </ui:insert>
-            </div>
-
-            <div style="display: block; position: absolute; bottom: 20px">
-                <ui:insert name="save_btn">Save Button</ui:insert>
-                <span style="width: 20px"/>
-                <p:button value="Abbrechen" styleClass="ui-button-danger" outcome="#{masteroutcome}"/>
-            </div>
-        </h:form>
-    </ui:define>
-</ui:composition>
+                <div style="display: block; position: absolute; bottom: 20px">
+                    <p:commandButton value="Speichern" action="#{bean[save]}" update="form"/>
+                    <span style="width: 20px"/>
+                    <p:button value="Abbrechen" styleClass="ui-button-danger" outcome="#{masteroutcome}"/>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
