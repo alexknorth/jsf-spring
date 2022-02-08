@@ -6,27 +6,41 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
-        <f:viewParam name="trainingsplanId" value="#{trainingsplanDetails.trainingsplanId}"/>
-        <f:viewAction action="#{trainingsplanDetails.onLoad}"/>
+        <f:viewParam name="trainingsplanId" value="#{trainingsplanDetail.trainingsplanId}"/>
+        <f:viewAction action="#{trainingsplanDetail.onLoad}"/>
     </f:metadata>
+
     <ui:param name="pageTitle" value="Trainingsplan Details"/>
+
     <ui:composition template="../templates/detail-template.xhtml">
         <ui:param name="masteroutcome" value="trainingsplan-list.xhtml"/>
+        <ui:param name="bean" value="#{trainingsplanDetail}"/>
+        <ui:param name="save" value="save"/>
         <ui:define name="detail-name">
-            #{trainingsplanDetails.trainingsplan.name}
+            #{trainingsplanDetail.trainingsplan.name}
         </ui:define>
         <ui:define name="detail-content">
+            <p:growl id="growl" showDetail="true" />
             <div style="display: grid; grid-gap: 20px">
                 <div>
                     <h5>Name</h5>
-                    <p:inputText placeholder="Name" value="#{trainingsplanDetails.trainingsplan.name}" />
+                    <p:inputText id="name"
+                                 placeholder="Name"
+                                 required="true"
+                                 requiredMessage="Der Name des Plans darf nicht leer sein."
+                                 value="#{trainingsplanDetail.trainingsplan.name}" />
+                    <p:message for="name"/>
                 </div>
                 <div>
                     <h5>Startdatum</h5>
                     <div class="p-field p-col-12 p-md-4">
-                        <p:datePicker id="start" value="#{trainingsplanDetails.trainingsplan.startDatum}">
+                        <p:datePicker id="start"
+                                      required="true"
+                                      requiredMessage="Das Startdatum darf nicht leer sein."
+                                      value="#{trainingsplanDetail.trainingsplan.startDatum}">
                             <f:ajax render="end" />
                         </p:datePicker>
+                        <p:message for="start"/>
                     </div>
                 </div>
 
@@ -34,46 +48,85 @@
                     <h5>Enddatum</h5>
                     <div class="p-field p-col-12 p-md-4">
                         <p:datePicker id="end"
-                                      value="#{trainingsplanDetails.trainingsplan.endDatum}"
-                                      disabled="#{trainingsplanDetails.trainingsplan.startDatum == null}" />
+                                      required="true"
+                                      requiredMessage="Das Enddatum darf nicht leer sein."
+                                      validator="#{trainingsplanDetail.validateEnddatum}"
+                                      value="#{trainingsplanDetail.trainingsplan.endDatum}"
+                                      disabled="#{trainingsplanDetail.trainingsplan.startDatum == null}" />
+                        <p:message for="end"/>
                     </div>
                 </div>
 
-                <div>
-                    <p:outputLabel value="Übung"/>
-                    <p:autoComplete id="dd" dropdown="true"
-                                    value="#{trainingsplanDetails.trainingsplanItem.uebung}"
-                                    converter="#{uebungConverter}"
-                                    completeMethod="#{trainingsplanDetails.completeText}" scrollHeight="250"/>
+                <h:panelGroup id="item-form" style="display: grid; grid-template-columns: repeat(8, max-content); grid-gap: 10px">
+                    <div>
+                        <h5>Übung</h5>
+                        <p:autoComplete id="uebung" dropdown="true"
+                                        value="#{trainingsplanDetail.trainingsplanItem.uebung}"
+                                        required="true"
+                                        requiredMessage="Es muss eine Übung gewählt werden."
+                                        converter="#{uebungConverter}"
+                                        completeMethod="#{trainingsplanDetail.completeText}" scrollHeight="250"/>
+                        <p:message for="uebung"/>
+                    </div>
+                    <div>
+                        <h5>Gewicht</h5>
+                        <p:inputNumber id="gewicht"
+                                       required="true"
+                                       requiredMessage="Das Gewicht muss gesetzt werden."
+                                       value="#{trainingsplanDetail.trainingsplanItem.gewicht}"
+                                       placeholder="Gewicht"/>
+                        <p:message for="gewicht"/>
+                    </div>
+                    <div>
+                        <h5>Sets</h5>
+                        <p:inputNumber id="sets"
+                                       required="true"
+                                       requiredMessage="Die Anzahl der Sets muss gesetzt werden."
+                                       value="#{trainingsplanDetail.trainingsplanItem.anzahlSets}" placeholder="Sets"/>
+                        <p:message for="sets"/>
+                    </div>
+                    <div>
+                        <h5>Reps</h5>
+                        <p:inputNumber id="reps"
+                                       required="true"
+                                       requiredMessage="Die Anzahl der Reps muss gesetzt werden."
+                                       value="#{trainingsplanDetail.trainingsplanItem.anzahlReps}" placeholder="Reps"/>
+                        <p:message for="reps"/>
+                    </div>
 
-                    <p:inputText value="#{trainingsplanDetails.trainingsplanItem.gewicht}" placeholder="Gewicht"/>
-                    <p:inputText value="#{trainingsplanDetails.trainingsplanItem.anzahlSets}" placeholder="Sets"/>
-                    <p:inputText value="#{trainingsplanDetails.trainingsplanItem.anzahlReps}" placeholder="Reps"/>
-
-                    <p:commandButton value="Speichern" action="#{trainingsplanDetails.saveItem}" update="list" />
-                </div>
+                    <p:commandButton value="Speichern" action="#{trainingsplanDetail.saveItem}" update="item-form list" />
+                </h:panelGroup>
 
                 <div>
                     <h5>Übungen</h5>
                     <p:dataList id="list"
-                                value="#{trainingsplanDetails.trainingsplan.trainingsplanItemList}"
+                                value="#{trainingsplanDetail.trainingsplan.trainingsplanItemList}"
                                 var="trainingsplanItem"
                                 type="ordered">
                         <ui:decorate template="../templates/trainingsplan/trainingsplan-item-list-item.xhtml">
                             <ui:param name="trainingsplanItem" value="#{trainingsplanItem}"/>
-                            <ui:param name="bean" value="#{trainingsplanDetails}"/>
-                            <ui:param name="delete" value="deleteItem"/>
-                            <ui:param name="arg" value="#{trainingsplanItem.uebung.name}"/>
-                            <ui:param name="updateview" value="list" />
+                            <ui:define name="edit_btns">
+                                <p:commandButton rendered="#{trainingsplanItem.id > 0}" icon="pi pi-angle-double-up" type="button" styleClass="rounded-button ui-button-success" onclick="PF('dlg3').show()"/>
+                                <span style="width: 10px"/>
+                                <p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger" action="#{trainingsplanDetail.deleteItem(trainingsplanItem.uebung.name)}" update="list"/>
+                            </ui:define>
+
+                            <ui:define name="dialog">
+                                <p:dialog header="Header" widgetVar="dlg3" minHeight="40" width="350" showEffect="fade">
+                                    <p:inputNumber id="meilenstein_gewicht"
+                                                   placeholder="Gewicht"
+                                                   required="true"
+                                                   requiredMessage="Das neu erreichte Gewicht muss gesetzt werden."
+                                                   value="#{trainingsplanItem.gewicht}"/>
+                                    <p:message for="meilenstein_gewicht"/>
+                                    <p:commandButton value="Meilenstein setzen" action="#{trainingsplanDetail.setMeilensteinAndUpdateGewicht(trainingsplanItem)}" update="list"/>
+                                </p:dialog>
+                            </ui:define>
                         </ui:decorate>
                     </p:dataList>
                 </div>
             </div>
 
-        </ui:define>
-
-        <ui:define name="save_btn">
-            <p:commandButton value="Speichern" action="#{trainingsplanDetails.save}"/>
         </ui:define>
     </ui:composition>
 </html>

@@ -18,7 +18,12 @@
             <p>Reps: #{trainingsplanItem.anzahlReps}</p>
         </div>
 
-        <p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger" action="#{bean[delete](arg)}" update="#{updateview}"/>
+        <div>
+            <ui:insert name="edit_btns"/>
+        </div>
+    </div>
+    <div>
+        <ui:insert name="dialog"/>
     </div>
 </ui:composition>
 </html>

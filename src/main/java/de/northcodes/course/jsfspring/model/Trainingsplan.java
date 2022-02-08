@@ -18,10 +18,6 @@ public class Trainingsplan extends AbstractEntity {
 	@OneToMany(mappedBy = "trainingsplan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<TrainingsplanItem> trainingsplanItemList;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "fk_user", referencedColumnName = "id")
-	private User user;
-
 	public Trainingsplan() {
 		this.trainingsplanItemList = new HashSet<>();
 	}
@@ -70,12 +66,5 @@ public class Trainingsplan extends AbstractEntity {
 	public void setTrainingsplanItemList(Set<TrainingsplanItem> trainingsplanItemList) {
 		this.trainingsplanItemList = trainingsplanItemList;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 }
+

@@ -2,27 +2,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-<ui:composition template="../templates/list-template.xhtml">
-    <ui:define name="master-name">
-        <p>Trainingspläne</p>
-    </ui:define>
-    <ui:define name="master-content">
-        <p:dataList value="#{trainingsplanList.trainingsplanList}" var="trainingsplan" type="ordered">
-            <ui:decorate template="../templates/trainingsplan/trainingsplan-list-item.xhtml">
-                <ui:param name="trainingsplan" value="#{trainingsplan}"/>
-            </ui:decorate>
-        </p:dataList>
+    <ui:composition template="../templates/list-template.xhtml">
+        <ui:define name="master-name">
+            <p>Trainingspläne</p>
+        </ui:define>
+        <ui:define name="master-content">
+            <p:dataList value="#{trainingsplanList.trainingsplanList}" var="trainingsplan" type="ordered">
+                <ui:decorate template="../templates/trainingsplan/trainingsplan-list-item.xhtml">
+                    <ui:param name="trainingsplan" value="#{trainingsplan}"/>
+                </ui:decorate>
+            </p:dataList>
 
-        <p:button icon="pi pi-plus"
-                  styleClass="rounded-button ui-button-secondary"
-                  style="position: fixed; bottom: 10px; right: 10px" outcome="trainingsplan-detail.xhtml">
-            <f:param name="trainingsplanId" value="#{0}"/>
-            <f:param name="trainingsplanItemId" value="#{0}"/>
-        </p:button>
+            <p:button icon="pi pi-plus"
+                      styleClass="rounded-button ui-button-secondary"
+                      style="position: fixed; bottom: 10px; right: 10px" outcome="trainingsplan-detail.xhtml">
+                <f:param name="trainingsplanId" value="#{0}"/>
+                <f:param name="trainingsplanItemId" value="#{0}"/>
+            </p:button>
 
-    </ui:define>
-</ui:composition>
+        </ui:define>
+    </ui:composition>
 </html>
