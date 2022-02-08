@@ -1,10 +1,6 @@
 package de.northcodes.course.jsfspring.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "plan_item")
@@ -14,15 +10,16 @@ public class TrainingsplanItem extends AbstractEntity {
 	@JoinColumn (name = "fk_uebung", referencedColumnName = "id", nullable = false)
 	private Uebung uebung;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_plan", referencedColumnName = "id", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "plan_id", referencedColumnName = "id", nullable = false)
 	private Trainingsplan trainingsplan;
 
 	private int anzahlSets;
 	private int anzahlReps;
 	private double gewicht;
     
-	protected TrainingsplanItem() {
+	public TrainingsplanItem() {
+		this.uebung = new Uebung();
 	}
 
 	public TrainingsplanItem(Trainingsplan trainingsplan, Uebung uebung, int anzahlSets, int anzahlReps, double gewicht) {
@@ -37,19 +34,39 @@ public class TrainingsplanItem extends AbstractEntity {
 		return uebung;
 	}
 
+	public void setUebung(Uebung uebung) {
+		this.uebung = uebung;
+	}
+
+	public Trainingsplan getTrainingsplan() {
+		return trainingsplan;
+	}
+
+	public void setTrainingsplan(Trainingsplan trainingsplan) {
+		this.trainingsplan = trainingsplan;
+	}
+
 	public int getAnzahlSets() {
 		return anzahlSets;
+	}
+
+	public void setAnzahlSets(int anzahlSets) {
+		this.anzahlSets = anzahlSets;
 	}
 
 	public int getAnzahlReps() {
 		return anzahlReps;
 	}
 
+	public void setAnzahlReps(int anzahlReps) {
+		this.anzahlReps = anzahlReps;
+	}
+
 	public double getGewicht() {
 		return gewicht;
 	}
 
-	public Trainingsplan getPlan() {
-		return trainingsplan;
+	public void setGewicht(double gewicht) {
+		this.gewicht = gewicht;
 	}
 }

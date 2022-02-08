@@ -8,17 +8,24 @@
 <ui:composition>
     <div>
         <h2>
-            <h:outputLink value="uebung-detail.xhtml">
-                <f:param name="uebungId" value="#{trainingsplan.id}"/>
+            <h:outputLink value="trainingsplan-detail.xhtml">
+                <f:param name="trainingsplanId" value="#{trainingsplan.id}"/>
                 #{trainingsplan.name}
             </h:outputLink>
         </h2>
-        <h:outputText value="#{trainingsplan.startDatum}">
-            <f:convertDateTime pattern="dd.MM.yyyy" />
-        </h:outputText>
-        <h:outputText value="#{trainingsplan.endDatum}">
-            <f:convertDateTime pattern="dd.MM.yyyy" />
-        </h:outputText>
+        <div>
+            Start:
+            <h:outputText value="#{trainingsplan.startDatum}">
+                <f:convertDateTime pattern="dd.MM.yyyy" />
+            </h:outputText>
+        </div>
+
+        <div>
+            Ende:
+            <h:outputText value="#{trainingsplan.endDatum}">
+                <f:convertDateTime pattern="dd.MM.yyyy" />
+            </h:outputText>
+        </div>
     </div>
 </ui:composition>
 </html>

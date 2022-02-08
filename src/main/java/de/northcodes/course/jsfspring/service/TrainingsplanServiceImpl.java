@@ -1,5 +1,6 @@
 package de.northcodes.course.jsfspring.service;
 
+import de.northcodes.course.jsfspring.bean.trainingsplan.TrainingsplanDetails;
 import de.northcodes.course.jsfspring.model.Trainingsplan;
 import de.northcodes.course.jsfspring.persistence.TrainingsplanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class TrainingsplanServiceImpl implements TrainingsplanService {
     @Override
     public Trainingsplan getTrainingsplanById(long id) {
         return this.trainingsplanRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Trainingsplan saveTrainingsplan(Trainingsplan trainingsplan) {
+        return this.trainingsplanRepository.save(trainingsplan);
     }
 
 }

@@ -10,6 +10,8 @@ public interface UebungService {
 
     Uebung getUebungById(long uebungId);
 
+    Uebung getUebungByName(String name);
+
     void saveUebung(Uebung uebung);
 
 }

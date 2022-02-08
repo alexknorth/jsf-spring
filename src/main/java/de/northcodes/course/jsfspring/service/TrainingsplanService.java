@@ -10,4 +10,5 @@ public interface TrainingsplanService {
 
     Trainingsplan getTrainingsplanById(long id);
 
+    Trainingsplan saveTrainingsplan(Trainingsplan trainingsplan);
 }

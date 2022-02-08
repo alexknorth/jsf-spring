@@ -36,6 +36,11 @@ public class UebungServiceImpl implements UebungService {
 	}
 
 	@Override
+	public Uebung getUebungByName(String name) {
+		return this.uebungRepository.findByName(name);
+	}
+
+	@Override
 	public void saveUebung(Uebung uebung) {
 		this.uebungRepository.save(uebung);
 	}

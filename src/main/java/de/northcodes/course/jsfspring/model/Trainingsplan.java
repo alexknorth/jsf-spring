@@ -2,7 +2,7 @@ package de.northcodes.course.jsfspring.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Trainingsplan extends AbstractEntity {
@@ -10,29 +10,30 @@ public class Trainingsplan extends AbstractEntity {
 	private String name;
 
 	@Column(name = "start_datum", nullable = false)
-	private LocalDate startDatum;
+	private Date startDatum;
 
-	@Column(name = "end_datum")
-	private LocalDate endDatum;
+	@Column(name = "end_datum", nullable = false)
+	private Date endDatum;
 
 	@OneToMany(mappedBy = "trainingsplan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<TrainingsplanItem> trainingsplanItemList;
+	private Set<TrainingsplanItem> trainingsplanItemList;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "fk_user", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "fk_user", referencedColumnName = "id")
 	private User user;
 
-	protected Trainingsplan() {
+	public Trainingsplan() {
+		this.trainingsplanItemList = new HashSet<>();
 	}
 
-	public Trainingsplan(String name, LocalDate startDatum, LocalDate endDatum, List<TrainingsplanItem> trainingsplanItemList) {
+	public Trainingsplan(String name, Date startDatum, Date endDatum, Set<TrainingsplanItem> trainingsplanItemList) {
 		this.name = name;
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.trainingsplanItemList = trainingsplanItemList;
 	}
 
-	public Trainingsplan(String name, LocalDate startDatum, List<TrainingsplanItem> trainingsplanItemList) {
+	public Trainingsplan(String name, Date startDatum, Set<TrainingsplanItem> trainingsplanItemList) {
 		this.name = name;
 		this.startDatum = startDatum;
 		this.trainingsplanItemList = trainingsplanItemList;
@@ -42,16 +43,32 @@ public class Trainingsplan extends AbstractEntity {
 		return name;
 	}
 
-	public LocalDate getStartDatum() {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getStartDatum() {
 		return startDatum;
 	}
 
-	public LocalDate getEndDatum() {
+	public void setStartDatum(Date startDatum) {
+		this.startDatum = startDatum;
+	}
+
+	public Date getEndDatum() {
 		return endDatum;
 	}
 
-	public List<TrainingsplanItem> getPlanItemList() {
+	public void setEndDatum(Date endDatum) {
+		this.endDatum = endDatum;
+	}
+
+	public Set<TrainingsplanItem> getTrainingsplanItemList() {
 		return trainingsplanItemList;
+	}
+
+	public void setTrainingsplanItemList(Set<TrainingsplanItem> trainingsplanItemList) {
+		this.trainingsplanItemList = trainingsplanItemList;
 	}
 
 	public User getUser() {

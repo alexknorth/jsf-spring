@@ -15,6 +15,14 @@
                 <ui:param name="trainingsplan" value="#{trainingsplan}"/>
             </ui:decorate>
         </p:dataList>
+
+        <p:button icon="pi pi-plus"
+                  styleClass="rounded-button ui-button-secondary"
+                  style="position: fixed; bottom: 10px; right: 10px" outcome="trainingsplan-detail.xhtml">
+            <f:param name="trainingsplanId" value="#{0}"/>
+            <f:param name="trainingsplanItemId" value="#{0}"/>
+        </p:button>
+
     </ui:define>
 </ui:composition>
 </html>

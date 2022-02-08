@@ -1,20 +1,20 @@
 package de.northcodes.course.jsfspring.bean.trainingsplan;
 
-import de.northcodes.course.jsfspring.bean.UserManager;
-import de.northcodes.course.jsfspring.model.User;
-import de.northcodes.course.jsfspring.service.UserService;
+import de.northcodes.course.jsfspring.model.Trainingsplan;
+import de.northcodes.course.jsfspring.model.TrainingsplanItem;
+import de.northcodes.course.jsfspring.model.Uebung;
+import de.northcodes.course.jsfspring.service.TrainingsplanService;
+import de.northcodes.course.jsfspring.service.UebungService;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ViewScoped
 @Component
@@ -23,56 +23,75 @@ public class TrainingsplanDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long trainingsplanId;
+
+	private Trainingsplan trainingsplan;
+
+	private TrainingsplanItem trainingsplanItem = new TrainingsplanItem();
+
 	@Autowired
-	private UserManager userManager;
-	
+	private TrainingsplanService trainingsplanService;
+
 	@Autowired
-	private UserService userService;
+	private UebungService uebungService;
 
-	private User user;
-
-	public User getUser() {
-		return user;
-	}
-
-	public void onload() {
-		user = userManager.isSignedIn() ? userManager.getCurrentUser() : new User();
-	}
-
-	public String submit() {
-		return userManager.save(user);
-	}
-
-	public void validateEmail(FacesContext context, UIComponent component, Object value) {
-		String emailAddress = (String) value;
-		if (
-				emailAddress == null || 
-				emailAddress.isEmpty() || 
-				!emailAddress.contains("@") || 
-				!emailAddress.contains(".") || 
-				(!isUserOwnEmailAddress(emailAddress) && userService.isEmailAlreadyExisting(emailAddress))
-			) {
-			throw new ValidatorException(new FacesMessage("Please enter a valid e-mail address."));
+	public void onLoad() {
+		if (this.trainingsplanId > 0) {
+			this.trainingsplan = this.trainingsplanService.getTrainingsplanById(this.trainingsplanId);
+		} else {
+			this.trainingsplan = new Trainingsplan();
 		}
 	}
 
-	private boolean isUserOwnEmailAddress(String emailAddress) {
-		return user.getEmailAddress() != null && user.getEmailAddress().equals(emailAddress);
+	public void save() {
+		Trainingsplan saved = this.trainingsplanService.saveTrainingsplan(this.trainingsplan);
+		this.trainingsplan = saved;
 	}
 
-	public void validatePhoneNumber(FacesContext context, UIComponent component, Object value) {
-		String phoneNumber = (String) value;
-		if (phoneNumber == null || phoneNumber.isEmpty()
-				|| !Pattern.compile("[0-9]{4}-[0-9]{7}").matcher(phoneNumber).matches()) {
-			throw new ValidatorException(
-					new FacesMessage("Please enter a valid phone number of the form: 0123-1234567."));
-		}
+	public void saveItem() {
+		this.trainingsplanItem.setTrainingsplan(this.trainingsplan);
+		this.trainingsplan.getTrainingsplanItemList().add(this.trainingsplanItem);
+
+		this.trainingsplanItem = new TrainingsplanItem();
 	}
-	
-	public void validateBirthDate(FacesContext context, UIComponent component, Object value) {
-		Date birthDate = (Date) value;
-		if (birthDate == null || !birthDate.before(new Date())) {
-			throw new ValidatorException(new FacesMessage("Please enter a valid birth date."));
+
+	public void deleteItem(String uebungName) {
+		this.trainingsplan.getTrainingsplanItemList().removeIf(i -> i.getUebung().getName().equals(uebungName));
+		PrimeFaces.current().ajax().update("list");
+	}
+
+	public List<String> completeText(String query) {
+		String queryLowerCase = query.toLowerCase();
+		List<String> uebungStrList = new ArrayList<>();
+		List<Uebung> uebungList = this.uebungService.getUebungList();
+		for (Uebung uebung : uebungList) {
+			uebungStrList.add(uebung.getName());
 		}
+
+		return uebungStrList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+
+	public Long getTrainingsplanId() {
+		return trainingsplanId;
+	}
+
+	public void setTrainingsplanId(Long trainingsplanId) {
+		this.trainingsplanId = trainingsplanId;
+	}
+
+	public Trainingsplan getTrainingsplan() {
+		return trainingsplan;
+	}
+
+	public void setTrainingsplan(Trainingsplan trainingsplan) {
+		this.trainingsplan = trainingsplan;
+	}
+
+	public TrainingsplanItem getTrainingsplanItem() {
+		return trainingsplanItem;
+	}
+
+	public void setTrainingsplanItem(TrainingsplanItem trainingsplanItem) {
+		this.trainingsplanItem = trainingsplanItem;
 	}
 }
