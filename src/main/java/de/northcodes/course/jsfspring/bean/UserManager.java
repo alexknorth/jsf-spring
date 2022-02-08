@@ -46,7 +46,7 @@ public class UserManager implements Serializable {
     }
 
     public String signOut() {
-        // End the session, removing any session state, including the current user and content of the shopping cart
+        // End the session, removing any session state, including the current user and content
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         currentUser = null;
 
