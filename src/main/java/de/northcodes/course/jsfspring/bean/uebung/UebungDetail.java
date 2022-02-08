@@ -18,7 +18,7 @@ import javax.annotation.ManagedBean;
 @Component
 @ViewScoped
 @ManagedBean
-public class UebungDetails implements Serializable {
+public class UebungDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

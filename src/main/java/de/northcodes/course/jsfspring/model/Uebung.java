@@ -1,5 +1,8 @@
 package de.northcodes.course.jsfspring.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,24 +22,21 @@ public final class Uebung extends AbstractEntity implements Serializable {
     @Column(name = "description", nullable = false)
     private String beschreibung;
     
-    @Column(name = "image_name")
-    private String imageName;
-
     @Column(name = "muskelgruppe", nullable = false)
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Muskelgruppe.class, fetch = FetchType.EAGER)
     private List<Muskelgruppe> beanpruchteMuskelgruppeList;
 
-    @OneToMany(mappedBy = "uebung", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "uebung", cascade = CascadeType.ALL)
     private List<Meilenstein> meilensteinList = new ArrayList<>();
 
     public Uebung() {}
     
-    public Uebung(String name, String beschreibung, List<Muskelgruppe> beanspruchteMuskelgruppeList, String imageName) {
+    public Uebung(String name, String beschreibung, List<Muskelgruppe> beanspruchteMuskelgruppeList) {
         this.name = name;
         this.beschreibung = beschreibung;
         this.beanpruchteMuskelgruppeList = beanspruchteMuskelgruppeList;
-        this.imageName = imageName;
     }
 
     public String getName() {
@@ -54,10 +54,6 @@ public final class Uebung extends AbstractEntity implements Serializable {
         } else {
             return beschreibung.substring(0, Math.min(beschreibung.length(), 100)) + "...";
         }
-    }
-
-    public String getImageName() {
-        return imageName;
     }
 
     public List<Muskelgruppe> getBeanpruchteMuskelgruppeList() {
@@ -83,10 +79,6 @@ public final class Uebung extends AbstractEntity implements Serializable {
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
-    }
-
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
     }
 
     public void setBeanpruchteMuskelgruppeList(List<Muskelgruppe> beanpruchteMuskelgruppeList) {
