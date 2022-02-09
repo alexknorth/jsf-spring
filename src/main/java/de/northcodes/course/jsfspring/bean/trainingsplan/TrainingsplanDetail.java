@@ -65,9 +65,7 @@ public class TrainingsplanDetail implements Serializable {
 			}
 		}
 
-		Trainingsplan saved = this.trainingsplanService.saveTrainingsplan(this.trainingsplan);
-		this.trainingsplan = saved;
-
+		this.trainingsplan = this.trainingsplanService.saveTrainingsplan(this.trainingsplan);
 		this.addMessage(FacesMessage.SEVERITY_INFO, "Speichern erfolgreich.", "Der Trainingsplan '" + this.trainingsplan.getName() + "' wurde erfolgreich gespeichert.");
 	}
 
@@ -116,12 +114,11 @@ public class TrainingsplanDetail implements Serializable {
 	}
 
 	private boolean validateItem() {
-		boolean isOk = true;
-
 		boolean uebungAlreadyExists = this.trainingsplan.getTrainingsplanItemList()
 				.stream()
 				.anyMatch(item -> item.getUebung().getId().equals(this.trainingsplanItem.getUebung().getId()));
 
+		boolean isOk = true;
 		if (this.trainingsplanItem.getUebung() == null) {
 			isOk = false;
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "Keine Übung ausgewählt.", "Es ist keine Übung ausgewählt. Bitte eine auswählen.");
