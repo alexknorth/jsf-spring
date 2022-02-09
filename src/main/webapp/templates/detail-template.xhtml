@@ -6,7 +6,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:composition template="page-template.xhtml">
         <ui:define name="panel-main">
-                <p:menubar>
+            <p:growl id="growl" showDetail="true" />
+
+            <p:menubar>
                     <p:menuitem value="Zurück" icon="pi pi-arrow-left" outcome="#{masteroutcome}"/>
                     <p:menuitem disabled="true">
                         <ui:insert name="detail-name">
@@ -22,10 +24,16 @@
                     </ui:insert>
                 </div>
 
-                <div style="display: block; position: absolute; bottom: 20px">
-                    <p:commandButton value="Speichern" action="#{bean[save]}" update="form"/>
-                    <span style="width: 20px"/>
+                <div style="display: block; position: absolute; bottom: 0; padding: 20px">
+                    <p:commandButton value="Speichern" action="#{bean[save]}" update="form growl"/>
+                    <p:spacer width="20px"/>
                     <p:button value="Abbrechen" styleClass="ui-button-danger" outcome="#{masteroutcome}"/>
+                </div>
+            </h:form>
+
+            <h:form id="second-form">
+                <div style="padding: 20px">
+                    <ui:insert name="detail-second-content"/>
                 </div>
             </h:form>
         </ui:define>

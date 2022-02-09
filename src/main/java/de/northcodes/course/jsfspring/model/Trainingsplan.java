@@ -15,7 +15,7 @@ public class Trainingsplan extends AbstractEntity {
 	@Column(name = "end_datum", nullable = false)
 	private Date endDatum;
 
-	@OneToMany(mappedBy = "trainingsplan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "trainingsplan", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<TrainingsplanItem> trainingsplanItemList;
 
 	public Trainingsplan() {

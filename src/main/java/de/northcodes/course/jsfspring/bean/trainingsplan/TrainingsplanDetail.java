@@ -16,13 +16,11 @@ import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @ViewScoped
@@ -60,30 +58,28 @@ public class TrainingsplanDetail implements Serializable {
 		}
 	}
 
-	public void save() {
+	public void savePlan() {
+		for (TrainingsplanItem item : this.trainingsplan.getTrainingsplanItemList()) {
+			if (item.getId() == null) {
+				this.setMeilenstein(item);
+			}
+		}
+
 		Trainingsplan saved = this.trainingsplanService.saveTrainingsplan(this.trainingsplan);
 		this.trainingsplan = saved;
 
-		for (TrainingsplanItem item : saved.getTrainingsplanItemList()) {
-			this.setMeilenstein(item);
-		}
+		this.addMessage(FacesMessage.SEVERITY_INFO, "Speichern erfolgreich.", "Der Trainingsplan '" + this.trainingsplan.getName() + "' wurde erfolgreich gespeichert.");
 	}
 
 	public void saveItem() {
-		boolean isOk = this.trainingsplan.getTrainingsplanItemList()
-				.stream()
-				.noneMatch(item -> item.getUebung().getId().equals(this.trainingsplanItem.getId()));
+		boolean isOk = this.validateItem();
 
 		if (isOk) {
 			this.trainingsplanItem.setTrainingsplan(this.trainingsplan);
 			this.trainingsplan.getTrainingsplanItemList().add(this.trainingsplanItem);
 
 			this.trainingsplanItem = new TrainingsplanItem();
-		} else {
-			FacesContext.getCurrentInstance().
-					addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Übung existiert bereits.", "Die Übung befindet sich bereits in der Liste. Bitte eine andere auswählen."));
 		}
-
 	}
 
 	public void deleteItem(String uebungName) {
@@ -104,6 +100,8 @@ public class TrainingsplanDetail implements Serializable {
 	public void setMeilensteinAndUpdateGewicht(TrainingsplanItem item) {
 		this.setMeilenstein(item);
 		this.trainingsplanItemService.saveItem(item);
+
+		this.addMessage(FacesMessage.SEVERITY_INFO, "Speichern erfolgreich.", "Das Gewicht wurde aktualisiert und ein Meilenstein für die Übung '" + item.getUebung().getName() + "' gesetzt.");
 	}
 
 	public List<String> completeText(String query) {
@@ -117,12 +115,34 @@ public class TrainingsplanDetail implements Serializable {
 		return uebungStrList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
 	}
 
+	private boolean validateItem() {
+		boolean isOk = true;
+
+		boolean uebungAlreadyExists = this.trainingsplan.getTrainingsplanItemList()
+				.stream()
+				.anyMatch(item -> item.getUebung().getId().equals(this.trainingsplanItem.getUebung().getId()));
+
+		if (this.trainingsplanItem.getUebung() == null) {
+			isOk = false;
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "Keine Übung ausgewählt.", "Es ist keine Übung ausgewählt. Bitte eine auswählen.");
+		} else if (uebungAlreadyExists) {
+			isOk = false;
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "Übung existiert bereits.", "Die Übung befindet sich bereits in der Liste. Bitte eine andere auswählen.");
+		}
+
+		return isOk;
+	}
+
 	public void validateEnddatum(FacesContext context, UIComponent component, Object value) {
 		Date enddatum = (Date) value;
 		if (enddatum.before(this.trainingsplan.getStartDatum())) {
-			throw new ValidatorException(
-					new FacesMessage("Das Enddatum darf nicht vor dem Startdatum liegen."));
+			this.addMessage(FacesMessage.SEVERITY_ERROR, "Enddatum vor Startdatum", "Das Enddatum darf nicht vor dem Startdatum liegen.");
 		}
+	}
+
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+		FacesContext.getCurrentInstance().
+				addMessage(null, new FacesMessage(severity, summary, detail));
 	}
 
 	public Long getTrainingsplanId() {
