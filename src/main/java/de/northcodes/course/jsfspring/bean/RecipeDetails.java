@@ -2,6 +2,7 @@ package de.northcodes.course.jsfspring.bean;
 
 import de.northcodes.course.jsfspring.JsfSpringApplication;
 import de.northcodes.course.jsfspring.model.Recipe;
+import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.RecipeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
@@ -42,7 +41,6 @@ public class RecipeDetails implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-
 
 	private de.northcodes.course.jsfspring.bean.readmodel.Recipe recipe;
 
@@ -80,9 +78,7 @@ public class RecipeDetails implements Serializable {
 		recipe = new de.northcodes.course.jsfspring.bean.readmodel.Recipe();
 		recipeDetails = new de.northcodes.course.jsfspring.model.Recipe();
 
-		log.info("RecipeId {}", recipeId);
 		if (userManager.isSignedIn() && (type.equals("read") || type.equals("create"))) {
-			log.info("Onload called with signed-in User");
 			recipeDetails = recipeService.getRecipeIfUserIsOwner(recipeId, userManager.getCurrentUser());
 			recipe = new de.northcodes.course.jsfspring.bean.readmodel.Recipe(recipeDetails, true);
 		}
@@ -90,6 +86,10 @@ public class RecipeDetails implements Serializable {
 
 	public boolean isEditable() {
 		return !type.equals("read");
+	}
+
+	public void makeEditable() {
+		type = "create";
 	}
 
 	public String submit() {
@@ -101,8 +101,8 @@ public class RecipeDetails implements Serializable {
 	}
 
 	public String delete() {
-		log.info("Deletion for Recipe {} called", recipeDetails.getId());
-		log.info("Deletion for RecipeId {} called", recipeId);
+		User userCreator = recipeDetails.getCreator();
+		userCreator.getRecipes().remove(recipeDetails);
 		recipeService.delete(recipeDetails);
 		return "index";
 	}

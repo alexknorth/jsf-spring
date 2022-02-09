@@ -48,7 +48,6 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipeIfUserIsOwner(long recipeId, User user) {
-        log.info("Size {}", user.getRecipes().size());
         return user.getRecipes().stream().filter(recipe -> recipe.getId() == recipeId).findFirst().orElse(new Recipe());
     }
 }

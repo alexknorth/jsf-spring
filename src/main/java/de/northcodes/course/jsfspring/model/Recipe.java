@@ -31,7 +31,7 @@ public class Recipe implements Serializable {
     @Column(name = "create_date")
     private Date createDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name="fk_creator",referencedColumnName="id",nullable=false,unique=false)
     private User creator;
 

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/templates/page-template.xhtml">
     <f:metadata>
         <f:viewAction action="#{recipeDetails.onload()}"/>
@@ -16,7 +16,7 @@
                 <p>Please enter some details of your meal.</p>
             </ui:fragment>
             <ui:fragment rendered="#{not recipeDetails.editable}">
-                <h1>View your Cooking Recipe</h1>
+                <h1>View and edit your Cooking Recipe</h1>
             </ui:fragment>
             <p><h:outputLink value="index.xhtml">Back to All Recipes</h:outputLink></p>
         </section>
@@ -28,10 +28,10 @@
                 <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
                     <h:outputLabel for="recipeName">Recipe Name</h:outputLabel>
                     <h:inputText id="recipeName"
-                    			 value="#{recipeDetails.recipeDetails.recipeName}"
-                    			 size="30"
-                    			 required="true" 
-                    			 requiredMessage="Please enter a Recipe Name."
+                                 value="#{recipeDetails.recipeDetails.recipeName}"
+                                 size="30"
+                                 required="true"
+                                 requiredMessage="Please enter a Recipe Name."
                                  validatorMessage="Please enter a Recipe Name between 1 and 30 characters long."
                                  disabled="#{!recipeDetails.editable}">
                         <f:validateLength minimum="1" maximum="30"/>
@@ -41,32 +41,43 @@
                     <h:inputText id="portion"
                                  value="#{recipeDetails.recipeDetails.portion}"
                                  size="20"
-                                 style="width: 10%;"
+                                 style="width: 12%;"
                                  disabled="#{!recipeDetails.editable}"/>
 
                     <h:outputLabel for="ingredients">Ingredients</h:outputLabel>
-                    <h:inputText id="ingredients"
-                                   value="#{recipeDetails.recipeDetails.ingredients}"
-                                   size="150"
-                                   style="width: 60%; height: 100px"
-                                 disabled="#{!recipeDetails.editable}"/>
+                    <h:inputTextarea id="ingredients"
+                                     value="#{recipeDetails.recipeDetails.ingredients}"
+                                     size="200"
+                                     cols="40"
+                                     rows="4"
+                                     style="font-family: Arial;"
+                                     disabled="#{!recipeDetails.editable}"/>
 
                     <h:outputLabel for="preparation">Preparation</h:outputLabel>
-                    <h:inputText id="preparation"
-                    			   value="#{recipeDetails.recipeDetails.preparation}"
-                    			   size="200"
-                                   style="width: 60%; height: 100px"
-                                 disabled="#{!recipeDetails.editable}"/>
+                    <h:inputTextarea id="preparation"
+                                     value="#{recipeDetails.recipeDetails.preparation}"
+                                     size="500"
+                                     cols="40"
+                                     rows="4"
+                                     style="font-family: Arial;"
+                                     disabled="#{!recipeDetails.editable}"/>
 
                     <h:outputLabel for="cooking_time">Cooking Time</h:outputLabel>
                     <h:inputText id="cooking_time"
                                  value="#{recipeDetails.recipeDetails.cookingTime}"
                                  size="30"
-                                 style="width: 10%;"
+                                 style="width: 12%;"
                                  disabled="#{!recipeDetails.editable}"/>
 
                     <h:outputText value=""/>
-                    <h:commandButton value="Submit" action="#{recipeDetails.submit}"/>
+
+                    <ui:fragment rendered="#{recipeDetails.editable}">
+                        <h:commandButton value="Submit" action="#{recipeDetails.submit}"/>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not recipeDetails.editable}">
+                        <h:commandButton value="Edit Recipe" action="#{recipeDetails.makeEditable}"/>
+                        <h:commandButton value="Delete Recipe" action="#{recipeDetails.delete}"/>
+                    </ui:fragment>
                 </h:panelGrid>
             </h:form>
         </section>

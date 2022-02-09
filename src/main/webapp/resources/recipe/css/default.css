@@ -61,18 +61,8 @@ body > footer > p {
     margin: 0;
 }
 
-.product-summary {
+.recipe-summary {
     margin: 0.5em 0;
     padding: 0.5em 0;
     clear: both;
-}
-
-.product-summary > img {
-    float: left;
-    padding-right: 1em;
-}
-
-.product-details > img {
-    float: left;
-    padding-right: 1em;
 }

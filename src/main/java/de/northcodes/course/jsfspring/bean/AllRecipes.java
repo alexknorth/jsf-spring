@@ -1,7 +1,5 @@
 package de.northcodes.course.jsfspring.bean;
 
-import de.northcodes.course.jsfspring.bean.readmodel.Recipe;
-import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.RecipeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +25,6 @@ public class AllRecipes {
 	private static final Logger log = LoggerFactory.getLogger(AllRecipes.class);
 
 	public List<de.northcodes.course.jsfspring.bean.readmodel.Recipe> getAllRecipes() {
-		log.info("Get All Other Recipes");
 		if (userManager.isSignedIn()) {
 			return recipeService.getAllRecipes()
 					.stream()

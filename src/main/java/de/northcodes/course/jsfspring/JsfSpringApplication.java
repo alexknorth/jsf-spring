@@ -56,9 +56,9 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
           User userB = userRepository.save(new User("TestB", "test1234", "Tester", "Tester", "test@gmx.de", new Date()));
         // save a few recipes
 
-        repository.save( new Recipe("Spaghetti Bolognese", "5", "spagehetti & soße", "blabla", "20min", new Date(), userA));
-        repository.save( new Recipe("Lasagne", "4", "bla", "bla", "1h", new Date(), userA));
-        repository.save( new Recipe("Ofenkartoffeln", "4", "bla", "bla", "30min", new Date(), userB));
+        repository.save( new Recipe("Spaghetti Bolognese", "4", "400g Spagehetti & Bolognese Soße", "Spaghetti kochen, Bolognese-Soße dazugeben", "20min", new Date(), userA));
+        repository.save( new Recipe("Griechischer Salat", "4", "3 El Olivenöl, 1 kleine Zwiebel, 1 Salatgurke, 2 Tomaten, 50g Schafskäse, Salz und Pfeffer", "Gemüse waschen und schneiden, Öl dazugeben und gut durchmischen, Schafskäse in Würfel schneiden und dazugeben", "25min", new Date(), userA));
+        repository.save( new Recipe("Porridge", "4", "100g Haferflocken, 500ml Milch, 125g Mandeln, Salz und Zimt, ", "Haferflocken, Milch und Salz in einem Topf unter ständigem Rühren erhitzen, 2-3 Minuten leicht köcheln lassen, bis eine breiige Konsistenz entsteht. Mandeln dazugeben", "25min", new Date(), userB));
 
         // fetch all recipes
         log.info("Recipes found with findAll():");
