@@ -1,5 +1,7 @@
 package de.northcodes.course.jsfspring.bean.uebung;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import de.northcodes.course.jsfspring.model.Muskelgruppe;
@@ -39,6 +41,7 @@ public class UebungDetail implements Serializable {
 
     public void save() {
         this.uebungService.saveUebung(this.uebung);
+        this.addMessage(FacesMessage.SEVERITY_INFO, "Speichern erfolgreich", "Die Übung '" + this.uebung.getName() + "' wurde erfolgreich gespeichert.");
     }
 
     public List<Muskelgruppe> completeMuskelgruppe(String query) {
@@ -49,6 +52,11 @@ public class UebungDetail implements Serializable {
                 .stream()
                 .filter(m -> m.getName().toLowerCase().contains(queryLowerCase))
                 .collect(Collectors.toList());
+    }
+
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
     public Long getUebungId() {

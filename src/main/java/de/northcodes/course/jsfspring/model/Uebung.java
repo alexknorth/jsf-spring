@@ -47,15 +47,6 @@ public final class Uebung extends AbstractEntity implements Serializable {
         return beschreibung;
     }
 
-    public String getShortDescription() {
-        int i = beschreibung.indexOf('.');
-        if (i >= 0 && i < 100) {
-            return beschreibung.substring(0, i + 1);
-        } else {
-            return beschreibung.substring(0, Math.min(beschreibung.length(), 100)) + "...";
-        }
-    }
-
     public List<Muskelgruppe> getBeanpruchteMuskelgruppeList() {
         return beanpruchteMuskelgruppeList;
     }
@@ -87,10 +78,5 @@ public final class Uebung extends AbstractEntity implements Serializable {
 
     public void setMeilensteinList(List<Meilenstein> meilensteinList) {
         this.meilensteinList = meilensteinList;
-    }
-
-    @Override
-    public String toString() {
-    	return "Product ID: " + this.getId() + ", name: " + this.getName() +", description: " + this.getBeschreibung();
     }
 }
