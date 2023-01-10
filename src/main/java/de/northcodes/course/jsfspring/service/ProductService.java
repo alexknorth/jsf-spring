@@ -9,4 +9,6 @@ public interface ProductService {
     List<Product> getPopularProducts();
 
     Product getProduct(long id);
+
+    boolean update(long productId, Product product);
 }

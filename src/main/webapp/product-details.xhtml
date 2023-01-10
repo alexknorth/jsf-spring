@@ -19,6 +19,7 @@
                 <p>#{productDetails.product.description}</p>
                 <p>Price: $ #{productDetails.product.price} - <h:commandLink
                         action="#{shoppingCart.addProduct(productDetails.product)}">Add to cart</h:commandLink></p>
+                <h:outputLink value="product-edit.xhtml?productId=#{productDetails.product.id}">Edit</h:outputLink>
                 <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
             </h:form>
         </section>

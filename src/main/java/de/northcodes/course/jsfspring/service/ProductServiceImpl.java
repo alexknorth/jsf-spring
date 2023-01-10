@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import de.northcodes.course.jsfspring.model.Product;
 import de.northcodes.course.jsfspring.persistence.ProductRepository;
 
+import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -29,5 +32,21 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product getProduct(long id) {
 		return productRepository.findById(id).get();
+	}
+
+	@Transactional
+	@Override
+	public boolean update(long productId, Product product) {
+		System.out.println(productId);
+		Optional<Product> maybeProduct = productRepository.findById(productId);
+		if (!maybeProduct.isPresent()){
+			return false;
+		}
+		Product productDB = maybeProduct.get();
+		productDB.setName(product.getName());
+		productDB.setDescription(product.getDescription());
+		productDB.setPrice(product.getPrice());
+		productRepository.save(productDB);
+		return true;
 	}
 }

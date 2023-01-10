@@ -51,6 +51,18 @@ public final class Product implements Serializable {
         return description;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public void setPrice(BigDecimal price){
+        this.price = price;
+    }
+
     public String getShortDescription() {
         int i = description.indexOf('.');
         if (i >= 0 && i < 100) {
