@@ -72,7 +72,7 @@ public class UserDetails implements Serializable {
 	
 	public void validateBirthDate(FacesContext context, UIComponent component, Object value) {
 		Date birthDate = (Date) value;
-		if (birthDate == null || !birthDate.before(new Date())) {
+		if (birthDate == null || birthDate.after(new Date())) {
 			throw new ValidatorException(new FacesMessage("Please enter a valid birth date."));
 		}
 	}

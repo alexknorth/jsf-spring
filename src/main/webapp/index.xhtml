@@ -10,7 +10,11 @@
             <h1>Popular Products</h1>
             <ui:debug hotkey="e"/>
             <h:form>
-                <ui:repeat value="#{popularProducts.products}" var="product">
+                <h:inputText value="#{searchProduct.searchText}" onkeydown="#{searchProduct.getProductsBySearchText()}">
+                </h:inputText>
+                <!--<h:commandButton value="Search" action="#{searchProduct.getProductsBySearchText()}"/>-->
+
+                <ui:repeat value="#{searchProduct.getProductsBySearchText()}" var="product">
                     <ui:decorate template="templates/product-summary.xhtml">
                         <ui:param name="product" value="#{product}"/>
                         <ui:define name="product-description">
