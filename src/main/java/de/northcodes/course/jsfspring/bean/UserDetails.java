@@ -60,20 +60,18 @@ public class UserDetails implements Serializable {
 	private boolean isUserOwnEmailAddress(String emailAddress) {
 		return user.getEmailAddress() != null && user.getEmailAddress().equals(emailAddress);
 	}
-
-	public void validatePhoneNumber(FacesContext context, UIComponent component, Object value) {
-		String phoneNumber = (String) value;
-		if (phoneNumber == null || phoneNumber.isEmpty()
-				|| !Pattern.compile("[0-9]{4}-[0-9]{7}").matcher(phoneNumber).matches()) {
-			throw new ValidatorException(
-					new FacesMessage("Please enter a valid phone number of the form: 0123-1234567."));
-		}
-	}
 	
 	public void validateBirthDate(FacesContext context, UIComponent component, Object value) {
 		Date birthDate = (Date) value;
 		if (birthDate == null || !birthDate.before(new Date())) {
 			throw new ValidatorException(new FacesMessage("Please enter a valid birth date."));
+		}
+	}
+
+	public void validateResolverGroup(FacesContext context, UIComponent component, Object value) {
+		String resolverGroup = (String) value;
+		if (resolverGroup == null) {
+			throw new ValidatorException(new FacesMessage("Please enter a resolver group."));
 		}
 	}
 }
