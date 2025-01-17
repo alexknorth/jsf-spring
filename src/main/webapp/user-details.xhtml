@@ -79,14 +79,14 @@
                     </h:inputText>
 
                     <h:outputLabel for="resolverGroup">Resolver group</h:outputLabel>
-                    <h:inputText id="resolverGroup"
-                                 value="#{userDetails.user.resolverGroup}"
-                                 size="20"
-                                 required="true"
-                                 requiredMessage="Please enter your resolver group."
-                                 validator="#{userDetails.validateResolverGroup}"/>
-
-                    <h:outputText value=""/>
+                    <h:selectOneMenu id="resolverGroup"
+                                     value="#{userDetails.user.resolverGroup}"
+                                     required="true"
+                                     requiredMessage="Please select a resolver group.">
+                    <f:selectItem itemLabel="-- Select --" itemValue="" />
+                    <f:selectItems value="#{userDetails.resolverGroupOptions}" var="group"
+                                   itemLabel="#{group}" itemValue="#{group}" />
+                    </h:selectOneMenu>
                     <h:commandButton value="Submit" action="#{userDetails.submit}"/>
                 </h:panelGrid>
             </h:form>

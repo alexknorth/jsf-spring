@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.bean;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,7 +15,9 @@ import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.UserService;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @ViewScoped
@@ -32,8 +35,19 @@ public class UserDetails implements Serializable {
 
 	private User user;
 
+	private List<String> resolverGroupOptions;
+
+	@PostConstruct
+	public void init(){
+		resolverGroupOptions = Arrays.asList("Frontend Team", "Backend Team", "Network Team", "Onside Team");
+	}
+
 	public User getUser() {
 		return user;
+	}
+
+	public List<String> getResolverGroupOptions(){
+		return resolverGroupOptions;
 	}
 
 	public void onload() {
@@ -68,10 +82,4 @@ public class UserDetails implements Serializable {
 		}
 	}
 
-	public void validateResolverGroup(FacesContext context, UIComponent component, Object value) {
-		String resolverGroup = (String) value;
-		if (resolverGroup == null) {
-			throw new ValidatorException(new FacesMessage("Please enter a resolver group."));
-		}
-	}
 }
