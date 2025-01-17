@@ -1,7 +1,9 @@
 package de.northcodes.course.jsfspring.persistence;
 
+import java.util.Date;
 import java.util.List;
 
+import de.northcodes.course.jsfspring.model.OrderState;
 import org.springframework.data.repository.CrudRepository;
 
 import de.northcodes.course.jsfspring.model.Order;

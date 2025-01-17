@@ -3,14 +3,7 @@ package de.northcodes.course.jsfspring.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = AbstractEntity.SHOP_PREFIX + "order")
@@ -23,6 +16,7 @@ public class Order extends AbstractEntity{
 	@JoinColumn (name="fk_orderer",referencedColumnName="id",nullable=false,unique=false)
 	private User orderer;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "order_state", nullable = false)
 	private OrderState orderState;
 

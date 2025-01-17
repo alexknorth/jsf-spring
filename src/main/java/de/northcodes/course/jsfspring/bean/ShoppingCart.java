@@ -29,10 +29,10 @@ public class ShoppingCart implements Serializable {
     private int totalQuantity = 0;
 
     private BigDecimal totalAmount = BigDecimal.ZERO;
-    
+
     @Autowired
     private UserManager userManager;
-    
+
     @Autowired
     OrderService orderService;
 
@@ -49,7 +49,7 @@ public class ShoppingCart implements Serializable {
     }
 
     public void addProduct(Product product) {
-    	System.out.println("ShoppingCart.addProduct called");
+        System.out.println("ShoppingCart.addProduct called");
         // Find the item for this product, increment quantity and amount if found
         for (ShoppingCartItem item : items) {
             if (item.getProduct().getId() == product.getId()) {
@@ -90,14 +90,14 @@ public class ShoppingCart implements Serializable {
         totalQuantity--;
         totalAmount = totalAmount.subtract(productPrice);
     }
-    
+
     public void orderNow() {
-    	orderService.orderNow(userManager.getCurrentUser(), items);
-    	totalQuantity = 0;
-    	totalAmount = BigDecimal.ZERO;
-    	items.removeAll(items);
+        orderService.orderNow(userManager.getCurrentUser(), items);
+        totalQuantity = 0;
+        totalAmount = BigDecimal.ZERO;
+        items.removeAll(items);
     }
-    
+
     public List<Order> getAllOrders() {
         return orderService.getAllOrdersByUser(userManager.getCurrentUser());
     }

@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
 <ui:composition template="templates/page-template.xhtml">
     <f:metadata>
         <f:viewParam name="productId" value="#{productDetails.productId}"/>
@@ -17,6 +19,13 @@
             <h:form>
                 <h1>#{productDetails.product.name}</h1>
                 <p>#{productDetails.product.description}</p>
+
+                <p:menuButton icon="pi pi-bars" value="Menü" styleClass="burger-menu">
+                    <p:menuitem value="Home" action="home.xhtml"/>
+                    <p:menuitem value="Profil" action="profile.xhtml"/>
+                    <p:menuitem value="Einstellungen" action="settings.xhtml"/>
+                </p:menuButton>
+
                 <p>Price: $ #{productDetails.product.price} - <h:commandLink
                         action="#{shoppingCart.addProduct(productDetails.product)}">Add to cart</h:commandLink></p>
                 <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
