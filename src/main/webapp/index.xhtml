@@ -6,31 +6,20 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Sign In"/>
-    <ui:define name="panel-top">
+    <ui:define name="panel-main">
         <section>
-            <h:form>
-                <ui:fragment rendered="#{not userManager.signedIn}">
-                    <h1>Sign In</h1>
-                    <p>Please enter your username and password:</p>
-                    <h:outputLabel for="username" value="Username:" />
-                    <h:inputText id="username" value="#{userManager.username}" />
+            <ui:fragment rendered="#{not userManager.signedIn}">
+                <h1>Sign In</h1>
+                <p>Please enter your username.</p>
+            </ui:fragment>
 
-                    <h:outputLabel for="password" value="Password:" />
-                    <h:inputSecret id="password" value="#{userManager.password}" />
-
-                    <h:commandButton value="Login" action="#{userManager.signIn}" />
-                    <h:messages />
-                </ui:fragment>
-
-                <ui:fragment rendered="#{userManager.signedIn}">
+            <ui:fragment rendered="#{userManager.signedIn}">
+                <h:form>
                     <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
-                    <p>You are already signed in.</p>
-                    <p>View and update your <h:outputLink value="user-details.xhtml">user details</h:outputLink>
-                        or <h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>.</p>
-                </ui:fragment>
-            </h:form>
-
-            <p><h:outputLink value="user-details.xhtml">Register</h:outputLink></p>
+                    <p>You are already signed in.
+                        Do you want to<h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>?</p>
+                </h:form>
+            </ui:fragment>
         </section>
     </ui:define>
     <ui:define name="panel-main">
