@@ -1,21 +1,19 @@
 package de.northcodes.course.jsfspring.bean;
 
-import javax.annotation.ManagedBean;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
+import java.io.Serializable;
 
 import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.UserService;
 
-import java.io.Serializable;
-
-@SessionScoped
 @Component
-@ManagedBean
+@Scope("session") // Spring-spezifische Annotation für Session-Scoped Beans
 public class UserManager implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,6 +23,9 @@ public class UserManager implements Serializable {
 
     private User currentUser;
 
+    private String username;
+    private String password;
+
     public boolean isSignedIn() {
         return currentUser != null;
     }
@@ -33,24 +34,48 @@ public class UserManager implements Serializable {
         return currentUser;
     }
 
-    public String signIn(String username, String password) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String signIn() {
         User user = userService.getUser(username);
         if (user == null || !password.equals(user.getPassword())) {
-        	 FacesContext.getCurrentInstance().addMessage(null,
-                     new FacesMessage("Please enter a valid username and password."));
-            return "sign-in";
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login", "Invalid username or password."));
+            return null;
         }
 
         currentUser = user;
-        return "index";
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("tickets.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public String signOut() {
-        // End the session, removing any session state, including the current user and content of the shopping cart
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-
-        // Redirect is necessary to let the browser make a new GET request
-        return "index?faces-redirect=true";
+    public void signOut() {
+        currentUser = null;
+        username = null;
+        password = null;
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String save(User user) {
