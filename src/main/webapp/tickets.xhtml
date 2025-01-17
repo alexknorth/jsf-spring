@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> <!-- Hier wird der 'f' Namensraum hinzugefügt -->>
+<ui:composition template="/templates/page-template.xhtml">
+    <ui:param name="pageTitle" value="Popular Products"/>
+    <ui:define name="panel-main">
+        <!-- Vor dem Rendering der Seite prüfen, ob der Benutzer angemeldet ist -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{userManager.checkAccess}" />
+        </f:metadata>
+
+        <section>
+            <h1>Popular Products</h1>
+            <ui:debug hotkey="e"/>
+            <h:form>
+                <ui:repeat value="#{popularProducts.products}" var="product">
+                    <ui:decorate template="templates/product-summary.xhtml">
+                        <ui:param name="product" value="#{product}"/>
+                        <ui:define name="product-description">
+                            <p>#{product.shortDescription}</p>
+                        </ui:define>
+                    </ui:decorate>
+                </ui:repeat>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

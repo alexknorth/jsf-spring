@@ -14,7 +14,7 @@
         <section>
             <h1>Tell us about yourself</h1>
             <p>Please enter some details about yourself.</p>
-            <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
+            <p><h:outputLink value="index.xhtml">Back to Sign-In</h:outputLink></p>
         </section>
     </ui:define>
     <ui:define name="panel-main">
@@ -68,12 +68,6 @@
                                  requiredMessage="Please enter your mail address."
                                  validator="#{userDetails.validateEmail}"/>
 
-                    <h:outputLabel for="phoneNumber">Phone number</h:outputLabel>
-                    <h:inputText id="phoneNumber" 
-                                 value="#{userDetails.user.phoneNumber}" 
-                                 size="20"
-                                 validator="#{userDetails.validatePhoneNumber}"/>
-
                     <h:outputLabel for="birthDate">Birth date</h:outputLabel>
                     <h:inputText id="birthDate" 
                     			 p:type="date"
@@ -84,16 +78,15 @@
                         <f:convertDateTime pattern="yyyy-MM-dd"/>
                     </h:inputText>
 
-                    <h:outputLabel for="subscribedToNewsletter">Subscribe to the newsletter?</h:outputLabel>
-                    <h:selectOneRadio id="subscribedToNewsletter"
-                                      value="#{userDetails.user.subscribedToNewsletter}"
-                                      required="true"
-                                      requiredMessage="Please select if you want to subscribe for the newsletter.">
-                        <f:selectItem itemValue="#{true}" itemLabel="Yes"/>
-                        <f:selectItem itemValue="#{false}" itemLabel="No"/>
-                    </h:selectOneRadio>
-
-                    <h:outputText value=""/>
+                    <h:outputLabel for="resolverGroup">Resolver group</h:outputLabel>
+                    <h:selectOneMenu id="resolverGroup"
+                                     value="#{userDetails.user.resolverGroup}"
+                                     required="true"
+                                     requiredMessage="Please select a resolver group.">
+                    <f:selectItem itemLabel="-- Select --" itemValue="" />
+                    <f:selectItems value="#{userDetails.resolverGroupOptions}" var="group"
+                                   itemLabel="#{group}" itemValue="#{group}" />
+                    </h:selectOneMenu>
                     <h:commandButton value="Submit" action="#{userDetails.submit}"/>
                 </h:panelGrid>
             </h:form>

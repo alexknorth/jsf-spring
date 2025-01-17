@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.bean;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,7 +15,9 @@ import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.UserService;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @ViewScoped
@@ -32,8 +35,19 @@ public class UserDetails implements Serializable {
 
 	private User user;
 
+	private List<String> resolverGroupOptions;
+
+	@PostConstruct
+	public void init(){
+		resolverGroupOptions = Arrays.asList("Frontend Team", "Backend Team", "Network Team", "Onside Team");
+	}
+
 	public User getUser() {
 		return user;
+	}
+
+	public List<String> getResolverGroupOptions(){
+		return resolverGroupOptions;
 	}
 
 	public void onload() {
@@ -60,15 +74,6 @@ public class UserDetails implements Serializable {
 	private boolean isUserOwnEmailAddress(String emailAddress) {
 		return user.getEmailAddress() != null && user.getEmailAddress().equals(emailAddress);
 	}
-
-	public void validatePhoneNumber(FacesContext context, UIComponent component, Object value) {
-		String phoneNumber = (String) value;
-		if (phoneNumber == null || phoneNumber.isEmpty()
-				|| !Pattern.compile("[0-9]{4}-[0-9]{7}").matcher(phoneNumber).matches()) {
-			throw new ValidatorException(
-					new FacesMessage("Please enter a valid phone number of the form: 0123-1234567."));
-		}
-	}
 	
 	public void validateBirthDate(FacesContext context, UIComponent component, Object value) {
 		Date birthDate = (Date) value;
@@ -76,4 +81,5 @@ public class UserDetails implements Serializable {
 			throw new ValidatorException(new FacesMessage("Please enter a valid birth date."));
 		}
 	}
+
 }

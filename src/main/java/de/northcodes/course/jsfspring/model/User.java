@@ -33,14 +33,11 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
     
-    @Column(name = "phone_number", nullable = true)
-    private String phoneNumber;
-    
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
-    
-    @Column(name = "subscribed_to_newsletter", nullable = false)
-    private Boolean subscribedToNewsletter;
+
+	@Column(name = "resolver_group", nullable = false)
+	private String resolverGroup;
 
     @OneToMany(mappedBy = "orderer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<Order>();
@@ -87,14 +84,6 @@ public class User extends AbstractEntity implements Serializable {
 		this.emailAddress = emailAddress;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 	public Date getBirthDate() {
 		return birthDate;
 	}
@@ -103,12 +92,12 @@ public class User extends AbstractEntity implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public Boolean getSubscribedToNewsletter() {
-		return subscribedToNewsletter;
+	public String getResolverGroup() {
+		return resolverGroup;
 	}
 
-	public void setSubscribedToNewsletter(Boolean subscribedToNewsletter) {
-		this.subscribedToNewsletter = subscribedToNewsletter;
+	public void setResolverGroup(String resolverGroup) {
+		this.resolverGroup = resolverGroup;
 	}
 
 	public List<Order> getOrders() {
