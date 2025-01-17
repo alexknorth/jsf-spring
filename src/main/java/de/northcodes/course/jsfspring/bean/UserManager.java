@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import de.northcodes.course.jsfspring.model.User;
 import de.northcodes.course.jsfspring.service.UserService;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 @SessionScoped
@@ -42,11 +43,12 @@ public class UserManager implements Serializable {
         }
 
         currentUser = user;
-        return "index";
+        return "tickets?faces-redirect=true";
     }
 
     public String signOut() {
         // End the session, removing any session state, including the current user and content of the shopping cart
+        currentUser = null;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         // Redirect is necessary to let the browser make a new GET request
@@ -54,8 +56,27 @@ public class UserManager implements Serializable {
     }
 
     public String save(User user) {
-        userService.saveUser(user);
-        currentUser = user;
-        return "index";
+        try {
+            userService.saveUser(user); // Speichert den Benutzer in der Datenbank
+            currentUser = user; // Setzt den aktuellen Benutzer in die Sitzung
+
+            // Weiterleitung zur Tickets-Seite
+            return "tickets?faces-redirect=true";
+        } catch (Exception e) {
+            // Fehlerbehandlung
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error occurred during registration.", null));
+            return null; // Bleibt auf der aktuellen Seite
+        }
+    }
+    public void checkAccess() {
+        if (!isSignedIn()) {
+            try {
+                // Falls der Benutzer nicht eingeloggt ist, leite ihn zur Anmeldeseite weiter
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
