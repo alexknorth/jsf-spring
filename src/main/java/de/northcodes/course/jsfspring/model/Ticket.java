@@ -39,13 +39,13 @@ public final class Ticket extends AbstractEntity implements Serializable{
     @Column(name = "resolver_group", nullable = false)
     private String resolverGroup;
 
-    @Column(name = "solution_txt", nullable = false)
+    @Column(name = "solution_txt", nullable = true)
     private String solutionTxt;
 
-    @Column(name = "solving_date", nullable = false)
+    @Column(name = "solving_date", nullable = true)
     private String solvingDate;
 
-    @Column(name = "solving_time", nullable = false)
+    @Column(name = "solving_time", nullable = true)
     private String solvingTime;
 
     protected Ticket() {}

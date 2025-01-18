@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"> <!-- Hier wird der 'f' Namensraum hinzugefügt -->>
 <ui:composition template="/templates/page-template.xhtml">
-    <ui:param name="pageTitle" value="Popular Products"/>
+    <ui:param name="pageTitle" value="Support Tickets"/>
     <ui:define name="panel-main">
         <!-- Vor dem Rendering der Seite prüfen, ob der Benutzer angemeldet ist -->
         <f:metadata>
@@ -13,16 +13,22 @@
         </f:metadata>
 
         <section>
-            <h1>Popular Products</h1>
+            <h1>Open Tickets</h1>
             <ui:debug hotkey="e"/>
             <h:form>
-                <ui:repeat value="#{popularProducts.products}" var="product">
-                    <ui:decorate template="templates/product-summary.xhtml">
-                        <ui:param name="product" value="#{product}"/>
-                        <ui:define name="product-description">
-                            <p>#{product.shortDescription}</p>
-                        </ui:define>
-                    </ui:decorate>
+                <ui:repeat value="#{ticketManager.tickets}" var="ticket">
+                    <div class="ticket-summary">
+                    <h2>#{ticket.ticketName}</h2>
+                    <p><strong>Status:</strong> #{ticket.status}</p>
+                    <p><strong>Priorität:</strong> #{ticket.prio}</p>
+                    <p><strong>Beschreibung:</strong> #{ticket.description}</p>
+                    <p><strong>Erstellungsdatum:</strong> #{ticket.creationDate} #{ticket.creationTime}</p>
+
+                        <!-- Button/Link zu den Details -->
+                        <h:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}">
+                            <f:param name="ticketId" value="#{ticket.id}" />
+                        </h:commandButton>
+                    </div>
                 </ui:repeat>
             </h:form>
         </section>
