@@ -9,30 +9,39 @@
         <f:viewParam name="ticketId" value="#{ticketDetails.ticketId}"/>
         <f:viewAction action="#{ticketDetails.onload}"/>
     </f:metadata>
+    <!-- Top Panel ersetzen -->
+    <ui:define name="panel-top">
+            <section>
+                <h1>Ticketdetails</h1>
+                <p><h:outputLink value="tickets.xhtml">Go back to Dashboard</h:outputLink></p>
+            </section>
+    </ui:define>
+
     <ui:param name="pageTitle" value="Ticket Details"/>
     <ui:define name="panel-main">
+        <!-- Vor dem Rendering der Seite prüfen, ob der Benutzer angemeldet ist -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{userManager.checkAccess}" />
+        </f:metadata>
         <section class="ticket-details">
             <h:form>
-            <h1>Ticket: #{ticketDetails.ticket.ticketName}</h1>
-            <p><strong>Description:</strong> #{ticketDetails.ticket.description}</p>
-            <p><strong>Status:</strong> #{ticketDetails.ticket.status}</p>
-            <p><strong>Priority:</strong> #{ticketDetails.ticket.prio}</p>
-            <p><strong>Affected System:</strong> #{ticketDetails.ticket.affectedSystem}</p>
-            <p><strong>Resolver Group:</strong> #{ticketDetails.ticket.resolverGroup}</p>
+                <h1>Ticket: #{ticketDetails.ticket.ticketName}</h1>
+                <p><strong>Description:</strong> #{ticketDetails.ticket.description}</p>
+                <p><strong>Status:</strong> #{ticketDetails.ticket.status}</p>
+                <p><strong>Priority:</strong> #{ticketDetails.ticket.prio}</p>
+                <p><strong>Affected System:</strong> #{ticketDetails.ticket.affectedSystem}</p>
+                <p><strong>Resolver Group:</strong> #{ticketDetails.ticket.resolverGroup}</p>
                 <p><strong>Creation Date:</strong> #{ticketDetails.ticket.creationDate}</p>
                 <p><strong>Creation Time:</strong> #{ticketDetails.ticket.creationTime}</p>
 
-
                 <!-- Optional: Lösungstext anzeigen, falls vorhanden -->
-            <p><strong>Solution:</strong> #{ticketDetails.ticket.solutionTxt != null ? ticketDetails.ticket.solutionTxt : 'Solution not available'}</p>
+                <p><strong>Solution:</strong> #{ticketDetails.ticket.solutionTxt != null ? ticketDetails.ticket.solutionTxt : 'Solution not available'}</p>
 
                 <!-- Anzeige von Solving Date und Time -->
                 <p><strong>Solving Date:</strong> #{ticketDetails.ticket.solvingDate != null ? ticketDetails.ticket.solvingDate : 'Not yet solved'}</p>
                 <p><strong>Solving Time:</strong> #{ticketDetails.ticket.solvingTime != null ? ticketDetails.ticket.solvingTime : 'Not yet solved'}</p>
 
-            <!-- Optional: Links zu anderen Seiten -->
-            <p><h:outputLink value="tickets.xhtml">Back to Ticket List</h:outputLink></p>
-        </h:form>
+             </h:form>
         </section>
     </ui:define>
 </ui:composition>

@@ -39,9 +39,6 @@ public class User extends AbstractEntity implements Serializable {
 	@Column(name = "resolver_group", nullable = false)
 	private String resolverGroup;
 
-    @OneToMany(mappedBy = "orderer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Order> orders = new ArrayList<Order>();
-    
     public User() {}
 
 	public String getUsername() {
@@ -98,14 +95,6 @@ public class User extends AbstractEntity implements Serializable {
 
 	public void setResolverGroup(String resolverGroup) {
 		this.resolverGroup = resolverGroup;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
 	}
 
 	public static long getSerialversionuid() {

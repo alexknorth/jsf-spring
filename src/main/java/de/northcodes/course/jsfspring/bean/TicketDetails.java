@@ -58,6 +58,6 @@ public class TicketDetails implements Serializable {
         // Navigiere zur Ticket-Detailseite
         FacesContext facesContext = FacesContext.getCurrentInstance();
         NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-        navigationHandler.handleNavigation(facesContext, null, "ticket-details.xhtml");
+        navigationHandler.handleNavigation(facesContext, null, "ticket-details?faces-redirect=true");
     }
 }
