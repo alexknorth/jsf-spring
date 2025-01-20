@@ -22,7 +22,10 @@
         <ui:fragment rendered="#{userManager.signedIn}">
             <section>
                 <h1>Change your data</h1>
-                <p><h:outputLink value="tickets.xhtml">Go back to Dashboard</h:outputLink></p>
+                <h:form>
+                    <!-- Button für die Anzeige des Ticket Dashboards -->
+                    <h:commandButton value="Go back to Dashboard" action="tickets.xhtml?faces-redirect=true" />
+                </h:form>
             </section>
         </ui:fragment>
     </ui:define>

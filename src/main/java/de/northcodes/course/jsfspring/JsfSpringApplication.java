@@ -41,41 +41,4 @@ public class JsfSpringApplication extends SpringBootServletInitializer {
         srb.setLoadOnStartup(1);
         return srb;
     }
-    
-    
-    //Only need for development initialization purposes
-    @Bean
-    public CommandLineRunner demo(TicketRepository repository) {
-      return (args) -> {
-        // save a few Tickets
-
-          repository.save(new Ticket("TICKET001", "2025-01-01", "10:00", "Network Issue",
-                  "The network in building A is down.", 1, "Open", "Network", "IT Support",
-                  null, null, null));
-          repository.save(new Ticket("TICKET002", "2025-01-02", "11:30", "Email Problem",
-                  "Emails are not being sent from the marketing team.", 2, "Open", "Email", "IT Support",
-                  null, null, null));
-          repository.save(new Ticket("TICKET003", "2025-01-03", "15:45", "Printer Error",
-                  "The main office printer is showing a paper jam error.", 3, "Open", "Hardware", "Facilities",
-                  null, null, null));
-        // fetch all products
-        log.info("Tickets found with findAll():");
-        log.info("-------------------------------");
-        for (Ticket ticket : repository.findAll()) {
-          log.info(ticket.toString());
-        }
-        log.info("");
-
-        // fetch an individual Ticket by ID
-          Ticket ticket = repository.findById(1L).orElse(null);
-          log.info("Ticket found with findById(1L):");
-          log.info("--------------------------------");
-          if (ticket != null) {
-              log.info(ticket.toString());
-          } else {
-              log.info("No ticket found with ID 1");
-          }
-          log.info("");
-      };
-    }
 }

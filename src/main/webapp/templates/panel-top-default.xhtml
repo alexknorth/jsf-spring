@@ -15,8 +15,10 @@
         <ui:fragment rendered="#{userManager.signedIn}">
             <h:form>
                 <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
-                <p>View and update your <h:outputLink value="user-details.xhtml">user details</h:outputLink>
-                    or <h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>.</p>
+                <!-- Button für das Ändern der User Daten -->
+                <h:commandButton value="Update user data" action="user-details.xhtml?faces-redirect=true" />
+                <!-- Button für den Logout -->
+                <h:commandButton value="Sign out" action="#{userManager.signOut}"/>
             </h:form>
         </ui:fragment>
     </section>

@@ -13,7 +13,7 @@ public final class Ticket extends AbstractEntity implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Column(name = "ticket_id", nullable = false)
-    private String ticketId;
+    private long ticketId;
 
     @Column(name = "creation_date", nullable = false)
     private String creationDate;
@@ -48,9 +48,9 @@ public final class Ticket extends AbstractEntity implements Serializable{
     @Column(name = "solving_time", nullable = true)
     private String solvingTime;
 
-    protected Ticket() {}
+    public Ticket() {}
 
-    public Ticket(String ticketId, String creation_date, String creation_time, String ticket_name, String description, Integer prio, String status, String affected_system, String resolver_group, String solution_txt, String solving_date, String solving_time) {
+    public Ticket(long ticketId, String creation_date, String creation_time, String ticket_name, String description, Integer prio, String status, String affected_system, String resolver_group, String solution_txt, String solving_date, String solving_time) {
         this.ticketId = ticketId;
         this.creationDate = creation_date;
         this.creationTime = creation_time;
@@ -65,52 +65,100 @@ public final class Ticket extends AbstractEntity implements Serializable{
         this.solvingTime = solving_time;
     }
 
-    public String getTicketId() {
+    public long getTicketId() {
         return ticketId;
+    }
+
+    public void setTicketId(long ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getCreationDate() {
         return creationDate;
     }
 
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public String getCreationTime() {
         return creationTime;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = creationTime;
     }
 
     public String getTicketName() {
         return ticketName;
     }
 
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPrio() {
         return prio;
     }
 
+    public void setPrio(Integer prio) {
+        this.prio = prio;
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAffectedSystem() {
         return affectedSystem;
     }
 
+    public void setAffectedSystem(String affectedSystem) {
+        this.affectedSystem = affectedSystem;
+    }
+
     public String getResolverGroup() {
         return resolverGroup;
+    }
+
+    public void setResolverGroup(String resolverGroup) {
+        this.resolverGroup = resolverGroup;
     }
 
     public String getSolutionTxt() {
         return solutionTxt;
     }
 
+    public void setSolutionTxt(String solutionTxt) {
+        this.solutionTxt = solutionTxt;
+    }
+
     public String getSolvingDate() {
         return solvingDate;
     }
 
+    public void setSolvingDate(String solvingDate) {
+        this.solvingDate = solvingDate;
+    }
+
     public String getSolvingTime() {
         return solvingTime;
+    }
+
+    public void setSolvingTime(String solvingTime) {
+        this.solvingTime = solvingTime;
     }
 
     @Override

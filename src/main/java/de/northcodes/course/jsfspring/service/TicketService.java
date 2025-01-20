@@ -12,4 +12,7 @@ public interface TicketService {
 
     List<Ticket> getTicketsByStatus(String status);
 
+    void updateTicket(Ticket ticket);
+
+    void createTicket(Ticket ticket);
 }

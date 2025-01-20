@@ -6,6 +6,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"> <!-- Hier wird der 'f' Namensraum hinzugefügt -->>
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Support Tickets"/>
+    <!-- Top Panel ersetzen -->
+    <ui:define name="panel-top">
+        <section>
+            <h1>Dashboard</h1>
+            <h:form>
+                <!-- Button für das Hinzufügen eines neuen Tickets -->
+                <h:commandButton value="Add New Ticket" action="ticket-details.xhtml?faces-redirect=true" />
+                <!-- Button für das Ändern der User Daten -->
+                <h:commandButton value="Change user data" action="user-details.xhtml?faces-redirect=true" />
+                <!-- Button für den Logout -->
+                <h:commandButton value="Sign out" action="#{userManager.signOut}"/>
+            </h:form>
+        </section>
+    </ui:define>
+    <!-- Main Panel füllen -->
     <ui:define name="panel-main">
         <!-- Vor dem Rendering der Seite prüfen, ob der Benutzer angemeldet ist -->
         <f:metadata>
@@ -18,16 +33,18 @@
             <h:form>
                 <ui:repeat value="#{ticketManager.tickets}" var="ticket">
                     <div class="ticket-summary">
-                    <h2>#{ticket.ticketName}</h2>
-                    <p><strong>Status:</strong> #{ticket.status}</p>
-                    <p><strong>Priorität:</strong> #{ticket.prio}</p>
-                    <p><strong>Beschreibung:</strong> #{ticket.description}</p>
-                    <p><strong>Erstellungsdatum:</strong> #{ticket.creationDate} #{ticket.creationTime}</p>
+                        <p><strong>Ticket name:</strong> #{ticket.ticketName}</p>
+                        <p><strong>Status:</strong> #{ticket.status}</p>
+                        <p><strong>Prio:</strong> #{ticket.prio}</p>
+                        <p><strong>Description:</strong> #{ticket.description}</p>
+                        <p><strong>Creation date:</strong> #{ticket.creationDate} #{ticket.creationTime}</p>
 
                         <!-- Button/Link zu den Details -->
+                        <p>
                         <h:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}">
                             <f:param name="ticketId" value="#{ticket.id}" />
                         </h:commandButton>
+                        </p>
                     </div>
                 </ui:repeat>
             </h:form>

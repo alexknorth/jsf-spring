@@ -7,22 +7,6 @@
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Sign In"/>
     <ui:define name="panel-main">
-        <section>
-            <ui:fragment rendered="#{not userManager.signedIn}">
-                <h1>Sign In</h1>
-                <p>Please enter your username.</p>
-            </ui:fragment>
-
-            <ui:fragment rendered="#{userManager.signedIn}">
-                <h:form>
-                    <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
-                    <p>You are already signed in.
-                        Do you want to<h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>?</p>
-                </h:form>
-            </ui:fragment>
-        </section>
-    </ui:define>
-    <ui:define name="panel-main">
         <ui:fragment rendered="#{not userManager.signedIn}">
             <section>
                 <h:messages styleClass="validation-messages"/>

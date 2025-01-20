@@ -9,12 +9,15 @@
         <f:viewParam name="ticketId" value="#{ticketDetails.ticketId}"/>
         <f:viewAction action="#{ticketDetails.onload}"/>
     </f:metadata>
-    <!-- Top Panel ersetzen -->
+
     <ui:define name="panel-top">
-            <section>
-                <h1>Ticketdetails</h1>
-                <p><h:outputLink value="tickets.xhtml">Go back to Dashboard</h:outputLink></p>
-            </section>
+        <section>
+            <h1>Ticketdetails</h1>
+            <h:form>
+                <!-- Button für die Anzeige des Ticket Dashboards -->
+                <h:commandButton value="Go back to Dashboard" action="tickets.xhtml?faces-redirect=true" />
+            </h:form>
+        </section>
     </ui:define>
 
     <ui:param name="pageTitle" value="Ticket Details"/>
@@ -26,22 +29,54 @@
         <section class="ticket-details">
             <h:form>
                 <h1>Ticket: #{ticketDetails.ticket.ticketName}</h1>
-                <p><strong>Description:</strong> #{ticketDetails.ticket.description}</p>
-                <p><strong>Status:</strong> #{ticketDetails.ticket.status}</p>
-                <p><strong>Priority:</strong> #{ticketDetails.ticket.prio}</p>
-                <p><strong>Affected System:</strong> #{ticketDetails.ticket.affectedSystem}</p>
-                <p><strong>Resolver Group:</strong> #{ticketDetails.ticket.resolverGroup}</p>
-                <p><strong>Creation Date:</strong> #{ticketDetails.ticket.creationDate}</p>
-                <p><strong>Creation Time:</strong> #{ticketDetails.ticket.creationTime}</p>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="ticketId" value="TicketID:" />
+                    <h:inputText id="ticketId" value="#{ticketDetails.ticket.ticketId}" />
 
-                <!-- Optional: Lösungstext anzeigen, falls vorhanden -->
-                <p><strong>Solution:</strong> #{ticketDetails.ticket.solutionTxt != null ? ticketDetails.ticket.solutionTxt : 'Solution not available'}</p>
+                    <h:outputLabel for="ticketName" value="Ticket Name:" />
+                    <h:inputText id="ticketName" value="#{ticketDetails.ticket.ticketName}" />
 
-                <!-- Anzeige von Solving Date und Time -->
-                <p><strong>Solving Date:</strong> #{ticketDetails.ticket.solvingDate != null ? ticketDetails.ticket.solvingDate : 'Not yet solved'}</p>
-                <p><strong>Solving Time:</strong> #{ticketDetails.ticket.solvingTime != null ? ticketDetails.ticket.solvingTime : 'Not yet solved'}</p>
+                    <h:outputLabel for="description" value="Description:" />
+                    <h:inputTextarea id="description" value="#{ticketDetails.ticket.description}" rows="4" cols="50" />
 
-             </h:form>
+                    <h:outputLabel for="status" value="Status:" />
+                    <h:inputText id="status" value="#{ticketDetails.ticket.status}" />
+
+                    <h:outputLabel for="priority" value="Priority:" />
+                    <h:inputText id="priority" value="#{ticketDetails.ticket.prio}" />
+
+                    <h:outputLabel for="affectedSystem" value="Affected System:" />
+                    <h:inputText id="affectedSystem" value="#{ticketDetails.ticket.affectedSystem}" />
+
+                    <h:outputLabel for="resolverGroup">Resolver group</h:outputLabel>
+                    <h:selectOneMenu id="resolverGroup"
+                                     value="#{ticketDetails.ticket.resolverGroup}"
+                                     required="true"
+                                     requiredMessage="Please select a resolver group.">
+                    <f:selectItem itemLabel="-- Select --" itemValue="" />
+                    <f:selectItems value="#{userDetails.resolverGroupOptions}" var="group"
+                                   itemLabel="#{group}" itemValue="#{group}" />
+                    </h:selectOneMenu>
+
+                    <h:outputLabel for="creationDate" value="Creation Date:" />
+                    <h:inputText id="creationDate" value="#{ticketDetails.ticket.creationDate}" />
+
+                    <h:outputLabel for="creationTime" value="Creation Time:" />
+                    <h:inputText id="creationTime" value="#{ticketDetails.ticket.creationTime}" />
+
+                    <h:outputLabel for="solutionTxt" value="Solution:" />
+                    <h:inputTextarea id="solutionTxt" value="#{ticketDetails.ticket.solutionTxt}" rows="4" cols="50" />
+
+                    <h:outputLabel for="solvingDate" value="Solving Date:" />
+                    <h:inputText id="solvingDate" value="#{ticketDetails.ticket.solvingDate}" />
+
+                    <h:outputLabel for="solvingTime" value="Solving Time:" />
+                    <h:inputText id="solvingTime" value="#{ticketDetails.ticket.solvingTime}" />
+                </h:panelGrid>
+
+                <!-- Button für das Speichern des Tickets -->
+                <h:commandButton value="Save Ticket" action="#{ticketDetails.saveTicket}" />
+            </h:form>
         </section>
     </ui:define>
 </ui:composition>

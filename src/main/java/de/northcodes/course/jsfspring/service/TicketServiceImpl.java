@@ -39,5 +39,15 @@ public class TicketServiceImpl implements TicketService {
 		log.info("getTicketsByStatus called with status: {}", status);
 		return ticketRepository.findByStatus(status);
 	}
+
+	@Override
+	public void createTicket(Ticket ticket) {
+		ticketRepository.save(ticket);
+	}
+
+	@Override
+	public void updateTicket(Ticket ticket) {
+		ticketRepository.save(ticket);
+	}
 }
 

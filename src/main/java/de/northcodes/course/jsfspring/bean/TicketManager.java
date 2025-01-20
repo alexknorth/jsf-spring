@@ -40,6 +40,7 @@ public class TicketManager {
 		checkAccess();
 	}
 
+	//Methode zum Abrufen der Tickets
 	public List<Ticket> getTickets() {
 		return ticketService.getAllTickets();
 	}

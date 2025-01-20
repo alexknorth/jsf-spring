@@ -44,10 +44,21 @@ public class TicketDetails implements Serializable {
     // Onload-Methode zum Laden der Ticketdetails
     @PostConstruct
     public void onload() {
-        // Stelle sicher, dass FacesContext zu diesem Zeitpunkt verfügbar ist
-        if (FacesContext.getCurrentInstance() != null) {
+        if (ticketId != 0) { // Ticket mit ID existiert
             ticket = ticketService.getTicket(ticketId);
+        } else {
+            ticket = new Ticket(); // Neues Ticket für die Erstellung
         }
+    }
+
+    // Speichern eines Tickets (neu oder bestehend)
+    public String saveTicket() {
+        if (ticketId == 0) { // Neues Ticket
+            ticketService.createTicket(ticket);
+        } else { // Bestehendes Ticket
+            ticketService.updateTicket(ticket);
+        }
+        return "tickets.xhtml?faces-redirect=true"; // Nach dem Speichern zur Ticket-Liste zurück
     }
 
     // Methode zum Laden der Ticketdetails
@@ -58,6 +69,6 @@ public class TicketDetails implements Serializable {
         // Navigiere zur Ticket-Detailseite
         FacesContext facesContext = FacesContext.getCurrentInstance();
         NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-        navigationHandler.handleNavigation(facesContext, null, "ticket-details?faces-redirect=true");
+        navigationHandler.handleNavigation(facesContext, null, "ticket-details.xhtml");
     }
 }
