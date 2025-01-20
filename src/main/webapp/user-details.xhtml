@@ -38,7 +38,12 @@
                     			   value="#{userDetails.user.password}" 
                     			   size="20"
                                    required="true" 
-                                   requiredMessage="Please enter a password."/>
+                                   requiredMessage="Please enter a password.">
+                        <f:ajax event="keyup" listener="#{userDetails.validatePasswordStrength}" render="output"/>
+                    </h:inputSecret>
+                    <h:outputText id="output" value="#{userDetails.passwordStrength}" />
+                    <div>
+                    </div>
 
                     <h:outputLabel for="firstName">First name</h:outputLabel>
                     <h:inputText id="firstName" 

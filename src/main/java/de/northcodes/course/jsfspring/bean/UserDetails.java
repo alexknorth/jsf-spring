@@ -4,6 +4,7 @@ import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 
@@ -32,8 +33,14 @@ public class UserDetails implements Serializable {
 
 	private User user;
 
+	private int passwordStrength = 0;
+
 	public User getUser() {
 		return user;
+	}
+
+	public int getPasswordStrength() {
+		return passwordStrength;
 	}
 
 	public void onload() {
@@ -74,6 +81,14 @@ public class UserDetails implements Serializable {
 		Date birthDate = (Date) value;
 		if (birthDate == null || !birthDate.before(new Date())) {
 			throw new ValidatorException(new FacesMessage("Please enter a valid birth date."));
+		}
+	}
+
+	public void validatePasswordStrength(AjaxBehaviorEvent event) {
+		if (this.user.getPassword().length() > 8) {
+			this.passwordStrength = 5;
+		} else {
+			this.passwordStrength = 1;
 		}
 	}
 }
