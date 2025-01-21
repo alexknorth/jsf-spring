@@ -5,6 +5,9 @@ import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.faces.view.ViewScoped;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import de.northcodes.course.jsfspring.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +51,27 @@ public class TicketDetails implements Serializable {
             ticket = ticketService.getTicket(ticketId);
         } else {
             ticket = new Ticket(); // Neues Ticket für die Erstellung
+
+            // Setze das aktuelle Datum und die aktuelle Uhrzeit
+            ticket.setCreationDate(java.time.LocalDate.now().toString());
+            ticket.setCreationTime(java.time.LocalTime.now().toString());
         }
     }
 
     // Speichern eines Tickets (neu oder bestehend)
     public String saveTicket() {
         if (ticketId == 0) { // Neues Ticket
+            if (ticket.getCreationDate() == null || ticket.getCreationDate().isEmpty()) {
+                ticket.setCreationDate(java.time.LocalDate.now().toString());
+            }
+            if (ticket.getCreationTime() == null || ticket.getCreationTime().isEmpty()) {
+                ticket.setCreationTime(java.time.LocalTime.now().toString());
+            }
             ticketService.createTicket(ticket);
         } else { // Bestehendes Ticket
             ticketService.updateTicket(ticket);
+
+
         }
         return "tickets.xhtml?faces-redirect=true"; // Nach dem Speichern zur Ticket-Liste zurück
     }
