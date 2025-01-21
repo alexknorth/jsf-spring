@@ -101,6 +101,11 @@ public class TicketDetails implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Description is required.", null));
             hasErrors = true;
         }
+        if (ValidationUtils.isFieldEmpty(ticket.getPrio())) {
+            context.addMessage("prio",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Priority is required.", null));
+            hasErrors = true;
+        }
         if (ValidationUtils.isFieldEmpty(ticket.getStatus())) {
             context.addMessage("status",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Status is required.", null));
@@ -115,6 +120,25 @@ public class TicketDetails implements Serializable {
             context.addMessage("resolverGroup",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Resolver Group is required.", null));
             hasErrors = true;
+        }
+
+        // Validierung bei Status "Resolved"
+        if ("Resolved".equals(ticket.getStatus())) {
+            if (ValidationUtils.isFieldEmpty(ticket.getSolutionTxt())) {
+                context.addMessage("solutionTxt",
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solution must not be empty for 'Resolved' status.", null));
+                hasErrors = true;
+            }
+            if (ValidationUtils.isFieldEmpty(ticket.getSolvingDate())) {
+                context.addMessage("solvingDate",
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solving Date must not be empty for 'Resolved' status.", null));
+                hasErrors = true;
+            }
+            if (ValidationUtils.isFieldEmpty(ticket.getSolvingTime())) {
+                context.addMessage("solvingTime",
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solving Time must not be empty for 'Resolved' status.", null));
+                hasErrors = true;
+            }
         }
 
         // Wenn Fehler vorhanden sind, abbrechen
