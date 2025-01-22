@@ -76,3 +76,41 @@ body > footer > p {
     float: left;
     padding-right: 1em;
 }
+
+.right-align {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-top {
+    display: flex;
+    justify-content: space-between; /* Links, Mitte, Rechts */
+    align-items: center;            /* Vertikal ausgerichtet */
+    padding: 0 10px;                /* Abstand innen */
+}
+
+.panel-top h1 {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;                   /* Erzwingt zentrierte Überschrift */
+}
+
+.small-back-button {
+    padding: 5px 10px;              /* Kleinere Größe */
+    font-size: 14px;                /* Kleinere Schriftgröße */
+    display: flex;                  /* Flexbox für Icon und Text */
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.right-menu-button {
+    margin: 10px 0;             /* Abstand rechts */
+}
+

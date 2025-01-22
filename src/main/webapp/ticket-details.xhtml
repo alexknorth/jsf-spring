@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 <ui:composition template="templates/page-template.xhtml">
     <f:metadata>
         <f:event type="preRenderView" listener="#{userManager.checkAccess}" />
@@ -12,10 +13,21 @@
     </f:metadata>
 
     <ui:define name="panel-top">
-        <section>
-            <h1>Ticketdetails</h1>
+        <section class="panel-top">
             <h:form>
-                <h:commandButton value="Go back to Dashboard" action="tickets.xhtml?faces-redirect=true" />
+                <p:button value="Back" icon="pi pi-arrow-left"
+                          outcome="tickets.xhtml?faces-redirect=true"
+                          styleClass="small-back-button" />
+            </h:form>
+
+            <h1>Ticketdetails</h1>
+
+            <h:form>
+                <p:menuButton icon="pi pi-bars" styleClass="right-menu-button">
+                    <p:menuitem value="Add New Ticket" action="ticket-details.xhtml?faces-redirect=true" />
+                    <p:menuitem value="Change user data" action="user-details.xhtml?faces-redirect=true" />
+                    <p:menuitem value="Sign out" action="#{userManager.signOut}" />
+                </p:menuButton>
             </h:form>
         </section>
     </ui:define>

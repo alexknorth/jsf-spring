@@ -3,20 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"> <!-- Hier wird der 'f' Namensraum hinzugefügt -->>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"> <!-- Hier wird der 'f' & 'p' Namensraum hinzugefügt -->>
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Support Tickets"/>
     <!-- Top Panel ersetzen -->
     <ui:define name="panel-top">
-        <section>
+        <section class="panel-top">
             <h1>Dashboard</h1>
             <h:form>
-                <!-- Button für das Hinzufügen eines neuen Tickets -->
-                <h:commandButton value="Add New Ticket" action="ticket-details.xhtml?faces-redirect=true" />
-                <!-- Button für das Ändern der User Daten -->
-                <h:commandButton value="Change user data" action="user-details.xhtml?faces-redirect=true" />
-                <!-- Button für den Logout -->
-                <h:commandButton value="Sign out" action="#{userManager.signOut}"/>
+                    <p:menuButton icon="pi pi-bars" styleClass="right-menu-button">
+                        <!-- Button für das Hinzufügen eines neuen Tickets -->
+                        <p:menuitem value="Add New Ticket" action="ticket-details.xhtml?faces-redirect=true" />
+                        <!-- Button für das Ändern der User Daten -->
+                        <p:menuitem value="Change user data" action="user-details.xhtml?faces-redirect=true" />
+                        <!-- Button für den Logout -->
+                        <p:menuitem value="Sign out" action="#{userManager.signOut}"/>
+                    </p:menuButton>
             </h:form>
         </section>
     </ui:define>
