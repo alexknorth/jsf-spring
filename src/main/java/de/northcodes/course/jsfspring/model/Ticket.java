@@ -76,6 +76,16 @@ public final class Ticket extends AbstractEntity implements Serializable{
         this.creationTime = now.format(timeFormatter);
     }
 
+    // Methode zum Setzen von Lösungsdatum und -zeit
+    public void initializeSolvingDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        this.solvingDate = now.format(dateFormatter);
+        this.solvingTime = now.format(timeFormatter);
+    }
+
     public long getTicketId() {
         return ticketId;
     }

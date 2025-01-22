@@ -17,6 +17,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.ManagedBean;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Component
 @ViewScoped
@@ -125,20 +127,13 @@ public class TicketDetails implements Serializable {
 
         // Validierung bei Status "Resolved"
         if ("Resolved".equals(ticket.getStatus())) {
+
             if (ValidationUtils.isFieldEmpty(ticket.getSolutionTxt())) {
                 context.addMessage("solutionTxt",
                         new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solution must not be empty for 'Resolved' status.", null));
                 hasErrors = true;
-            }
-            if (ValidationUtils.isFieldEmpty(ticket.getSolvingDate())) {
-                context.addMessage("solvingDate",
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solving Date must not be empty for 'Resolved' status.", null));
-                hasErrors = true;
-            }
-            if (ValidationUtils.isFieldEmpty(ticket.getSolvingTime())) {
-                context.addMessage("solvingTime",
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solving Time must not be empty for 'Resolved' status.", null));
-                hasErrors = true;
+            }else if (ticket.getSolvingDate() == null || ticket.getSolvingDate().isEmpty()) {
+                ticket.initializeSolvingDateTime(); // Aufruf der Methode
             }
         }
 
