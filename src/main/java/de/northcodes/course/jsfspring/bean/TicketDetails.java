@@ -133,8 +133,13 @@ public class TicketDetails implements Serializable {
                         new FacesMessage(FacesMessage.SEVERITY_ERROR, "Solution must not be empty for 'Resolved' status.", null));
                 hasErrors = true;
             }else if (ticket.getSolvingDate() == null || ticket.getSolvingDate().isEmpty()) {
-                ticket.initializeSolvingDateTime(); // Aufruf der Methode
+                // Automatisches Setzen von Datum und Uhrzeit
+                ticket.initializeSolvingDateTime();
             }
+        }else {
+            // Status ist nicht mehr "Resolved", daher Datum und Uhrzeit löschen
+            ticket.setSolvingDate(null);
+            ticket.setSolvingTime(null);
         }
 
         // Wenn Fehler vorhanden sind, abbrechen

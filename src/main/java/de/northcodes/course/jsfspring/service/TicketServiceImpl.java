@@ -20,6 +20,13 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private TicketRepository ticketRepository;
 
+	public long getNextTicketId() {
+		Long maxId = ticketRepository.findMaxTicketId(); // Repository-Methode aufrufen, um die höchste ID zu ermitteln
+		long nextId = (maxId != null ? maxId + 1 : 1); // Wenn keine Tickets vorhanden sind, starte bei ID 1
+		log.info("Calculated next Ticket ID: {}", nextId);
+		return nextId;
+	}
+
 	@Override
 	public List<Ticket> getAllTickets() {
 		log.info("getAllTickets called");
@@ -42,12 +49,21 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public void createTicket(Ticket ticket) {
+		// Wenn das Ticket keine Ticket-ID hat, berechne die nächste ID
+		if (ticket.getTicketId() == 0) {
+			ticket.setTicketId(getNextTicketId()); // Weise die nächste ID zu
+		}
 		ticketRepository.save(ticket);
+		log.info("Ticket with ID {} created", ticket.getTicketId());
 	}
 
 	@Override
 	public void updateTicket(Ticket ticket) {
 		ticketRepository.save(ticket);
+		log.info("Ticket with ID {} updated", ticket.getTicketId());
 	}
+
+
 }
+
 
