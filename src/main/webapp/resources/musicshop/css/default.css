@@ -114,3 +114,31 @@ body > footer > p {
     margin: 10px 0;             /* Abstand rechts */
 }
 
+.tickets-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.tickets-table .ui-datatable-header {
+    font-weight: bold;
+    text-align: left;
+}
+
+.view-details-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #007ad9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-details-button:hover {
+    background-color: #005a9e;
+}
+
+.tickets-table .ui-column-filter {
+    padding: 5px;
+    font-size: 14px;
+}

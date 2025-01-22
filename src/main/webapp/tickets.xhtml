@@ -25,32 +25,135 @@
     </ui:define>
     <!-- Main Panel füllen -->
     <ui:define name="panel-main">
-        <!-- Vor dem Rendering der Seite prüfen, ob der Benutzer angemeldet ist -->
         <f:metadata>
             <f:event type="preRenderView" listener="#{userManager.checkAccess}" />
         </f:metadata>
 
         <section>
             <h1>Open Tickets</h1>
-            <ui:debug hotkey="e"/>
-            <h:form>
-                <ui:repeat value="#{ticketManager.tickets}" var="ticket">
-                    <div class="ticket-summary">
-                        <p><strong>Ticket name:</strong> #{ticket.ticketName}</p>
-                        <p><strong>Status:</strong> #{ticket.status}</p>
-                        <p><strong>Prio:</strong> #{ticket.prio}</p>
-                        <p><strong>Description:</strong> #{ticket.description}</p>
-                        <p><strong>Creation date:</strong> #{ticket.creationDate} #{ticket.creationTime}</p>
+            <h:form id="form">
+                <!-- Tabelle -->
+                <p:dataTable value="#{ticketManager.tickets}" var="ticket"
+                             styleClass="tickets-table"
+                             responsiveLayout="scroll"
+                             paginator="true" rows="10"
+                             paginatorPosition="bottom"
+                             rowKey="#{ticket.id}" emptyMessage="No tickets found.">
 
-                        <!-- Button/Link zu den Details -->
-                        <p>
-                            <p:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}"
-                                             styleClass="view-details-button">
-                                <f:param name="ticketId" value="#{ticket.id}" />
-                            </p:commandButton>
-                        </p>
-                    </div>
-                </ui:repeat>
+                    <!-- Ticket ID Spalte -->
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Ticket ID" styleClass="clickable-header"
+                                           onclick="PF('filterDialogTicketId').show()" />
+                        </f:facet>
+                        #{ticket.ticketId}
+                    </p:column>
+
+                    <!-- Ticket Name Spalte -->
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Ticket Name" styleClass="clickable-header"
+                                           onclick="PF('filterDialogTicketName').show()" />
+                        </f:facet>
+                        #{ticket.ticketName}
+                    </p:column>
+
+                    <!-- Status Spalte -->
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Status" styleClass="clickable-header"
+                                           onclick="PF('filterDialogStatus').show()" />
+                        </f:facet>
+                        #{ticket.status}
+                    </p:column>
+
+                    <!-- Priority Spalte -->
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Priority" styleClass="clickable-header"
+                                           onclick="PF('filterDialogPriority').show()" />
+                        </f:facet>
+                        #{ticket.prio}
+                    </p:column>
+
+                    <!-- Creation Date Spalte -->
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Creation Date" styleClass="clickable-header"
+                                           onclick="PF('filterDialogCreationDate').show()" />
+                        </f:facet>
+                        #{ticket.creationDate}
+                    </p:column>
+
+                    <!-- Actions -->
+                    <p:column headerText="Actions">
+                        <p:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}"
+                                         styleClass="view-details-button">
+                            <f:param name="ticketId" value="#{ticket.id}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <!-- Dialoge für Filter -->
+                <!-- Filterdialog für Ticket ID -->
+                <p:dialog header="Filter: Ticket ID" widgetVar="filterDialogTicketId" modal="true" closable="true">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Filter value:" />
+                        <p:inputText value="#{ticketManager.filterTicketId}" />
+
+                        <h:outputLabel />
+                        <p:commandButton value="Apply Filter" action="#{ticketManager.applyFilters()}"
+                                         oncomplete="PF('filterDialogTicketId').hide()" update=":form" />
+                    </h:panelGrid>
+                </p:dialog>
+
+                <!-- Filterdialog für Ticket Name -->
+                <p:dialog header="Filter: Ticket Name" widgetVar="filterDialogTicketName" modal="true" closable="true">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Filter value:" />
+                        <p:inputText value="#{ticketManager.filterTicketName}" />
+
+                        <h:outputLabel />
+                        <p:commandButton value="Apply Filter" action="#{ticketManager.applyFilters()}"
+                                         oncomplete="PF('filterDialogTicketName').hide()" update=":form" />
+                    </h:panelGrid>
+                </p:dialog>
+
+                <!-- Filterdialog für Status -->
+                <p:dialog header="Filter: Status" widgetVar="filterDialogStatus" modal="true" closable="true">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Filter value:" />
+                        <p:inputText value="#{ticketManager.filterStatus}" />
+
+                        <h:outputLabel />
+                        <p:commandButton value="Apply Filter" action="#{ticketManager.applyFilters()}"
+                                         oncomplete="PF('filterDialogStatus').hide()" update=":form" />
+                    </h:panelGrid>
+                </p:dialog>
+
+                <!-- Filterdialog für Priority -->
+                <p:dialog header="Filter: Priority" widgetVar="filterDialogPriority" modal="true" closable="true">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Filter value:" />
+                        <p:inputText value="#{ticketManager.filterPriority}" />
+
+                        <h:outputLabel />
+                        <p:commandButton value="Apply Filter" action="#{ticketManager.applyFilters()}"
+                                         oncomplete="PF('filterDialogPriority').hide()" update=":form" />
+                    </h:panelGrid>
+                </p:dialog>
+
+                <!-- Filterdialog für Creation Date -->
+                <p:dialog header="Filter: Creation Date" widgetVar="filterDialogCreationDate" modal="true" closable="true">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Filter value:" />
+                        <p:inputText value="#{ticketManager.filterCreationDate}" />
+
+                        <h:outputLabel />
+                        <p:commandButton value="Apply Filter" action="#{ticketManager.applyFilters()}"
+                                         oncomplete="PF('filterDialogCreationDate').hide()" update=":form" />
+                    </h:panelGrid>
+                </p:dialog>
             </h:form>
         </section>
     </ui:define>

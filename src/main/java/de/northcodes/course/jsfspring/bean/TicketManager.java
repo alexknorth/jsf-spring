@@ -13,6 +13,7 @@ import de.northcodes.course.jsfspring.service.TicketService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestScoped
 @Component
@@ -24,6 +25,17 @@ public class TicketManager {
 
 	@Autowired
 	private UserManager userManager; // Zugriff auf den angemeldeten Benutzer
+
+	// Filterwerte
+	private String filterTicketId;
+	private String filterTicketName;
+	private String filterStatus;
+	private String filterPriority;
+	private String filterCreationDate;
+
+	// Gefilterte Liste
+	private List<Ticket> filteredTickets;
+
 
 	public void checkAccess() {
 		if (!userManager.isSignedIn()) {
@@ -38,10 +50,67 @@ public class TicketManager {
 	// Event-Listener, der vor dem Rendering der Seite aufgerufen wird
 	public void onPreRenderView(PreRenderViewEvent event) {
 		checkAccess();
+		applyFilters();
 	}
 
-	//Methode zum Abrufen der Tickets
+	// Methode zum Abrufen der Tickets
 	public List<Ticket> getTickets() {
-		return ticketService.getAllTickets();
+		if (filteredTickets == null) {
+			return ticketService.getAllTickets(); // Originale Liste zurückgeben
+		}
+		return filteredTickets;
+	}
+
+	// Methode zum Anwenden der Filter
+	public void applyFilters() {
+		List<Ticket> allTickets = ticketService.getAllTickets(); // Hole die gesamte Ticketliste
+		filteredTickets = allTickets.stream()
+				.filter(ticket -> filterTicketId == null || filterTicketId.isEmpty() || ticket.getId().toString().contains(filterTicketId))
+				.filter(ticket -> filterTicketName == null || filterTicketName.isEmpty() || ticket.getTicketName().contains(filterTicketName))
+				.filter(ticket -> filterStatus == null || filterStatus.isEmpty() || ticket.getStatus().equals(filterStatus))
+				.filter(ticket -> filterPriority == null || filterPriority.isEmpty() || ticket.getPrio().equals(filterPriority))
+				.filter(ticket -> filterCreationDate == null || filterCreationDate.isEmpty() || ticket.getCreationDate().equals(filterCreationDate))
+				.collect(Collectors.toList());
+	}
+
+	// Getter und Setter für die Filterwerte
+	public String getFilterTicketId() {
+		return filterTicketId;
+	}
+
+	public void setFilterTicketId(String filterTicketId) {
+		this.filterTicketId = filterTicketId;
+	}
+
+	public String getFilterTicketName() {
+		return filterTicketName;
+	}
+
+	public void setFilterTicketName(String filterTicketName) {
+		this.filterTicketName = filterTicketName;
+	}
+
+	public String getFilterStatus() {
+		return filterStatus;
+	}
+
+	public void setFilterStatus(String filterStatus) {
+		this.filterStatus = filterStatus;
+	}
+
+	public String getFilterPriority() {
+		return filterPriority;
+	}
+
+	public void setFilterPriority(String filterPriority) {
+		this.filterPriority = filterPriority;
+	}
+
+	public String getFilterCreationDate() {
+		return filterCreationDate;
+	}
+
+	public void setFilterCreationDate(String filterCreationDate) {
+		this.filterCreationDate = filterCreationDate;
 	}
 }
