@@ -15,4 +15,6 @@ public interface TicketService {
     void updateTicket(Ticket ticket);
 
     void createTicket(Ticket ticket);
+
+    long getNextTicketId(); // Neue Methode für inkrementelle ID
 }
