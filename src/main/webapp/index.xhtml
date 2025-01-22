@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Sign In"/>
     <ui:define name="panel-main">
@@ -23,7 +24,7 @@
                                        required="true" requiredMessage="Please enter your password."/>
 
                         <h:outputText value=""/>
-                        <h:commandButton value="Submit" action="#{signIn.submit}"/>
+                        <p:commandButton value="Submit" action="#{signIn.submit}"/>
                     </h:panelGrid>
                 </h:form>
             </section>
