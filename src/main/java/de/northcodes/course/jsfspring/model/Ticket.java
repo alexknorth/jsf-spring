@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Entity
@@ -63,6 +65,15 @@ public final class Ticket extends AbstractEntity implements Serializable{
         this.solutionTxt = solution_txt;
         this.solvingDate = solving_date;
         this.solvingTime = solving_time;
+    }
+    // Methode zum Setzen von Datum und Uhrzeit bei der Erstellung
+    public void initializeCreationDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        this.creationDate = now.format(dateFormatter);
+        this.creationTime = now.format(timeFormatter);
     }
 
     public long getTicketId() {

@@ -72,6 +72,7 @@ public class TicketDetails implements Serializable {
             ticket = ticketService.getTicket(ticketId);
         } else {
             ticket = new Ticket(); // Neues Ticket für die Erstellung
+            ticket.initializeCreationDateTime(); // Setzt das aktuelle Datum und die Uhrzeit
         }
         // Initialisiere Ticket-Dropdown
         priorityOptions = Arrays.asList("Low", "Medium", "High", "Critical");
