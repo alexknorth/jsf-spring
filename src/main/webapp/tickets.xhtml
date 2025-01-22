@@ -44,9 +44,10 @@
 
                         <!-- Button/Link zu den Details -->
                         <p>
-                        <h:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}">
-                            <f:param name="ticketId" value="#{ticket.id}" />
-                        </h:commandButton>
+                            <p:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}"
+                                             styleClass="view-details-button">
+                                <f:param name="ticketId" value="#{ticket.id}" />
+                            </p:commandButton>
                         </p>
                     </div>
                 </ui:repeat>

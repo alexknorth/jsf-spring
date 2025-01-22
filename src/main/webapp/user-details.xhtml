@@ -17,7 +17,13 @@
             <section>
                 <h1>Tell us about yourself</h1>
                 <p>Please enter some details about yourself.</p>
-                <p><h:outputLink value="index.xhtml">Back to Sign-In</h:outputLink></p>
+                <p>
+                <h:form>
+                    <p:button value="Back" icon="pi pi-arrow-left"
+                              outcome="tickets.xhtml?faces-redirect=true"
+                              styleClass="small-back-button" />
+                </h:form>
+                </p>
             </section>
         </ui:fragment>
         <ui:fragment rendered="#{userManager.signedIn}">
@@ -110,7 +116,7 @@
                     <f:selectItems value="#{userDetails.resolverGroupOptions}" var="group"
                                    itemLabel="#{group}" itemValue="#{group}" />
                     </h:selectOneMenu>
-                    <h:commandButton value="Submit" action="#{userDetails.submit}"/>
+                    <p:commandButton value="Submit" action="#{userDetails.submit}"/>
                 </h:panelGrid>
             </h:form>
         </section>
