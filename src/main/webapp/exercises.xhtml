@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <script>
+        function clearSearchField() {
+            // ID des Input-Felds basierend auf der Form-ID und Component-ID
+            const searchInput = document.getElementById("form:search");
+            if (searchInput) {
+                searchInput.value = ""; // Suchfeld leeren
+
+                // Optional: Keyup-Event simulieren, um das Backend zu benachrichtigen
+                searchInput.dispatchEvent(new Event('input'));
+
+                // Trigger zur Aktualisierung des Ajax-Listeners
+                PrimeFaces.ajax.AjaxRequest({
+                    source: searchInput.id,
+                    update: '@form'
+                });
+            }
+        }
+    </script>
+</h:head>
+
+<ui:composition template="/templates/page-template.xhtml">
+    <ui:param name="pageTitle" value="Available Exercises"/>
+    <ui:define name="panel-main">
+        <section class="p-6 bg-white rounded-lg shadow-md">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-3xl font-bold">Available Exercises</h1>
+                <h:form id="form">
+                    <!-- Such-Button -->
+                    <p:button icon="pi pi-search" styleClass="rounded-button ui-button-success ui-button-flat" />
+
+                    <!-- Suchfeld -->
+                    <p:inputText id="search"
+                                 value="#{exerciseBean.searchQuery}"
+                                 placeholder="Search exercises..."
+                                 class="p-2 border rounded-md w-64">
+                        <f:ajax event="input"
+                                execute="@this"
+                                listener="#{exerciseBean.searchExercises}"
+                                render="exerciseList" />
+                    </p:inputText>
+
+                    <!-- Löschen-Button
+                    <p:button icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat"
+                              onclick="clearSearchField(); return false;"/> -->
+                    <p:commandButton value="Reset Code" update="search" process="@this"
+                                     action="#{exerciseBean.reset}"
+                                     styleClass="mr-2 ui-button-outlined"/>
+                </h:form>
+            </div>
+            <!-- Ergebnisse -->
+            <h:form id="exerciseForm">
+                <ui:repeat value="#{exerciseBean.exercises}" var="exercise" id="exerciseList">
+                    <section class="exercise-summary p-4 border-b border-gray-300">
+                        <h2 class="text-xl font-bold">#{exercise.name}</h2>
+                        <p class="text-lg italic text-gray-700">#{exercise.description}</p>
+                        <p class="text-gray-600">
+                            <span class="underline">Muscle Group:</span> #{exercise.muscleGroup}
+                        </p>
+                        <p class="text-gray-600">
+                            <span class="underline">Category:</span> #{exercise.category}
+                        </p>
+                        <p class="text-gray-600">
+                            <span class="underline">Bodyweight Exercise:</span> #{exercise.bodyweightExercise ? 'Yes' : 'No'}
+                        </p>
+                    </section>
+                </ui:repeat>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

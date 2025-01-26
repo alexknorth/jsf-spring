@@ -10,13 +10,6 @@
         <f:viewAction action="#{userDetails.onload}"/>
     </f:metadata>
     <ui:param name="pageTitle" value="User Details"/>
-    <ui:define name="panel-top">
-        <section>
-            <h1>Tell us about yourself</h1>
-            <p>Please enter some details about yourself.</p>
-            <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
-        </section>
-    </ui:define>
     <ui:define name="panel-main">
         <section>
             <h:messages styleClass="validation-messages"/>
@@ -103,6 +96,27 @@
                 </h:panelGrid>
             </h:form>
         </section>
+    </ui:define>
+    <ui:define name="top-message">
+        <div class="welcome-message text-center mt-4">
+            <ui:fragment rendered="#{not userManager.signedIn}">
+                <h1 class="text-2xl font-bold text-gray-800">Welcome, visitor!</h1>
+                <p>
+                    Please <h:outputLink value="sign-in.xhtml" class="text-blue-600">sign in</h:outputLink>
+                    or <h:outputLink value="user-details.xhtml" class="text-blue-600">register</h:outputLink>.
+                </p>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{userManager.signedIn}">
+                <h:form>
+                    <h1 class="text-2xl font-bold text-gray-800">Welcome, #{userManager.currentUser.firstName}!</h1>
+                    <p>
+                        View and update your <h:outputLink value="user-details.xhtml" class="text-blue-600">user details</h:outputLink>
+                        or <h:commandLink action="#{userManager.signOut}" class="text-blue-600">sign out</h:commandLink>.
+                    </p>
+                </h:form>
+            </ui:fragment>
+        </div>
     </ui:define>
 </ui:composition>
 </html>
