@@ -10,13 +10,15 @@ server:
 ### H2 ###"
 spring:
   datasource:
-    url: jdbc:h2:mem:productdb
+    url: jdbc:h2:file:~/persistent;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
     username: sa
-    password: password
+    password: test
     driverClassName: org.h2.Driver
   jpa:
     spring:
       jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+        ddl-auto: update
     properties:
       hibernate:
         show_sql: true

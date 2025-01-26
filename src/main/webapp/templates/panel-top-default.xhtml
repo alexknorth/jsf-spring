@@ -2,35 +2,49 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<ui:composition>
-    <section>
-       
-        <ui:fragment rendered="#{not userManager.signedIn}">
-            <h1>Welcome, visitor!</h1>
-            <p>Please <h:outputLink value="sign-in.xhtml">sign in</h:outputLink>
-                or <h:outputLink value="user-details.xhtml">register</h:outputLink>.</p>
-        </ui:fragment>
 
-        <ui:fragment rendered="#{userManager.signedIn}">
+<h:body>
+    <section class="top-panel bg-gray-100 p-6 shadow-md">
+        <!-- Burger Menu -->
+        <div class="menu-wrapper flex justify-between items-center">
             <h:form>
-                <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
-                <p>View and update your <h:outputLink value="user-details.xhtml">user details</h:outputLink>
-                    or <h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>.</p>
+                <p:menuButton icon="pi pi-bars" value="Menu" styleClass="burger-menu bg-blue-500 text-white rounded-md p-2">
+                    <p:menuitem value="Profile" outcome="index.xhtml?faces-redirect=true"
+                                style="#{menuBean.isActive('profile') ? 'font-weight: bold; color: red;' : ''}" />
+                    <p:menuitem value="Recent" outcome="index.xhtml?faces-redirect=true"
+                                style="#{menuBean.isActive('recent') ? 'font-weight: bold; color: red;' : ''}" />
+                    <p:menuitem value="Workout" outcome="user-details.xhtml?faces-redirect=true"
+                                style="#{menuBean.isActive('workout') ? 'font-weight: bold; color: red;' : ''}" />
+                    <p:menuitem value="Exercises" outcome="sign-in.xhtml?faces-redirect=true"
+                                style="#{menuBean.isActive('exercises') ? 'font-weight: bold; color: red;' : ''}" />
+                    <p:menuitem value="Index" outcome="index.xhtml?faces-redirect=true"
+                                style="#{menuBean.isActive('index') ? 'font-weight: bold; color: #f46049;' : ' color: red;'}" />
+                </p:menuButton>
             </h:form>
-        </ui:fragment>
-       
-         <ui:fragment rendered="#{shoppingCart.totalQuantity == 0}">
-            <p>Your <h:outputLink value="shopping-cart.xhtml">shopping cart</h:outputLink> is empty.</p>
-        </ui:fragment>
-        <ui:fragment rendered="#{shoppingCart.totalQuantity == 1}">
-            <p>Your <h:outputLink value="shopping-cart.xhtml">shopping cart</h:outputLink> contains one item.</p>
-        </ui:fragment>
-        <ui:fragment rendered="#{shoppingCart.totalQuantity > 1}">
-            <p>Your <h:outputLink value="shopping-cart.xhtml">shopping cart</h:outputLink>
-                contains #{shoppingCart.totalQuantity} items.
-            </p>
-        </ui:fragment>
+        </div>
+
+        <!-- Welcome Message -->
+        <div class="welcome-message text-center mt-4">
+            <ui:fragment rendered="#{not userManager.signedIn}">
+                <h1 class="text-2xl font-bold text-gray-800">Welcome, visitor!</h1>
+                <p>
+                    Please <h:outputLink value="sign-in.xhtml" class="text-blue-600">sign in</h:outputLink>
+                    or <h:outputLink value="user-details.xhtml" class="text-blue-600">register</h:outputLink>.
+                </p>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{userManager.signedIn}">
+                <h:form>
+                    <h1 class="text-2xl font-bold text-gray-800">Welcome, #{userManager.currentUser.firstName}!</h1>
+                    <p>
+                        View and update your <h:outputLink value="user-details.xhtml" class="text-blue-600">user details</h:outputLink>
+                        or <h:commandLink action="#{userManager.signOut}" class="text-blue-600">sign out</h:commandLink>.
+                    </p>
+                </h:form>
+            </ui:fragment>
+        </div>
     </section>
-</ui:composition>
+</h:body>
 </html>
