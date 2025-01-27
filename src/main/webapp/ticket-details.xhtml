@@ -36,89 +36,66 @@
     <ui:define name="panel-main">
         <section class="ticket-details">
             <h:form>
-                <!-- Globale Fehlermeldungen -->
-                <h:messages style="color: red;" />
+                <!-- Fehlermeldungs Styling -->
+                <h:messages styleClass="validation-messages"/>
 
                 <h1>Ticket: #{ticketDetails.ticket.ticketName}</h1>
+                <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
 
-                <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="ticketId" value="Ticket ID:" />
                     <h:outputText id="ticketId" value="#{ticketDetails.ticket.ticketId}" />
-                    <h:message for="ticketId" style="color: red;" />
 
-                    <!-- Ticket Name -->
                     <h:outputLabel for="ticketName" value="Ticket Name:" />
                     <h:inputText id="ticketName" value="#{ticketDetails.ticket.ticketName}" />
-                    <h:message for="ticketName" style="color: red;" />
 
-                    <!-- Description -->
                     <h:outputLabel for="description" value="Description:" />
                     <h:inputTextarea id="description" value="#{ticketDetails.ticket.description}" rows="4" cols="50" />
-                    <h:message for="description" style="color: red;" />
 
-                    <!-- Status -->
                     <h:outputLabel for="status" value="Status:" />
                     <h:selectOneMenu id="status" value="#{ticketDetails.ticket.status}">
                         <f:selectItem itemLabel="-- Select --" itemValue="" />
                         <f:selectItems value="#{ticketDetails.statusOptions}" var="status"
                                        itemLabel="#{status}" itemValue="#{status}" />
                     </h:selectOneMenu>
-                    <h:message for="status" style="color: red;" />
 
-                    <!-- Priority -->
                     <h:outputLabel for="priority" value="Priority:" />
                     <h:selectOneMenu id="priority" value="#{ticketDetails.ticket.prio}">
                         <f:selectItem itemLabel="-- Select --" itemValue="" />
                         <f:selectItems value="#{ticketDetails.priorityOptions}" var="prio"
                                        itemLabel="#{prio}" itemValue="#{prio}" />
                     </h:selectOneMenu>
-                    <h:message for="priority" style="color: red;" />
 
-                    <!-- Affected System -->
                     <h:outputLabel for="affectedSystem" value="Affected System:" />
                     <h:selectOneMenu id="affectedSystem" value="#{ticketDetails.ticket.affectedSystem}">
                         <f:selectItem itemLabel="-- Select --" itemValue="" />
                         <f:selectItems value="#{ticketDetails.affectedSystemOptions}" var="system"
                                        itemLabel="#{system}" itemValue="#{system}" />
                     </h:selectOneMenu>
-                    <h:message for="affectedSystem" style="color: red;" />
 
-                    <!-- Resolver Group -->
                     <h:outputLabel for="resolverGroup" value="Resolver Group:" />
                     <h:selectOneMenu id="resolverGroup" value="#{ticketDetails.ticket.resolverGroup}">
                         <f:selectItem itemLabel="-- Select --" itemValue="" />
                         <f:selectItems value="#{userDetails.resolverGroupOptions}" var="group"
                                        itemLabel="#{group}" itemValue="#{group}" />
                     </h:selectOneMenu>
-                    <h:message for="resolverGroup" style="color: red;" />
 
-                    <!-- Creation Date -->
                     <h:outputLabel for="creationDate" value="Creation Date:" />
                     <h:outputText id="creationDate" value="#{ticketDetails.ticket.creationDate}" />
-                    <h:message for="creationDate" style="color: red;" />
 
-                    <!-- Creation Time -->
                     <h:outputLabel for="creationTime" value="Creation Time:" />
                     <h:outputText id="creationTime" value="#{ticketDetails.ticket.creationTime}" />
-                    <h:message for="creationTime" style="color: red;" />
 
-                    <!-- Solution -->
                     <h:outputLabel for="solutionTxt" value="Solution:" />
                     <h:inputTextarea id="solutionTxt" value="#{ticketDetails.ticket.solutionTxt}" rows="4" cols="50" />
-                    <h:message for="solutionTxt" style="color: red;" />
 
-                    <!-- Solving Date -->
                     <h:outputLabel for="solvingDate" value="Solving Date:" />
                     <h:outputText id="solvingDate" value="#{ticketDetails.ticket.solvingDate}" />
-                    <h:message for="solvingDate" style="color: red;" />
 
-                    <!-- Solving Time -->
                     <h:outputLabel for="solvingTime" value="Solving Time:" />
                     <h:outputText id="solvingTime" value="#{ticketDetails.ticket.solvingTime}" />
-                    <h:message for="solvingTime" style="color: red;" />
                 </h:panelGrid>
 
-                <p:commandButton value="Save Ticket" action="#{ticketDetails.saveTicket}" />
+                <p:commandButton value="Save Ticket" action="#{ticketDetails.saveTicket}" update="@form"/>
 
             </h:form>
         </section>

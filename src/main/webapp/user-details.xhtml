@@ -48,9 +48,9 @@
     </ui:define>
     <ui:define name="panel-main">
         <section>
-            <h:messages styleClass="validation-messages"/>
             <h:form>
-                <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
+                <h:messages styleClass="validation-messages"/>
+                    <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
                     <h:outputLabel for="username">Username</h:outputLabel>
                     <h:inputText id="username" 
                     			 value="#{userDetails.user.username}" 
@@ -116,7 +116,7 @@
                     <f:selectItems value="#{userDetails.resolverGroupOptions}" var="group"
                                    itemLabel="#{group}" itemValue="#{group}" />
                     </h:selectOneMenu>
-                    <p:commandButton value="Submit" action="#{userDetails.submit}"/>
+                    <p:commandButton value="Submit" action="#{userDetails.submit}" update="@form"/>
                 </h:panelGrid>
             </h:form>
         </section>
