@@ -32,7 +32,7 @@
         <section>
             <h1>Open Tickets</h1>
             <h:form id="form">
-                <!-- Tabelle -->
+                <!-- Tabellenerstellung, ruft TicketManager.getTickets() auf -->
                 <p:dataTable value="#{ticketManager.tickets}" var="ticket"
                              styleClass="tickets-table"
                              responsiveLayout="scroll"

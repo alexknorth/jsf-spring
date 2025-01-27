@@ -49,7 +49,6 @@ public class TicketManager {
 	// Event-Listener, der vor dem Rendering der Seite aufgerufen wird
 	public void onPreRenderView(PreRenderViewEvent event) {
 		checkAccess();
-		applyFilters();
 	}
 
 	// Methode zum Abrufen der Tickets
