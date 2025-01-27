@@ -8,7 +8,7 @@
 <ui:composition template="templates/page-template.xhtml">
     <f:metadata>
         <f:event type="preRenderView" listener="#{userManager.checkAccess}" />
-        <f:viewParam name="ticketId" value="#{ticketDetails.ticketId}"/>
+        <f:viewParam name="id" value="#{ticketDetails.ticket.id}"/>
         <f:viewAction action="#{ticketDetails.onload}"/>
     </f:metadata>
 
@@ -42,8 +42,8 @@
                 <h1>Ticket: #{ticketDetails.ticket.ticketName}</h1>
                 <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
 
-                    <h:outputLabel for="ticketId" value="Ticket ID:" />
-                    <h:outputText id="ticketId" value="#{ticketDetails.ticket.ticketId}" />
+                    <h:outputLabel for="id" value="Ticket ID:" />
+                    <h:outputText id="id" value="#{ticketDetails.ticket.id}" />
 
                     <h:outputLabel for="ticketName" value="Ticket Name:" />
                     <h:inputText id="ticketName" value="#{ticketDetails.ticket.ticketName}" />

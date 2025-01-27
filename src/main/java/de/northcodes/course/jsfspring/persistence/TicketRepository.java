@@ -1,14 +1,11 @@
 package de.northcodes.course.jsfspring.persistence;
 
 import de.northcodes.course.jsfspring.model.Ticket;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
-public interface TicketRepository extends CrudRepository<Ticket, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Long>, JpaSpecificationExecutor <Ticket> {
     List<Ticket> findByStatus(String status);
-
-    // Methode zur Bestimmung der maximalen Ticket-ID
-    @Query("SELECT MAX(t.ticketId) FROM Ticket t")
-    Long findMaxTicketId(); // Abfrage für die höchste Ticket-ID
 }

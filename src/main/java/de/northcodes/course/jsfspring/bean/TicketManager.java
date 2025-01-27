@@ -13,7 +13,6 @@ import de.northcodes.course.jsfspring.service.TicketService;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequestScoped
 @Component
@@ -27,7 +26,7 @@ public class TicketManager {
 	private UserManager userManager; // Zugriff auf den angemeldeten Benutzer
 
 	// Filterwerte
-	private String filterTicketId;
+	private Long filterTicketId;
 	private String filterTicketName;
 	private String filterStatus;
 	private String filterPriority;
@@ -63,22 +62,23 @@ public class TicketManager {
 
 	// Methode zum Anwenden der Filter
 	public void applyFilters() {
-		List<Ticket> allTickets = ticketService.getAllTickets(); // Hole die gesamte Ticketliste
-		filteredTickets = allTickets.stream()
-				.filter(ticket -> filterTicketId == null || filterTicketId.isEmpty() || ticket.getId().toString().contains(filterTicketId))
-				.filter(ticket -> filterTicketName == null || filterTicketName.isEmpty() || ticket.getTicketName().contains(filterTicketName))
-				.filter(ticket -> filterStatus == null || filterStatus.isEmpty() || ticket.getStatus().equals(filterStatus))
-				.filter(ticket -> filterPriority == null || filterPriority.isEmpty() || ticket.getPrio().equals(filterPriority))
-				.filter(ticket -> filterCreationDate == null || filterCreationDate.isEmpty() || ticket.getCreationDate().equals(filterCreationDate))
-				.collect(Collectors.toList());
+		filteredTickets = ticketService.getFilteredTickets(filterTicketId, filterTicketName, filterStatus, filterPriority, filterCreationDate);
+//		List<Ticket> allTickets = ticketService.getAllTickets(); // Hole die gesamte Ticketliste
+//		filteredTickets = allTickets.stream()
+//				.filter(ticket -> filterTicketId == null || filterTicketId.isEmpty() || ticket.getId().toString().contains(filterTicketId))
+//				.filter(ticket -> filterTicketName == null || filterTicketName.isEmpty() || ticket.getTicketName().contains(filterTicketName))
+//				.filter(ticket -> filterStatus == null || filterStatus.isEmpty() || ticket.getStatus().equals(filterStatus))
+//				.filter(ticket -> filterPriority == null || filterPriority.isEmpty() || ticket.getPrio().equals(filterPriority))
+//				.filter(ticket -> filterCreationDate == null || filterCreationDate.isEmpty() || ticket.getCreationDate().equals(filterCreationDate))
+//				.collect(Collectors.toList());
 	}
 
 	// Getter und Setter für die Filterwerte
-	public String getFilterTicketId() {
+	public Long getFilterTicketId() {
 		return filterTicketId;
 	}
 
-	public void setFilterTicketId(String filterTicketId) {
+	public void setFilterTicketId(Long filterTicketId) {
 		this.filterTicketId = filterTicketId;
 	}
 

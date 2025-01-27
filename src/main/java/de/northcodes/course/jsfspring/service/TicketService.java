@@ -8,7 +8,7 @@ public interface TicketService {
 
     List<Ticket> getAllTickets();
 
-    Ticket getTicket(long id);
+    Ticket getTicket(Long id);
 
     List<Ticket> getTicketsByStatus(String status);
 
@@ -16,5 +16,6 @@ public interface TicketService {
 
     void createTicket(Ticket ticket);
 
-    long getNextTicketId(); // Neue Methode für inkrementelle ID
+    List<Ticket> getFilteredTickets(Long filterTicketId, String filterTicketName, String filterStatus,
+                                    String filterPriority, String filterCreationDate);
 }

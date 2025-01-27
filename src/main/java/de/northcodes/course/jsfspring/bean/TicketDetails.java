@@ -30,22 +30,12 @@ public class TicketDetails implements Serializable {
     @Autowired
     private TicketService ticketService;
 
-    private long ticketId;
-
     private Ticket ticket;
 
     // Listen für Ticket-Dropdown
     private List<String> priorityOptions;
     private List<String> statusOptions;
     private List<String> affectedSystemOptions;
-
-    public long getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
-    }
 
     public Ticket getTicket() {
         return ticket;
@@ -70,17 +60,33 @@ public class TicketDetails implements Serializable {
     // Onload-Methode zum Laden der Ticketdetails
     @PostConstruct
     public void onload() {
-        if (ticketId != 0) { // Ticket mit ID existiert
-            ticket = ticketService.getTicket(ticketId);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null) {
+            String newParam = context.getExternalContext().getRequestParameterMap().get("new");
+
+            if ("true".equals(newParam)) {
+                ticket = new Ticket(); // Neues leeres Ticket initialisieren
+                ticket.initializeCreationDateTime(); // Setze das aktuelle Datum und die Uhrzeit
+            } else if (ticket != null && ticket.getId() != null) {
+                // Bestehendes Ticket laden, wenn eine ID existiert
+                ticket = ticketService.getTicket(ticket.getId());
+            } else {
+                // Standardmäßig ein neues Ticket erstellen, falls kein Zustand gesetzt wurde
+                ticket = new Ticket();
+                ticket.initializeCreationDateTime();
+            }
         } else {
-            ticket = new Ticket(); // Neues Ticket für die Erstellung
-            ticket.initializeCreationDateTime(); // Setzt das aktuelle Datum und die Uhrzeit
+            // Kein FacesContext verfügbar – Initialisierung ohne JSF-Kontext
+            ticket = new Ticket();
+            ticket.initializeCreationDateTime();
         }
-        // Initialisiere Ticket-Dropdown
+
+        // Initialisiere die Dropdown-Werte
         priorityOptions = Arrays.asList("Low", "Medium", "High", "Critical");
         statusOptions = Arrays.asList("Open", "Work in progress", "Suspended", "Resolved");
         affectedSystemOptions = Arrays.asList("System A", "System B", "System C", "System D");
     }
+
 
 
     // Speichern eines Tickets (neu oder bestehend)
@@ -89,11 +95,6 @@ public class TicketDetails implements Serializable {
         boolean hasErrors = false;
 
         // Validierung der Pflichtfelder
-        if (ValidationUtils.isFieldEmpty(ticket.getTicketId())) {
-            context.addMessage("ticketId",
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ticket ID is required.", null));
-            hasErrors = true;
-        }
         if (ValidationUtils.isFieldEmpty(ticket.getTicketName())) {
             context.addMessage("ticketName",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ticket Name is required.", null));
@@ -148,19 +149,30 @@ public class TicketDetails implements Serializable {
         }
 
         // Speichern des Tickets
-        if (ticketId == 0) {
+        if (ticket.getId() == null || ticket.getId() == 0) { // Null-Check hinzufügen
             ticketService.createTicket(ticket);
         } else {
             ticketService.updateTicket(ticket);
         }
+
+        // **Neu Laden der Ticket-Liste**
+        FacesContext.getCurrentInstance().getExternalContext()
+                .getApplicationMap()
+                .put("ticketManager", null); // Cache leeren
+
+        // Zur Übersicht zurückleiten
         return "tickets.xhtml?faces-redirect=true";
     }
 
 
     // Methode zum Laden der Ticketdetails
     public void loadTicketDetails(Long ticketId) {
-        // Verwende ticketService, um die Ticketdetails basierend auf der ID zu laden
-        ticket = ticketService.getTicket(ticketId);
+        if (ticketId == null) {
+            ticket = new Ticket(); // Neues leeres Ticket initialisieren
+            ticket.initializeCreationDateTime();
+        } else {
+            ticket = ticketService.getTicket(ticketId); // Bestehendes Ticket laden
+        }
 
         // Navigiere zur Ticket-Detailseite
         FacesContext facesContext = FacesContext.getCurrentInstance();

@@ -2,6 +2,7 @@ package de.northcodes.course.jsfspring.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,9 +14,6 @@ import java.time.format.DateTimeFormatter;
 public final class Ticket extends AbstractEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
-
-    @Column(name = "ticket_id", nullable = false)
-    private long ticketId;
 
     @Column(name = "creation_date", nullable = false)
     private String creationDate;
@@ -52,8 +50,7 @@ public final class Ticket extends AbstractEntity implements Serializable{
 
     public Ticket() {}
 
-    public Ticket(long ticketId, String creation_date, String creation_time, String ticket_name, String description, String prio, String status, String affected_system, String resolver_group, String solution_txt, String solving_date, String solving_time) {
-        this.ticketId = ticketId;
+    public Ticket(String creation_date, String creation_time, String ticket_name, String description, String prio, String status, String affected_system, String resolver_group, String solution_txt, String solving_date, String solving_time) {
         this.creationDate = creation_date;
         this.creationTime = creation_time;
         this.ticketName = ticket_name;
@@ -84,14 +81,6 @@ public final class Ticket extends AbstractEntity implements Serializable{
 
         this.solvingDate = now.format(dateFormatter);
         this.solvingTime = now.format(timeFormatter);
-    }
-
-    public long getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
     }
 
     public String getCreationDate() {
@@ -185,7 +174,7 @@ public final class Ticket extends AbstractEntity implements Serializable{
     @Override
     public String toString() {
         return "Ticket{" +
-                "ticket_id='" + ticketId + '\'' +
+                "ticket_id='" + getId() + '\'' +
                 ", ticket_name='" + ticketName + '\'' +
                 ", status='" + status + '\'' +
                 ", prio=" + prio +

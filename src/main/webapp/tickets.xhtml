@@ -14,7 +14,7 @@
             <h:form>
                     <p:menuButton icon="pi pi-bars" styleClass="right-menu-button">
                         <!-- Button für das Hinzufügen eines neuen Tickets -->
-                        <p:menuitem value="Add New Ticket" action="ticket-details.xhtml?faces-redirect=true" />
+                        <p:menuitem value="Add New Ticket" action="ticket-details.xhtml?faces-redirect=true&amp;new=true" />
                         <!-- Button für das Ändern der User Daten -->
                         <p:menuitem value="Change user data" action="user-details.xhtml?faces-redirect=true" />
                         <!-- Button für den Logout -->
@@ -46,7 +46,7 @@
                             <p:outputLabel value="Ticket ID" styleClass="clickable-header"
                                            onclick="PF('filterDialogTicketId').show()" />
                         </f:facet>
-                        #{ticket.ticketId}
+                        #{ticket.id}
                     </p:column>
 
                     <!-- Ticket Name Spalte -->
@@ -89,7 +89,7 @@
                     <p:column headerText="Actions">
                         <p:commandButton value="View Details" action="#{ticketDetails.loadTicketDetails(ticket.id)}"
                                          styleClass="view-details-button">
-                            <f:param name="ticketId" value="#{ticket.id}" />
+                            <f:param name="Id" value="#{ticket.id}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
