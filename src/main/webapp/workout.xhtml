@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Workout</title>
+</h:head>
+
+<ui:composition template="/templates/page-template.xhtml">
+    <ui:param name="pageTitle" value="Start a Workout!"/>
+
+    <ui:define name="panel-main">
+        <section class="p-6 bg-white rounded-lg shadow-md">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-3xl font-bold">Start a Workout!</h1>
+            </div>
+
+            <p class="text-gray-700 text-lg mb-6">Quick Start</p>
+
+            <!-- Button to create an empty workout -->
+            <div class="flex justify-center items-center mb-6">
+                <p:commandButton value="Create Empty Workout"
+                                 action="#{workoutBean.createEmptyWorkout}"
+                                 styleClass="w-2/3 text-xl font-bold border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" />
+            </div>
+
+            <!-- Templates Section -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Templates</h2>
+                <p:commandButton value="Create Template"
+                                 outcome="profile.xhtml?faces-redirect=true"
+                                 styleClass="py-2 px-4 text-white bg-green-600 rounded-lg hover:bg-green-700 transition duration-200"/>
+            </div>
+
+            <!-- Template Buttons -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <ui:repeat value="#{templateBean.templates}" var="template">
+                    <p:commandButton value="#{template.name}"
+                                     action="#{templateBean.selectTemplate(template)}"
+                                     styleClass="py-4 px-6 text-lg font-semibold border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" />
+                </ui:repeat>
+            </div>
+        </section>
+    </ui:define>
+
+    <ui:define name="top-message">
+        <div class="welcome-message text-center mt-4">
+            <ui:fragment rendered="#{not userManager.signedIn}">
+                <h1 class="text-3xl font-bold">Welcome, visitor!</h1>
+                <p>
+                    Please <h:outputLink value="sign-in.xhtml">sign in</h:outputLink>
+                    or <h:outputLink value="profile.xhtml">register</h:outputLink>.
+                </p>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{userManager.signedIn}">
+                <h1 class="text-3xl font-bold">Welcome, #{userManager.currentUser.firstName}!</h1>
+                <p>
+                    Choose between starting an empty Workout or an existing template. Otherwise, create a new template.
+                </p>
+            </ui:fragment>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

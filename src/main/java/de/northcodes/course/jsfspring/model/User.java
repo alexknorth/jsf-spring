@@ -42,6 +42,18 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "subscribed_to_newsletter", nullable = false)
     private Boolean subscribedToNewsletter;
 
+	@Column(name = "height", nullable = false)
+	private Boolean height;
+
+	@Column(name = "weight", nullable = false)
+	private Boolean weight;
+
+	@Column(name = "bodyfat_percentage", nullable = false)
+	private Boolean bodyfatPercentage;
+
+	@Column(name = "calorie_intake", nullable = false)
+	private Boolean calorieIntake;
+
     @OneToMany(mappedBy = "orderer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<Order>();
     
@@ -122,6 +134,37 @@ public class User extends AbstractEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-    
-  
+
+
+    public Boolean getHeight() {
+        return height;
+    }
+
+    public void setHeight(Boolean height) {
+        this.height = height;
+    }
+
+    public Boolean getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Boolean weight) {
+        this.weight = weight;
+    }
+
+    public Boolean getBodyfatPercentage() {
+        return bodyfatPercentage;
+    }
+
+    public void setBodyfatPercentage(Boolean bodyfatPercentage) {
+        this.bodyfatPercentage = bodyfatPercentage;
+    }
+
+    public Boolean getCalorieIntake() {
+        return calorieIntake;
+    }
+
+    public void setCalorieIntake(Boolean calorieIntake) {
+        this.calorieIntake = calorieIntake;
+    }
 }
