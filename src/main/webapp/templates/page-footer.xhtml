@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 <ui:composition>
     <footer class="text-xl text-center mt-1">
-        <p>Stay Strong!</p>
+        <p class="mb-4">Stay Strong and Relentless</p>
+        <div class="space-x-4">
+            <p:linkButton value="Impressum" outcome="profile.xhtml" styleClass="ui-button-outlined ui-button-secondary"/>
+            <p:linkButton value="Kontakt" outcome="profile.xhtml" styleClass="ui-button-outlined ui-button-secondary"/>
+        </div>
     </footer>
 </ui:composition>
 </html>

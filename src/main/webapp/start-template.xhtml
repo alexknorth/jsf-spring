@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Workout Erstellen</title>
+</h:head>
+
+<ui:composition template="/templates/page-template.xhtml">
+    <ui:param name="pageTitle" value="Workout Erstellen"/>
+
+    <ui:define name="panel-main">
+        <section class="p-6 bg-white rounded-lg shadow-md">
+            <!-- Header mit Workout-Name, Timer & Beenden-Button -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">#{templateBean.selectedTemplate.name}</h2>
+                <p:outputLabel id="timer" value="#{workoutBean.timer}" class="text-lg font-semibold"/>
+                <p:commandButton value="Beenden" styleClass="ui-button-raised ui-button-success"
+                                 oncomplete="PF('endWorkoutDialog').show(); return false;"/>
+            </div>
+
+            <!-- Wiederholte Liste von Übungen -->
+            <ui:repeat value="#{workoutBean.exercises}" var="exercise">
+                <div class="mb-6 p-4 bg-gray-100 rounded shadow">
+                    <h3 class="text-lg font-semibold text-blue-600">#{exercise.name}</h3>
+                    <p:dataTable value="#{exercise.sets}" var="set" class="mt-2">
+                        <p:column headerText="Set">
+                            <h:outputText value="#{set.number}"/>
+                        </p:column>
+                        <p:column headerText="Before">
+                            <h:outputText value="#{set.previousWeight} kg x #{set.previousReps}"/>
+                        </p:column>
+                        <p:column headerText="KG">
+                            <p:inputText value="#{set.weight}" size="5"/>
+                        </p:column>
+                        <p:column headerText="Reps">
+                            <p:inputText value="#{set.reps}" size="5"/>
+                        </p:column>
+                        <p:column headerText="✔">
+                            <p:selectBooleanCheckbox value="#{set.completed}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="+ Set" actionListener="#{workoutBean.addSet(exercise)}"
+                                     update="workoutForm" styleClass="mt-2 bg-gray-300 px-3 py-1 rounded"/>
+                </div>
+            </ui:repeat>
+
+            <!-- Übung hinzufügen und Workout abbrechen Buttons -->
+            <div class="flex flex-col space-y-4">
+                <p:commandButton value="Übung hinzufügen" styleClass="ui-button-raised"
+                                 onclick="PF('addExerciseDialog').show(); return false;"/>
+                <p:commandButton value="Workout abbrechen" actionListener="#{workoutBean.cancelWorkout}"
+                                 styleClass="ui-button-raised ui-button-danger"/>
+            </div>
+        </section>
+
+        <!-- Dialog für Übung hinzufügen -->
+        <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">
+            <h:form>
+                <p:outputLabel value="Hier kannst du eine Übung auswählen..."/>
+                <!-- TODO: Übungsauswahl -->
+            </h:form>
+        </p:dialog>
+
+        <!-- Dialog für Workout beenden -->
+        <p:dialog header="Workout beenden" widgetVar="endWorkoutDialog" modal="true" width="400">
+            <h:form>
+                <p>Willst du das Workout wirklich beenden?</p>
+                <p:commandButton value="Ja" actionListener="#{workoutBean.finishWorkout}"
+                                 styleClass="bg-green-500 text-white px-4 py-2 rounded"/>
+                <p:commandButton value="Nein" onclick="PF('endWorkoutDialog').hide(); return false;"
+                                 styleClass="bg-gray-500 text-white px-4 py-2 rounded ml-2"/>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+</html>

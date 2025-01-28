@@ -16,7 +16,7 @@ import java.util.List;
 @SessionScoped
 public class MenuBean implements Serializable {
 
-    private static final Logger log = LoggerFactory.getLogger(JsfSpringApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(MenuBean.class);
     private final List<MenuItem> menuItems = new ArrayList<>();
     private String activePage;
 
@@ -34,6 +34,7 @@ public class MenuBean implements Serializable {
 
     public String getActivePage() {
         activePage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        log.info(activePage);
         return activePage;
     }
 
@@ -42,7 +43,7 @@ public class MenuBean implements Serializable {
     }
 
     public boolean isActive(String page) {
-        //getActivePage();
+        String test = this.getActivePage();
         return page.equals("index");
     }
 }

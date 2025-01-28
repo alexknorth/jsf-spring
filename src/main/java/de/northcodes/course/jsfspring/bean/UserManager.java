@@ -42,7 +42,7 @@ public class UserManager implements Serializable {
         }
 
         currentUser = user;
-        return "index";
+        return "workout";
     }
 
     public String signOut() {
@@ -50,12 +50,12 @@ public class UserManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         // Redirect is necessary to let the browser make a new GET request
-        return "index?faces-redirect=true";
+        return "sign-in?faces-redirect=true";
     }
 
     public String save(User user) {
         userService.saveUser(user);
         currentUser = user;
-        return "index";
+        return "workout";
     }
 }

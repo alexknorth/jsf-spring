@@ -14,36 +14,61 @@
 
     <ui:define name="panel-main">
         <section class="p-6 bg-white rounded-lg shadow-md">
+            <!-- Title Section -->
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-3xl font-bold">Start a Workout!</h1>
             </div>
 
             <p class="text-gray-700 text-lg mb-6">Quick Start</p>
 
-            <!-- Button to create an empty workout -->
-            <div class="flex justify-center items-center mb-6">
-                <p:commandButton value="Create Empty Workout"
-                                 action="#{workoutBean.createEmptyWorkout}"
-                                 styleClass="w-2/3 text-xl font-bold border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" />
+            <!-- Create Empty Workout Button -->
+            <div class="flex justify-center items-center mb-12">
+                <p:linkButton value="Create Empty Workout"
+                              action="#{workoutBean.createEmptyWorkout}"
+                              outcome="exercises.xhtml?faces-redirect=true"
+                              styleClass="w-2/3 text-xl font-bold border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" />
             </div>
 
             <!-- Templates Section -->
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">Templates</h2>
-                <p:commandButton value="Create Template"
-                                 outcome="profile.xhtml?faces-redirect=true"
-                                 styleClass="py-2 px-4 text-white bg-green-600 rounded-lg hover:bg-green-700 transition duration-200"/>
+                <p:linkButton
+                        value="Create Template"
+                        action="#{templateBean.createTemplate}"
+                        outcome="exercises.xhtml?faces-redirect=true"
+                        styleClass="ui-button-success"/>
+
             </div>
 
             <!-- Template Buttons -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <ui:repeat value="#{templateBean.templates}" var="template">
-                    <p:commandButton value="#{template.name}"
-                                     action="#{templateBean.selectTemplate(template)}"
-                                     styleClass="py-4 px-6 text-lg font-semibold border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition duration-200" />
+                    <p:commandButton
+                            value="#{template.name}"
+                            actionListener="#{templateBean.setSelectedTemplate(template)}"
+                            update="templateDetails"
+                            oncomplete="PF('templateDialog').show();"
+                            styleClass="ui-button-raised ui-button-secondary ui-button-flat"
+                    />
+
                 </ui:repeat>
             </div>
         </section>
+
+        <!-- Dialog for Template Details-->
+        <p:dialog id="templateDetails" widgetVar="templateDialog" modal="true" header="Template Details" closable="true" resizable="false">
+            <h3 class="text-2xl font-bold mb-4">Template: #{templateBean.selectedTemplate.name}</h3>
+            <p class="text-gray-700 mb-6">Description: #{templateBean.selectedTemplate.description}</p>
+            <div class="flex justify-end gap-4">
+                <p:commandButton value="Edit Template"
+                                 action="#{templateBean.editTemplate}"
+                                 styleClass="py-2 px-4 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition duration-200" />
+                <p:linkButton value="Start Template"
+                                 action="#{templateBean.startTemplate}"
+                                 outcome="start-template.xhtml?faces-redirect=true"
+                                 styleClass="py-2 px-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200" />
+            </div>
+        </p:dialog>
     </ui:define>
 
     <ui:define name="top-message">
@@ -57,7 +82,7 @@
             </ui:fragment>
 
             <ui:fragment rendered="#{userManager.signedIn}">
-                <h1 class="text-3xl font-bold">Welcome, #{userManager.currentUser.firstName}!</h1>
+                <h1 class="text-3xl font-bold">Welcome, #{userManager.currentUser.firstName}</h1>
                 <p>
                     Choose between starting an empty Workout or an existing template. Otherwise, create a new template.
                 </p>

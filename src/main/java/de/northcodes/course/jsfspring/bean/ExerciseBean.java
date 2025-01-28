@@ -5,9 +5,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 
+import de.northcodes.course.jsfspring.JsfSpringApplication;
 import de.northcodes.course.jsfspring.model.Exercise;
 import de.northcodes.course.jsfspring.persistence.ExerciseRepository;
 import org.primefaces.PrimeFaces;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @Component
 @ViewScoped
 public class ExerciseBean implements Serializable {
+    private static final Logger log = LoggerFactory.getLogger(ExerciseBean.class);
 
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -34,6 +38,7 @@ public class ExerciseBean implements Serializable {
     }
 
     public void searchExercises(AjaxBehaviorEvent event) {
+        this.log.info("searchExercises: " + searchQuery);
         if (searchQuery == null || searchQuery.isBlank()) {
             exercises = (List<Exercise>) exerciseRepository.findAll();
         } else {
@@ -44,6 +49,7 @@ public class ExerciseBean implements Serializable {
     public List<Exercise> getExercises() {
         return exercises;
     }
+
 
     public String getSearchQuery() {
         return searchQuery;

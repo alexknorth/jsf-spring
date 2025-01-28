@@ -1,20 +1,23 @@
 package de.northcodes.course.jsfspring.bean;
 
+import de.northcodes.course.jsfspring.JsfSpringApplication;
 import de.northcodes.course.jsfspring.model.Template;
 import de.northcodes.course.jsfspring.persistence.TemplateRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 
-@ManagedBean
 @SessionScoped
 @Component
 public class TemplateBean implements Serializable {
-
+    private static final Logger log = LoggerFactory.getLogger(JsfSpringApplication.class);
     @Autowired
     private TemplateRepository templateRepository;
 
@@ -42,5 +45,16 @@ public class TemplateBean implements Serializable {
 
     public void setSelectedTemplate(Template selectedTemplate) {
         this.selectedTemplate = selectedTemplate;
+        log.info("Selected template: {}", selectedTemplate.getName());
     }
+
+    public void editTemplate() {
+        //
+    }
+
+    public void startTemplate() {
+        //
+    }
+
+
 }
