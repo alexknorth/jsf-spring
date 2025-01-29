@@ -1,10 +1,14 @@
 package de.northcodes.course.jsfspring.bean;
 
 import de.northcodes.course.jsfspring.model.*;
+import de.northcodes.course.jsfspring.persistence.SetRepository;
 import de.northcodes.course.jsfspring.persistence.WorkoutExerciseRepository;
 import de.northcodes.course.jsfspring.persistence.WorkoutRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -24,25 +28,35 @@ public class WorkoutBean implements Serializable {
     @Autowired
     private WorkoutExerciseRepository workoutExerciseRepository;
 
+    @Autowired
+    private SetRepository setRepository;
+
+    Logger log = LoggerFactory.getLogger(WorkoutBean.class);
+
     public WorkoutBean() {
         workout = new Workout();
         workout.setStartedAt(LocalDateTime.now());
         exercises = new ArrayList<>();
     }
 
+    @Transactional
     public void initializeWorkout(Template template) {
         workout = new Workout();
         workout.setTemplate(template);
         workout.setStartedAt(LocalDateTime.now());
-
+        this.log.info("test");
         // Find the latest workout with the given template
         Workout latestWorkout = workoutRepository.findTopByTemplateOrderByIdDesc(template);
 
         if (latestWorkout != null) {
-            exercises = workoutRepository.findWorkoutExercisesByWorkoutId(latestWorkout.getId());
+            exercises = workoutExerciseRepository.findByWorkoutId(latestWorkout.getId());
             for (WorkoutExercise exercise : exercises) {
-                List<Set> sets = workoutExerciseRepository.findSetsByWorkoutExerciseId(exercise.getId());
-                exercise.setSets(sets);
+                List<Set> sets = setRepository.findByWorkoutExerciseId(exercise.getId());
+                exercise.getSets().clear();
+                exercise.getSets().addAll(sets);
+            }
+            for (WorkoutExercise exercise : exercises) {
+                log.info("Exercise: {}", exercise.getExercise().getName());
             }
         } else {
             exercises = new ArrayList<>();
@@ -82,6 +96,7 @@ public class WorkoutBean implements Serializable {
     }
 
     public List<WorkoutExercise> getExercises() {
+        this.log.info("exercises: " + exercises);
         return exercises;
     }
 

@@ -13,90 +13,70 @@
     <ui:param name="pageTitle" value="Workout Erstellen"/>
 
     <ui:define name="panel-main">
-        <section class="p-6 bg-white rounded-lg shadow-md">
-            <!-- Header mit Workout-Name, Timer & Beenden-Button -->
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Template: #{templateBean.selectedTemplate.name}</h2>
-                <!-- Timer -->
-                <p:commandButton value="Beenden" styleClass="ui-button-raised ui-button-success"
-                                 oncomplete="PF('endWorkoutDialog').show(); return false;"/>
-            </div>
-
-            <!-- Wiederholte Liste von Übungen -->
-            <ui:repeat value="#{workoutBean.exercises}" var="workoutExercise">
-                <div class="mb-6 p-4 bg-gray-100 rounded shadow">
-                    <h3 class="text-lg font-semibold text-blue-600">#{workoutExercise.exercise.name}</h3>
-                    <p:dataTable value="#{workoutExercise.sets}" var="set" class="mt-2">
-                        <p:column headerText="Set">
-                            <h:outputText value="#{set.id}"/>
-                        </p:column>
-                        <p:column headerText="KG">
-                            <p:inputText value="#{set.weight}" size="5"/>
-                        </p:column>
-                        <p:column headerText="Reps">
-                            <p:inputText value="#{set.reps}" size="5"/>
-                        </p:column>
-                        <p:column headerText="Pause (s)">
-                            <p:inputText value="#{set.restTime}" size="5"/>
-                        </p:column>
-                        <p:column headerText="✔">
-                            <p:selectBooleanCheckbox value="#{set.isCompleted}"/>
-                        </p:column>
-                    </p:dataTable>
-                    <p:commandButton value="+ Set" actionListener="#{workoutBean.addSet(workoutExercise)}"
-                                     update="@form" styleClass="mt-2 bg-gray-300 px-3 py-1 rounded"/>
+        <h:form>
+            <section class="p-6 bg-white rounded-lg shadow-md">
+                <!-- Header mit Workout-Name, Timer & Beenden-Button -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Template: #{templateBean.selectedTemplate.name}</h2>
+                    <!-- Timer -->
+                    <p:commandButton value="Beenden" styleClass="ui-button-raised ui-button-success"
+                                     oncomplete="PF('endWorkoutDialog').show(); return false;"/>
                 </div>
-            </ui:repeat>
 
-            <div class="mb-6 p-4 bg-gray-100 rounded shadow">
-                <h3 class="text-lg font-semibold text-blue-600">Static Exercise Name</h3>
-                <p:dataTable value="#{workoutExercise.sets}" var="set" class="mt-2">
-                    <p:column headerText="Set">
-                        <h:outputText value="1"/>
-                    </p:column>
-                    <p:column headerText="KG">
-                        <p:inputText value="50" size="5"/>
-                    </p:column>
-                    <p:column headerText="Reps">
-                        <p:inputText value="10" size="5"/>
-                    </p:column>
-                    <p:column headerText="Pause (s)">
-                        <p:inputText value="60" size="5"/>
-                    </p:column>
-                    <p:column headerText="✔">
-                        <p:selectBooleanCheckbox value="true"/>
-                    </p:column>
-                </p:dataTable>
-                <p:commandButton value="+ Set" styleClass="mt-2 bg-gray-300 px-3 py-1 rounded"/>
-            </div>
+                <!-- Wiederholte Liste von Übungen -->
+                <ui:repeat value="#{workoutBean.exercises}" var="workoutExercise">
+                    <div class="mb-6 p-4 bg-gray-100 rounded shadow">
+                        <h3 class="text-lg font-semibold text-blue-600">#{workoutExercise.exercise.name}</h3>
+                        <p:dataTable value="#{workoutExercise.sets}" var="set" class="mt-2">
+                            <p:column headerText="Set">
+                                <h:outputText value="#{set.id}"/>
+                            </p:column>
+                            <p:column headerText="KG">
+                                <p:inputText value="#{set.weight}" size="5"/>
+                            </p:column>
+                            <p:column headerText="Reps">
+                                <p:inputText value="#{set.reps}" size="5"/>
+                            </p:column>
+                            <p:column headerText="Pause (s)">
+                                <p:inputText value="#{set.restTime}" size="5"/>
+                            </p:column>
+                            <p:column headerText="✔">
+                                <p:selectBooleanCheckbox value="#{set.completed}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="+ Set" actionListener="#{workoutBean.addSet(workoutExercise)}"
+                                         update="@form" styleClass="mt-2 bg-gray-300 px-3 py-1 rounded"/>
+                    </div>
+                </ui:repeat>
 
-            <!-- Übung hinzufügen und Workout abbrechen Buttons -->
-            <div class="flex flex-col space-y-4">
-                <p:commandButton value="Übung hinzufügen" styleClass="ui-button-raised"
-                                 onclick="PF('addExerciseDialog').show(); return false;"/>
-                <p:commandButton value="Workout abbrechen" actionListener="#{workoutBean.cancelWorkout}"
-                                 styleClass="ui-button-raised ui-button-danger"/>
-            </div>
-        </section>
+                <!-- Übung hinzufügen und Workout abbrechen Buttons -->
+                <div class="flex flex-col space-y-4">
+                    <p:commandButton value="Übung hinzufügen" styleClass="ui-button-raised"
+                                     onclick="PF('addExerciseDialog').show(); return false;"/>
+                    <p:commandButton value="Workout abbrechen" actionListener="#{workoutBean.cancelWorkout}"
+                                     styleClass="ui-button-raised ui-button-danger"/>
+                </div>
+            </section>
 
-        <!-- Dialog für Übung hinzufügen -->
-        <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">
-            <h:form>
-                <p:outputLabel value="Hier kannst du eine Übung auswählen..."/>
-                <!-- TODO: Übungsauswahl -->
-            </h:form>
-        </p:dialog>
+            <!-- Dialog für Übung hinzufügen -->
+            <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">
+                <h:form>
+                    <p:outputLabel value="Hier kannst du eine Übung auswählen..."/>
+                    <!-- TODO: Übungsauswahl -->
+                </h:form>
+            </p:dialog>
 
-        <!-- Dialog für Workout beenden -->
-        <p:dialog header="Workout beenden" widgetVar="endWorkoutDialog" modal="true" width="400">
-            <h:form>
-                <p>Willst du das Workout wirklich beenden?</p>
-                <p:commandButton value="Ja" actionListener="#{workoutBean.finishWorkout}"
-                                 styleClass="bg-green-500 text-white px-4 py-2 rounded"/>
-                <p:commandButton value="Nein" onclick="PF('endWorkoutDialog').hide(); return false;"
-                                 styleClass="bg-gray-500 text-white px-4 py-2 rounded ml-2"/>
-            </h:form>
-        </p:dialog>
+            <!-- Dialog für Workout beenden -->
+            <p:dialog header="Workout beenden" widgetVar="endWorkoutDialog" modal="true" width="400">
+                <h:form>
+                    <p>Willst du das Workout wirklich beenden?</p>
+                    <p:commandButton value="Ja" actionListener="#{workoutBean.finishWorkout}"
+                                     styleClass="bg-green-500 text-white px-4 py-2 rounded"/>
+                    <p:commandButton value="Nein" onclick="PF('endWorkoutDialog').hide(); return false;"
+                                     styleClass="bg-gray-500 text-white px-4 py-2 rounded ml-2"/>
+                </h:form>
+            </p:dialog>
+        </h:form>
     </ui:define>
 </ui:composition>
 </html>

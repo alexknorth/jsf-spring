@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WorkoutExerciseRepository extends CrudRepository<Set, Long> {
-    @Query("SELECT s FROM Set s WHERE s.workoutExercise.id = :workoutExerciseId")
-    List<Set> findSetsByWorkoutExerciseId(@Param("workoutExerciseId") Long workoutExerciseId);
+public interface WorkoutExerciseRepository extends CrudRepository<WorkoutExercise, Long> {
+    List<WorkoutExercise> findByWorkoutId(Long workoutId);
 }

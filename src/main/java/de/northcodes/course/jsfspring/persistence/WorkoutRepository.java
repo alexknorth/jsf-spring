@@ -12,6 +12,5 @@ import java.util.List;
 
 public interface WorkoutRepository extends CrudRepository<Workout, Long> {
     Workout findTopByTemplateOrderByIdDesc(Template template);
-    @Query("SELECT we FROM WorkoutExercise we WHERE we.workout.id = :workoutId")
-    List<WorkoutExercise> findWorkoutExercisesByWorkoutId(@Param("workoutId") Long workoutId);
+    List<Workout> findByTemplateId(Long templateId);
 }

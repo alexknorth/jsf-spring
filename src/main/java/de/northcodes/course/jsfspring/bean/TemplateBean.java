@@ -17,7 +17,7 @@ import java.util.List;
 @SessionScoped
 @Component
 public class TemplateBean implements Serializable {
-    private static final Logger log = LoggerFactory.getLogger(TemplateBean.class);
+    Logger log = LoggerFactory.getLogger(TemplateBean.class);
 
     @Autowired
     private TemplateRepository templateRepository;
@@ -57,8 +57,10 @@ public class TemplateBean implements Serializable {
         //
     }
 
-    public void startTemplate() {
+    public String startTemplate() {
+        log.info("Starting template: {}", selectedTemplate.getName());
         workoutBean.initializeWorkout(selectedTemplate);
+        return "start-template?faces-redirect=true";
     }
 
 

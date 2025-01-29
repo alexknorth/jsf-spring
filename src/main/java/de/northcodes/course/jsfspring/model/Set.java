@@ -19,7 +19,8 @@ public class Set {
     private String level;
 
     private int duration;
-    private boolean isCompleted;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean completed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workout_exercise_id", nullable = false)
@@ -73,12 +74,20 @@ public class Set {
         this.duration = duration;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public boolean getCompleted() {
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     // Getters and Setters
