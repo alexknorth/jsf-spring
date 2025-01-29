@@ -1,6 +1,6 @@
 package de.northcodes.course.jsfspring.persistence;
 
-import de.northcodes.course.jsfspring.model.Exercise;
+import de.northcodes.course.jsfspring.model.Set;
 import de.northcodes.course.jsfspring.model.Template;
 import de.northcodes.course.jsfspring.model.Workout;
 import de.northcodes.course.jsfspring.model.WorkoutExercise;
@@ -10,8 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WorkoutRepository extends CrudRepository<Workout, Long> {
-    Workout findTopByTemplateOrderByIdDesc(Template template);
-    @Query("SELECT we FROM WorkoutExercise we WHERE we.workout.id = :workoutId")
-    List<WorkoutExercise> findWorkoutExercisesByWorkoutId(@Param("workoutId") Long workoutId);
+public interface WorkoutExerciseRepository extends CrudRepository<Set, Long> {
+    @Query("SELECT s FROM Set s WHERE s.workoutExercise.id = :workoutExerciseId")
+    List<Set> findSetsByWorkoutExerciseId(@Param("workoutExerciseId") Long workoutExerciseId);
 }

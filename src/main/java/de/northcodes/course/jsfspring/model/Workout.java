@@ -1,8 +1,9 @@
 package de.northcodes.course.jsfspring.model;
 
+import org.apache.tomcat.jni.Local;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,18 +23,19 @@ public class Workout {
     private Template template;
 
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Set> sets = new ArrayList<>();
+    private List<WorkoutExercise> workoutExercises;
 
     private LocalDateTime startedAt;
-
     private LocalDateTime finishedAt;
 
-    public Template getTemplate() {
-        return template;
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
     }
 
-    public void setTemplate(Template template) {
-        this.template = template;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -44,12 +46,20 @@ public class Workout {
         this.user = user;
     }
 
-    public List<Set> getSets() {
-        return sets;
+    public Template getTemplate() {
+        return template;
     }
 
-    public void setSets(List<Set> sets) {
-        this.sets = sets;
+    public void setTemplate(Template template) {
+        this.template = template;
+    }
+
+    public List<WorkoutExercise> getWorkoutExercises() {
+        return workoutExercises;
+    }
+
+    public void setWorkoutExercises(List<WorkoutExercise> workoutExercises) {
+        this.workoutExercises = workoutExercises;
     }
 
     public LocalDateTime getStartedAt() {
@@ -67,7 +77,4 @@ public class Workout {
     public void setFinishedAt(LocalDateTime finishedAt) {
         this.finishedAt = finishedAt;
     }
-
-    // Getters and Setters
 }
-

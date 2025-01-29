@@ -45,4 +45,8 @@ public class WorkoutExercise {
     public void setSets(List<Set> sets) {
         this.sets = sets;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

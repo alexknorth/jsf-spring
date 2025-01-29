@@ -17,9 +17,13 @@ import java.util.List;
 @SessionScoped
 @Component
 public class TemplateBean implements Serializable {
-    private static final Logger log = LoggerFactory.getLogger(JsfSpringApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(TemplateBean.class);
+
     @Autowired
     private TemplateRepository templateRepository;
+
+    @Autowired
+    private WorkoutBean workoutBean;
 
 
     private Template selectedTemplate;
@@ -54,7 +58,7 @@ public class TemplateBean implements Serializable {
     }
 
     public void startTemplate() {
-        WorkoutBean.setTemplate(selectedTemplate);
+        workoutBean.initializeWorkout(selectedTemplate);
     }
 
 
