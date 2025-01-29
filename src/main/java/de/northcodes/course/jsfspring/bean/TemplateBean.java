@@ -21,6 +21,7 @@ public class TemplateBean implements Serializable {
     @Autowired
     private TemplateRepository templateRepository;
 
+
     private Template selectedTemplate;
     private List<Template> templates;
 
@@ -53,7 +54,7 @@ public class TemplateBean implements Serializable {
     }
 
     public void startTemplate() {
-        //
+        WorkoutBean.setTemplate(selectedTemplate);
     }
 
 

@@ -1,6 +1,7 @@
 package de.northcodes.course.jsfspring.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "workout_exercises")
@@ -18,6 +19,30 @@ public class WorkoutExercise {
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
 
-    // Getters and Setters
-}
+    @OneToMany(mappedBy = "workoutExercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Set> sets;
 
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+    public List<Set> getSets() {
+        return sets;
+    }
+
+    public void setSets(List<Set> sets) {
+        this.sets = sets;
+    }
+}
