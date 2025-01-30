@@ -100,3 +100,9 @@ body > footer > p {
     padding: 5px;
 }
 
+.outline {
+    border: 2px solid #000; /* Black border */
+    padding: 16px; /* Padding inside the border */
+    border-radius: 80px; /* Rounded corners */
+}
+
