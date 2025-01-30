@@ -13,6 +13,7 @@
     <ui:param name="pageTitle" value="Start a Workout!"/>
 
     <ui:define name="panel-main">
+        <ui:fragment rendered="#{userManager.signedIn}">
         <section class="p-6 bg-white rounded-lg shadow-md">
             <!-- Title Section -->
             <div class="flex justify-between items-center mb-4">
@@ -68,6 +69,7 @@
                                  styleClass="py-2 px-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200" />
             </div>
         </p:dialog>
+        </ui:fragment>
     </ui:define>
 
     <ui:define name="top-message">
