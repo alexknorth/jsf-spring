@@ -29,7 +29,7 @@
                         <h3 class="text-lg font-semibold text-blue-600">#{workoutExercise.exercise.name}</h3>
                         <p:dataTable value="#{workoutExercise.sets}" var="set" class="mt-2">
                             <p:column headerText="Set">
-                                <h:outputText value="#{set.id}"/>
+                                <h:outputText value="#{workoutExercise.getSetOrder(set)}"/>
                             </p:column>
                             <p:column headerText="KG">
                                 <p:inputText value="#{set.weight}" size="5"/>
@@ -45,7 +45,7 @@
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="+ Set" actionListener="#{workoutBean.addSet(workoutExercise)}"
-                                         update="@form" styleClass="mt-2 bg-gray-300 px-3 py-1 rounded"/>
+                                         update="@form" styleClass="ui-button-raised"/>
                     </div>
                 </ui:repeat>
 
@@ -67,14 +67,14 @@
             </p:dialog>
 
             <!-- Dialog für Workout beenden -->
-            <p:dialog header="Workout beenden" widgetVar="endWorkoutDialog" modal="true" width="400">
-                <h:form>
+            <p:dialog header="Workout abbrechen" widgetVar="endWorkoutDialog" modal="true" width="400">
+                <div class="flex justify-end gap-4">
                     <p>Willst du das Workout wirklich beenden?</p>
-                    <p:commandButton value="Ja" actionListener="#{workoutBean.finishWorkout}"
-                                     styleClass="bg-green-500 text-white px-4 py-2 rounded"/>
+                    <p:commandButton value="Ja" action="#{workoutBean.finishWorkout}"
+                                     styleClass="ui-button-raised"/>
                     <p:commandButton value="Nein" onclick="PF('endWorkoutDialog').hide(); return false;"
-                                     styleClass="bg-gray-500 text-white px-4 py-2 rounded ml-2"/>
-                </h:form>
+                                     styleClass="ui-button-raised ui-button-danger"/>
+                </div>
             </p:dialog>
         </h:form>
     </ui:define>

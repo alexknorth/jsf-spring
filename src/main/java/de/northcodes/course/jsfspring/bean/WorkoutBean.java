@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @SessionScoped
 @Component
+@ManagedBean
 public class WorkoutBean implements Serializable {
     private static Workout workout;
     private List<WorkoutExercise> exercises;
@@ -31,6 +33,9 @@ public class WorkoutBean implements Serializable {
     @Autowired
     private SetRepository setRepository;
 
+    @Autowired
+    private UserManager userManager;
+
     Logger log = LoggerFactory.getLogger(WorkoutBean.class);
 
     public WorkoutBean() {
@@ -43,6 +48,7 @@ public class WorkoutBean implements Serializable {
     public void initializeWorkout(Template template) {
         workout = new Workout();
         workout.setTemplate(template);
+        workout.setUser(userManager.getCurrentUser());
         workout.setStartedAt(LocalDateTime.now());
         this.log.info("test");
         // Find the latest workout with the given template
@@ -80,9 +86,12 @@ public class WorkoutBean implements Serializable {
         workoutExercise.getSets().add(newSet);
     }
 
-    public void finishWorkout() {
+    @Transactional
+    public String finishWorkout() {
+        log.info("Finishing workout");
         workout.setFinishedAt(LocalDateTime.now());
-        // Speichern in der Datenbank wäre hier nötig
+        workoutRepository.save(workout);
+        return "workout?faces-redirect=true";
     }
 
     public void cancelWorkout() {

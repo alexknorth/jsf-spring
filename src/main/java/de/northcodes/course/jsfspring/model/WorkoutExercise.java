@@ -49,4 +49,8 @@ public class WorkoutExercise {
     public Long getId() {
         return id;
     }
+
+    public int getSetOrder(Set set) {
+        return sets.indexOf(set) + 1;
+    }
 }
