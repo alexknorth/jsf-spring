@@ -50,21 +50,24 @@ public class WorkoutBean implements Serializable {
         workout.setTemplate(template);
         workout.setUser(userManager.getCurrentUser());
         workout.setStartedAt(LocalDateTime.now());
-        this.log.info("test");
+        this.log.info("Initializing workout for template: {}", template.getName());
+
         // Find the latest workout with the given template
         Workout latestWorkout = workoutRepository.findTopByTemplateOrderByIdDesc(template);
 
         if (latestWorkout != null) {
+            this.log.info("Latest workout found with ID: {}", latestWorkout.getId());
             exercises = workoutExerciseRepository.findByWorkoutId(latestWorkout.getId());
+            this.log.info("Number of exercises found: {}", exercises.size());
             for (WorkoutExercise exercise : exercises) {
+                this.log.info("Exercise found: {}", exercise.getExercise().getName());
                 List<Set> sets = setRepository.findByWorkoutExerciseId(exercise.getId());
+                this.log.info("Number of sets found for exercise {}: {}", exercise.getExercise().getName(), sets.size());
                 exercise.getSets().clear();
                 exercise.getSets().addAll(sets);
             }
-            for (WorkoutExercise exercise : exercises) {
-                log.info("Exercise: {}", exercise.getExercise().getName());
-            }
         } else {
+            this.log.info("No previous workout found for template: {}", template.getName());
             exercises = new ArrayList<>();
         }
     }
@@ -90,6 +93,27 @@ public class WorkoutBean implements Serializable {
     public String finishWorkout() {
         log.info("Finishing workout");
         workout.setFinishedAt(LocalDateTime.now());
+
+        // Ensure the user is set
+        User currentUser = userManager.getCurrentUser();
+        if (currentUser == null) {
+            log.error("Current user is null. Cannot finish workout.");
+            throw new IllegalStateException("Current user is null. Cannot finish workout.");
+        }
+        workout.setUser(currentUser);
+
+        // Save the workout first
+        workout = workoutRepository.save(workout);
+
+        List<WorkoutExercise> managedExercises = new ArrayList<>();
+        for (WorkoutExercise exercise : exercises) {
+            exercise.setWorkout(workout);
+            for (Set set : exercise.getSets()) {
+                set.setWorkoutExercise(exercise);
+            }
+            managedExercises.add(workoutExerciseRepository.save(exercise)); // Save and manage the exercise
+        }
+        workout.setWorkoutExercises(managedExercises);
         workoutRepository.save(workout);
         return "workout?faces-redirect=true";
     }
