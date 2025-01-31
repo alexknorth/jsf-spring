@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,14 +19,21 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @SessionScoped
 @Component
 @ManagedBean
 public class WorkoutBean implements Serializable {
+
+    private String timer;
+    private Timer timerTask;
+
     private static Workout workout;
     private List<WorkoutExercise> exercises;
 
@@ -46,6 +55,11 @@ public class WorkoutBean implements Serializable {
         workout = new Workout();
         workout.setStartedAt(LocalDateTime.now());
         exercises = new ArrayList<>();
+    }
+
+    @PostConstruct
+    public void init() {
+        startTimer();
     }
 
     @Transactional
@@ -74,6 +88,24 @@ public class WorkoutBean implements Serializable {
             this.log.info("No previous workout found for template: {}", template.getName());
             exercises = new ArrayList<>();
         }
+        startTimer();
+    }
+
+    private void startTimer() {
+        timerTask = new Timer();
+        timerTask.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateTimer();
+            }
+        }, 0, 1000);
+    }
+
+    private void updateTimer() {
+        Duration duration = Duration.between(workout.getStartedAt(), LocalDateTime.now());
+        long minutes = duration.toMinutes();
+        long seconds = duration.getSeconds() % 60;
+        timer = String.format("%02d:%02d", minutes, seconds);
     }
 
     public void addExercise(Exercise exercise) {
@@ -120,6 +152,7 @@ public class WorkoutBean implements Serializable {
         }
         workout.setWorkoutExercises(managedExercises);
         workoutRepository.save(workout);
+        cleanup();
         return "workout?faces-redirect=true";
     }
 
@@ -130,7 +163,15 @@ public class WorkoutBean implements Serializable {
         workout.setStartedAt(LocalDateTime.now());
         exercises.clear();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        cleanup();
         return "workout?faces-redirect=true";
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
     }
 
     public static void setTemplate(Template template){
@@ -144,5 +185,9 @@ public class WorkoutBean implements Serializable {
 
     public Workout getWorkout() {
         return workout;
+    }
+
+    public String getTimer() {
+        return timer;
     }
 }

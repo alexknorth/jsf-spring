@@ -20,6 +20,9 @@
                     <p:commandButton value="Beenden" styleClass="ui-button-raised ui-button-success"
                                      oncomplete="PF('endWorkoutDialog').show(); return false;"/>
                 </div>
+                <div class="text-lg mb-12 ml-1">
+                <ui:include src="/templates/timer-component.xhtml"/>
+                </div>
                 <ui:repeat value="#{workoutBean.exercises}" var="workoutExercise">
                     <div class="mb-6 p-4 bg-gray-100 rounded shadow">
                         <h3 class="text-lg font-semibold text-blue-600">#{workoutExercise.exercise.name}</h3>
@@ -53,7 +56,7 @@
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="+ Set" actionListener="#{workoutBean.addSet(workoutExercise)}"
-                                         update="@form" styleClass="ui-button-raised"/>
+                                         update="@form" styleClass="ui-button-raised mt-12" style="margin-top: 12px;"/>
                     </div>
                 </ui:repeat>
                 <div class="flex flex-col space-y-4">
@@ -63,7 +66,7 @@
                                      styleClass="ui-button-raised ui-button-danger" immediate="true"/>
                 </div>
             </section>
-            <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">
+            <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400" contentStyle="height:400px; overflow:auto;">
                     <ui:include src="/templates/exercises_search_template.xhtml">
                     </ui:include>
                     <ui:repeat value="#{exerciseBean.exercises}" var="exercise">
@@ -74,7 +77,8 @@
                         <p:commandButton value="Add" action="#{workoutBean.addExercise(exercise)}"
                                          oncomplete="PF('addExerciseDialog').hide();"
                                          update=":workoutForm"
-                                         styleClass="ui-button-raised ui-button-success"/>
+                                         styleClass="ui-button-raised ui-button-success"
+                                         style="margin-top: 0; border-top: none;"/>
                     </ui:repeat>
             </p:dialog>
 
