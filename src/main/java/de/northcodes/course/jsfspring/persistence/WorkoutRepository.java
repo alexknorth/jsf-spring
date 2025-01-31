@@ -13,4 +13,6 @@ import java.util.List;
 public interface WorkoutRepository extends CrudRepository<Workout, Long> {
     Workout findTopByTemplateOrderByIdDesc(Template template);
     List<Workout> findByTemplateId(Long templateId);
+
+    List<Workout> findAllByOrderByStartedAtAsc();
 }

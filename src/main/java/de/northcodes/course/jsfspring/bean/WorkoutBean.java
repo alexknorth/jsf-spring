@@ -4,6 +4,7 @@ import de.northcodes.course.jsfspring.model.*;
 import de.northcodes.course.jsfspring.persistence.SetRepository;
 import de.northcodes.course.jsfspring.persistence.WorkoutExerciseRepository;
 import de.northcodes.course.jsfspring.persistence.WorkoutRepository;
+import de.northcodes.course.jsfspring.service.WorkoutService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class WorkoutBean implements Serializable {
 
     private static Workout workout;
     private List<WorkoutExercise> exercises;
+    private List<Workout> completedWorkouts;
 
     @Autowired
     private WorkoutRepository workoutRepository;
@@ -49,6 +51,9 @@ public class WorkoutBean implements Serializable {
     @Autowired
     private UserManager userManager;
 
+    @Autowired
+    private WorkoutService workoutService;
+
     Logger log = LoggerFactory.getLogger(WorkoutBean.class);
 
     public WorkoutBean() {
@@ -60,6 +65,7 @@ public class WorkoutBean implements Serializable {
     @PostConstruct
     public void init() {
         startTimer();
+        loadCompletedWorkouts();
     }
 
     @Transactional
@@ -199,5 +205,17 @@ public class WorkoutBean implements Serializable {
 
     public String getTimer() {
         return timer;
+    }
+
+    public void loadCompletedWorkouts() {
+        completedWorkouts = workoutService.getCompletedWorkouts();
+    }
+
+    public List<Workout> getCompletedWorkouts() {
+        return completedWorkouts;
+    }
+
+    public void setCompletedWorkouts(List<Workout> completedWorkouts) {
+        this.completedWorkouts = completedWorkouts;
     }
 }

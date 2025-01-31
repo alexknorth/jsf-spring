@@ -5,6 +5,8 @@ import de.northcodes.course.jsfspring.persistence.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WorkoutService {
 
@@ -14,5 +16,10 @@ public class WorkoutService {
     public void saveWorkout(Workout workout) {
         workoutRepository.save(workout);
     }
+
+    public List<Workout> getCompletedWorkouts() {
+        return workoutRepository.findAllByOrderByStartedAtAsc();
+    }
+
 }
 

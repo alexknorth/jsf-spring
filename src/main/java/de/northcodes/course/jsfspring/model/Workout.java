@@ -3,6 +3,7 @@ package de.northcodes.course.jsfspring.model;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Workout {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "template_id")
     private Template template;
 
@@ -76,5 +77,22 @@ public class Workout {
 
     public void setFinishedAt(LocalDateTime finishedAt) {
         this.finishedAt = finishedAt;
+    }
+
+    public String getDate() {
+        if (finishedAt != null) {
+            return finishedAt.toLocalDate().toString();
+        }
+        return null;
+    }
+
+    public String getTotalTime() {
+        if (startedAt != null && finishedAt != null) {
+            Duration duration = Duration.between(startedAt, finishedAt);
+            long minutes = duration.toMinutes();
+            long seconds = duration.minusMinutes(minutes).getSeconds();
+            return String.format("%02d:%02d", minutes, seconds);
+        }
+        return null;
     }
 }
