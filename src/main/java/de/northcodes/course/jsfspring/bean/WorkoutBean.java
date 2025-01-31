@@ -113,7 +113,17 @@ public class WorkoutBean implements Serializable {
         WorkoutExercise workoutExercise = new WorkoutExercise();
         workoutExercise.setWorkout(workout);
         workoutExercise.setExercise(exercise);
-        workoutExercise.setSets(new ArrayList<>());
+
+        // Initialize the sets list with a single empty Set element
+        Set initialSet = new Set();
+        initialSet.setWorkoutExercise(workoutExercise);
+        initialSet.setWeight(0);
+        initialSet.setReps(0);
+        initialSet.setRestTime(60);
+        List<Set> sets = new ArrayList<>();
+        sets.add(initialSet);
+        workoutExercise.setSets(sets);
+
         exercises.add(workoutExercise);
     }
 
