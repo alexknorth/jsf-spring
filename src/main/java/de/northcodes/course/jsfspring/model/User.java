@@ -43,16 +43,16 @@ public class User extends AbstractEntity implements Serializable {
     private Boolean subscribedToNewsletter;
 
 	@Column(name = "height", nullable = false)
-	private Boolean height;
+	private Double height;
 
 	@Column(name = "weight", nullable = false)
-	private Boolean weight;
+	private Double weight;
 
 	@Column(name = "bodyfat_percentage", nullable = false)
-	private Boolean bodyfatPercentage;
+	private Double bodyfatPercentage;
 
 	@Column(name = "calorie_intake", nullable = false)
-	private Boolean calorieIntake;
+	private Double calorieIntake;
 
     @OneToMany(mappedBy = "orderer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<Order>();
@@ -136,35 +136,35 @@ public class User extends AbstractEntity implements Serializable {
 	}
 
 
-    public Boolean getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Boolean height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public Boolean getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Boolean weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public Boolean getBodyfatPercentage() {
+    public Double getBodyfatPercentage() {
         return bodyfatPercentage;
     }
 
-    public void setBodyfatPercentage(Boolean bodyfatPercentage) {
+    public void setBodyfatPercentage(Double bodyfatPercentage) {
         this.bodyfatPercentage = bodyfatPercentage;
     }
 
-    public Boolean getCalorieIntake() {
+    public Double getCalorieIntake() {
         return calorieIntake;
     }
 
-    public void setCalorieIntake(Boolean calorieIntake) {
+    public void setCalorieIntake(Double calorieIntake) {
         this.calorieIntake = calorieIntake;
     }
 }

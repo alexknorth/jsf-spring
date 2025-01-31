@@ -27,7 +27,9 @@
                                  validatorMessage="Please enter a username consisting of only letters and digits, between 2 and 20 characters long."
                                  readonly="#{userManager.signedIn}">
                         <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
+                        <p:ajax update="msgUsername" event="keyup"/>
                     </p:inputText>
+                    <p:message for="username" id="msgUsername" display="icon"/>
 
                     <!-- Password -->
                     <p:outputLabel for="password" value="Password"/>
@@ -38,6 +40,7 @@
                         <p:ajax event="keyup" listener="#{userDetails.validatePasswordStrength}" update="passwordStrengthOutput"/>
                     </p:password>
                     <p:outputLabel id="passwordStrengthOutput" value="#{userDetails.passwordStrength}"/>
+                    <p:message for="password" display="icon"/>
 
                     <!-- First Name -->
                     <p:outputLabel for="firstName" value="First Name"/>
@@ -45,7 +48,11 @@
                                  value="#{userDetails.user.firstName}"
                                  required="true"
                                  requiredMessage="Please enter your first name."
-                                 maxlength="30"/>
+                                 maxlength="30">
+                        <f:validateLength maximum="30"/>
+                        <p:ajax update="msgFirstName" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="firstName" id="msgFirstName" display="icon"/>
 
                     <!-- Last Name -->
                     <p:outputLabel for="lastName" value="Last Name"/>
@@ -53,20 +60,32 @@
                                  value="#{userDetails.user.lastName}"
                                  required="true"
                                  requiredMessage="Please enter your last name."
-                                 maxlength="30"/>
+                                 maxlength="30">
+                        <f:validateLength maximum="30"/>
+                        <p:ajax update="msgLastName" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="lastName" id="msgLastName" display="icon"/>
 
                     <!-- Email Address -->
                     <p:outputLabel for="emailAddress" value="E-mail Address"/>
                     <p:inputText id="emailAddress"
                                  value="#{userDetails.user.emailAddress}"
                                  required="true"
-                                 requiredMessage="Please enter your email address."/>
+                                 requiredMessage="Please enter your email address.">
+                        <f:validateRegex pattern="^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"/>
+                        <p:ajax update="msgEmailAddress" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="emailAddress" id="msgEmailAddress" display="icon"/>
 
                     <!-- Phone Number -->
                     <p:outputLabel for="phoneNumber" value="Phone Number"/>
                     <p:inputText id="phoneNumber"
                                  value="#{userDetails.user.phoneNumber}"
-                                 maxlength="20"/>
+                                 maxlength="20">
+                        <f:validateRegex pattern="^\+?[0-9\s\-]+$"/>
+                        <p:ajax update="msgPhoneNumber" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="phoneNumber" id="msgPhoneNumber" display="icon"/>
 
                     <!-- Birth Date -->
                     <p:outputLabel for="birthDate" value="Birth Date"/>
@@ -74,33 +93,54 @@
                                 value="#{userDetails.user.birthDate}"
                                 required="true"
                                 requiredMessage="Please select your birthdate."
-                                pattern="yyyy-MM-dd"/>
+                                pattern="yyyy-MM-dd">
+                        <p:ajax update="msgBirthDate" event="dateSelect"/>
+                    </p:calendar>
+                    <p:message for="birthDate" id="msgBirthDate" display="icon"/>
 
                     <!-- Subscribe to Newsletter -->
                     <p:outputLabel for="subscribedToNewsletter" value="Subscribe to the Newsletter?"/>
                     <p:selectOneRadio id="subscribedToNewsletter" value="#{userDetails.user.subscribedToNewsletter}" required="true" requiredMessage="Please select an option.">
                         <f:selectItem itemValue="true" itemLabel="Yes"/>
                         <f:selectItem itemValue="false" itemLabel="No"/>
+                        <p:ajax update="msgSubscribedToNewsletter" event="change"/>
                     </p:selectOneRadio>
+                    <p:message for="subscribedToNewsletter" id="msgSubscribedToNewsletter" display="icon"/>
 
                     <!-- Height -->
                     <p:outputLabel for="height" value="Height (cm)"/>
-                    <p:inputText id="height" value="#{userDetails.user.height}"/>
+                    <p:inputText id="height" value="#{userDetails.user.height}">
+                        <f:validateDoubleRange minimum="0.0"/>
+                        <p:ajax update="msgHeight" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="height" id="msgHeight" display="icon"/>
 
                     <!-- Weight -->
                     <p:outputLabel for="weight" value="Weight (kg)"/>
                     <p:inputText id="weight"
                                  value="#{userDetails.user.weight}"
                                  required="true"
-                                 requiredMessage="Please enter your weight."/>
+                                 requiredMessage="Please enter your weight.">
+                        <f:validateDoubleRange minimum="0.0"/>
+                        <p:ajax update="msgWeight" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="weight" id="msgWeight" display="icon"/>
 
                     <!-- Calorie Intake -->
                     <p:outputLabel for="calorieIntake" value="Calorie Intake (kcal)"/>
-                    <p:inputText id="calorieIntake" value="#{userDetails.user.calorieIntake}"/>
+                    <p:inputText id="calorieIntake" value="#{userDetails.user.calorieIntake}">
+                        <f:validateDoubleRange minimum="0.0"/>
+                        <p:ajax update="msgCalorieIntake" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="calorieIntake" id="msgCalorieIntake" display="icon"/>
 
                     <!-- Body Fat Percentage -->
                     <p:outputLabel for="bodyfatPercentage" value="Body Fat Percentage (%)"/>
-                    <p:inputText id="bodyfatPercentage" value="#{userDetails.user.bodyfatPercentage}"/>
+                    <p:inputText id="bodyfatPercentage" value="#{userDetails.user.bodyfatPercentage}">
+                        <f:validateDoubleRange minimum="0.0" maximum="100.0"/>
+                        <p:ajax update="msgBodyfatPercentage" event="keyup"/>
+                    </p:inputText>
+                    <p:message for="bodyfatPercentage" id="msgBodyfatPercentage" display="icon"/>
 
                     <!-- Submit Button -->
                     <p:outputLabel/>
