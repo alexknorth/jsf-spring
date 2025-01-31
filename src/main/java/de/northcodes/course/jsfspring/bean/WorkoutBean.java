@@ -118,10 +118,11 @@ public class WorkoutBean implements Serializable {
         return "workout?faces-redirect=true";
     }
 
-    public void cancelWorkout() {
+    public String cancelWorkout() {
         workout = new Workout();
         workout.setStartedAt(LocalDateTime.now());
         exercises.clear();
+        return "workout?faces-redirect=true";
     }
 
     public static void setTemplate(Template template){
