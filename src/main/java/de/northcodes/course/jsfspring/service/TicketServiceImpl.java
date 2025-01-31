@@ -44,12 +44,8 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public void createTicket(Ticket ticket) {
-		// Wenn das Ticket keine Ticket-ID hat, berechne die nächste ID
 		ticketRepository.save(ticket);
 		log.info("Ticket with ID {} created", ticket.getId());
-		if (ticket.getId() == null) {
-			log.error("ID is still null after save!");
-		}
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.view.ViewScoped;
 
 import de.northcodes.course.jsfspring.model.Ticket;
+import de.northcodes.course.jsfspring.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,9 @@ public class TicketDetails implements Serializable {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private UserManager userManager;
 
     private Ticket ticket;
 
@@ -61,24 +65,22 @@ public class TicketDetails implements Serializable {
     @PostConstruct
     public void onload() {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (context != null) {
-            String newParam = context.getExternalContext().getRequestParameterMap().get("new");
+        boolean isNewTicket = context != null &&
+                "true".equals(context.getExternalContext().getRequestParameterMap().get("new"));
 
-            if ("true".equals(newParam)) {
-                ticket = new Ticket(); // Neues leeres Ticket initialisieren
-                ticket.initializeCreationDateTime(); // Setze das aktuelle Datum und die Uhrzeit
-            } else if (ticket != null && ticket.getId() != null) {
-                // Bestehendes Ticket laden, wenn eine ID existiert
-                ticket = ticketService.getTicket(ticket.getId());
-            } else {
-                // Standardmäßig ein neues Ticket erstellen, falls kein Zustand gesetzt wurde
-                ticket = new Ticket();
-                ticket.initializeCreationDateTime();
-            }
-        } else {
-            // Kein FacesContext verfügbar – Initialisierung ohne JSF-Kontext
+        if (isNewTicket || ticket == null || ticket.getId() == null) {
             ticket = new Ticket();
             ticket.initializeCreationDateTime();
+
+            // Setze den Creator basierend auf dem angemeldeten Benutzer
+            if (userManager != null && userManager.getCurrentUser() != null) {
+                ticket.setCreator(userManager.getCurrentUser().getUsername()); // `creator` setzen
+            } else {
+                ticket.setCreator("Unknown");
+            }
+
+        } else {
+            ticket = ticketService.getTicket(ticket.getId());
         }
 
         // Initialisiere die Dropdown-Werte
@@ -87,7 +89,15 @@ public class TicketDetails implements Serializable {
         affectedSystemOptions = Arrays.asList("System A", "System B", "System C", "System D");
     }
 
+    // Methode zum Laden der Ticketdetails bestehender Tickets
+    public void loadTicketDetails(Long ticketId) {
+        ticket = ticketService.getTicket(ticketId); // Bestehendes Ticket laden
 
+        // Navigiere zur Ticket-Detailseite
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(facesContext, null, "ticket-details.xhtml");
+    }
 
     // Speichern eines Tickets (neu oder bestehend)
     public String saveTicket() {
@@ -164,19 +174,4 @@ public class TicketDetails implements Serializable {
         return "tickets.xhtml?faces-redirect=true";
     }
 
-
-    // Methode zum Laden der Ticketdetails
-    public void loadTicketDetails(Long ticketId) {
-        if (ticketId == null) {
-            ticket = new Ticket(); // Neues leeres Ticket initialisieren
-            ticket.initializeCreationDateTime();
-        } else {
-            ticket = ticketService.getTicket(ticketId); // Bestehendes Ticket laden
-        }
-
-        // Navigiere zur Ticket-Detailseite
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-        navigationHandler.handleNavigation(facesContext, null, "ticket-details.xhtml");
-    }
 }

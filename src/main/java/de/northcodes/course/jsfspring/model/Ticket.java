@@ -21,6 +21,9 @@ public final class Ticket extends AbstractEntity implements Serializable{
     @Column(name = "creation_time", nullable = false)
     private String creationTime;
 
+    @Column(name = "creator", nullable = true)
+    private String creator;
+
     @Column(name = "ticket_name", nullable = false)
     private String ticketName;
 
@@ -50,9 +53,10 @@ public final class Ticket extends AbstractEntity implements Serializable{
 
     public Ticket() {}
 
-    public Ticket(String creation_date, String creation_time, String ticket_name, String description, String prio, String status, String affected_system, String resolver_group, String solution_txt, String solving_date, String solving_time) {
+    public Ticket(String creation_date, String creation_time, String creator, String ticket_name, String description, String prio, String status, String affected_system, String resolver_group, String solution_txt, String solving_date, String solving_time) {
         this.creationDate = creation_date;
         this.creationTime = creation_time;
+        this.creator = creator;
         this.ticketName = ticket_name;
         this.description = description;
         this.prio = prio;
@@ -98,6 +102,10 @@ public final class Ticket extends AbstractEntity implements Serializable{
     public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
+
+    public String getCreator() { return creator; }
+
+    public void setCreator(String creator) { this.creator = creator; }
 
     public String getTicketName() {
         return ticketName;
