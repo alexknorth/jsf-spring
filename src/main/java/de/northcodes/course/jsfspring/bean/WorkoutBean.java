@@ -10,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -119,10 +123,13 @@ public class WorkoutBean implements Serializable {
         return "workout?faces-redirect=true";
     }
 
+    @Transactional
     public String cancelWorkout() {
+        log.info("Cancelling workout");
         workout = new Workout();
         workout.setStartedAt(LocalDateTime.now());
         exercises.clear();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "workout?faces-redirect=true";
     }
 

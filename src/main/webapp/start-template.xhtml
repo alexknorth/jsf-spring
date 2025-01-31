@@ -28,13 +28,25 @@
                                 <h:outputText value="#{workoutExercise.getSetOrder(set)}"/>
                             </p:column>
                             <p:column headerText="KG">
-                                <p:inputText value="#{set.weight}" size="5"/>
+                                <p:inputText id="weight" value="#{set.weight}" size="5" required="true" label="Weight">
+                                    <f:validateDoubleRange minimum="0.0"/>
+                                    <p:ajax update="msgWeight" event="keyup"/>
+                                </p:inputText>
+                                <p:message for="weight" id="msgWeight" display="icon"/>
                             </p:column>
                             <p:column headerText="Reps">
-                                <p:inputText value="#{set.reps}" size="5"/>
+                                <p:inputText id="reps" value="#{set.reps}" size="5" required="true" label="Reps">
+                                    <f:validateLongRange minimum="1"/>
+                                    <p:ajax update="msgReps" event="keyup"/>
+                                </p:inputText>
+                                <p:message for="reps" id="msgReps" display="icon"/>
                             </p:column>
                             <p:column headerText="Pause (s)">
-                                <p:inputText value="#{set.restTime}" size="5"/>
+                                <p:inputText id="restTime" value="#{set.restTime}" size="5" required="true" label="Rest Time">
+                                    <f:validateLongRange minimum="0"/>
+                                    <p:ajax update="msgRestTime" event="keyup"/>
+                                </p:inputText>
+                                <p:message for="restTime" id="msgRestTime" display="icon"/>
                             </p:column>
                             <p:column headerText="✔">
                                 <p:selectBooleanCheckbox value="#{set.completed}"/>
@@ -48,7 +60,7 @@
                     <p:commandButton value="Übung hinzufügen" styleClass="ui-button-raised"
                                      onclick="PF('addExerciseDialog').show(); return false;"/>
                     <p:commandButton value="Workout abbrechen" action="#{workoutBean.cancelWorkout}"
-                                     styleClass="ui-button-raised ui-button-danger"/>
+                                     styleClass="ui-button-raised ui-button-danger" immediate="true"/>
                 </div>
             </section>
             <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">

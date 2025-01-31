@@ -123,8 +123,7 @@
             <ui:fragment rendered="#{userManager.signedIn}">
                 <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
                 <p>
-                    View and update your <h:outputLink value="user-details.xhtml">user details</h:outputLink>
-                    or <h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>.
+                    View and update your profile or sign out.
                 </p>
             </ui:fragment>
         </div>
