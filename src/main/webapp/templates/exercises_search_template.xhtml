@@ -11,7 +11,7 @@
                          class="p-2 border rounded-md w-64">
                 <f:ajax event="keyup"
                         listener="#{exerciseBean.searchExercises}"
-                        render="#{searchOutput}"/>
+                        render=":exercisesForm"/>
             </p:inputText>
             <p:commandButton id="reset" icon="pi pi-times" update="search exerciseForm" process="@this"
                              action="#{exerciseBean.setSearchQuery('')}"

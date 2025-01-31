@@ -52,9 +52,7 @@
                 </div>
             </section>
             <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">
-                <h:form id="exercisesForm">
                     <ui:include src="/templates/exercises_search_template.xhtml">
-                        <ui:param name="searchOutput" value="exercisesForm"/>
                     </ui:include>
                     <ui:repeat value="#{exerciseBean.exercises}" var="exercise">
                         <ui:include src="/templates/exercise-template.xhtml">
@@ -66,7 +64,6 @@
                                          update=":workoutForm"
                                          styleClass="ui-button-raised ui-button-success"/>
                     </ui:repeat>
-                </h:form>
             </p:dialog>
 
             <p:dialog header="Workout abbrechen" widgetVar="endWorkoutDialog" modal="true" width="400">
