@@ -3,49 +3,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Sign In"/>
-    <ui:define name="panel-top">
-        <section>
-            <ui:fragment rendered="#{not userManager.signedIn}">
-                <h1>Sign In</h1>
-                <p>Please enter your username.</p>
-            </ui:fragment>
 
-            <ui:fragment rendered="#{userManager.signedIn}">
-                <h:form>
-                    <h1>Welcome, #{userManager.currentUser.firstName}!</h1>
-                    <p>You are already signed in.
-                        Do you want to <h:commandLink action="#{userManager.signOut}">sign out</h:commandLink>?</p>
-                </h:form>
-            </ui:fragment>
-
-            <p><h:outputLink value="index.xhtml">Back to Popular Products</h:outputLink></p>
-        </section>
-    </ui:define>
     <ui:define name="panel-main">
-        <ui:fragment rendered="#{not userManager.signedIn}">
-            <section>
-                <h:messages styleClass="validation-messages"/>
-                <h:form>
-                    <h:panelGrid columns="2" styleClass="form-grid" columnClasses="form-column-label,form-column-input">
-                        <h:outputLabel for="username">Username</h:outputLabel>
-                        <h:inputText id="username" value="#{signIn.username}" size="20"
-                                     validatorMessage="Please enter a username consisting of only letters and digits, between 2 and 20 characters long.">
-                            <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
-                        </h:inputText>
+        <div class="flex justify-center items-center mb-6 mt-6">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
 
-                        <h:outputLabel for="password">Password</h:outputLabel>
-                        <h:inputSecret id="password" value="#{signIn.password}" size="20"
-                                       required="true" requiredMessage="Please enter your password."/>
+                <ui:fragment rendered="#{not userManager.signedIn}">
+                    <h2 class="text-2xl font-bold text-center mb-6">Sign In</h2>
+                    <p class="text-center text-gray-600 mb-6">Please enter your username and password.</p>
 
-                        <h:outputText value=""/>
-                        <h:commandButton value="Submit" action="#{signIn.submit}"/>
-                    </h:panelGrid>
-                </h:form>
-            </section>
-        </ui:fragment>
+                    <h:form class="space-y-4">
+                        <h:messages styleClass="text-red-500 text-sm mb-4"/>
+
+                        <div>
+                            <h:outputLabel for="username" value="Username" class="block font-semibold mb-1"/>
+                            <p:inputText id="username" value="#{signIn.username}" styleClass="w-full p-2 border rounded-lg"
+                                         validatorMessage="Please enter a valid username (2-20 letters or digits).">
+                                <f:validateRegex pattern="[A-Za-z0-9]{2,20}"/>
+                            </p:inputText>
+                        </div>
+
+                        <div>
+                            <h:outputLabel for="password" value="Password" class="block font-semibold mb-1"/>
+                            <p:password id="password" value="#{signIn.password}" styleClass="w-full p-2 border rounded-lg"
+                                        required="true" requiredMessage="Please enter your password."/>
+                        </div>
+
+                        <p:commandButton value="Sign In" action="#{signIn.submit}"
+                                         styleClass="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"/>
+
+                        <p class="text-center text-sm text-gray-600">
+                            Don't have an account? <h:outputLink value="register.xhtml" class="text-blue-500 hover:underline">Sign up</h:outputLink>
+                        </p>
+                    </h:form>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{userManager.signedIn}">
+                    <h2 class="text-2xl font-bold text-center mb-4">Welcome, #{userManager.currentUser.firstName}!</h2>
+                    <p class="text-center text-gray-600 mb-6">You are already signed in.</p>
+
+                    <h:form class="text-center">
+                        <p:commandButton value="Sign Out" action="#{userManager.signOut}"
+                                         styleClass="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition duration-200"/>
+                    </h:form>
+
+                    <p class="text-center mt-4">
+                        <h:outputLink value="workout.xhtml" class="text-blue-500 hover:underline">Start a Workout</h:outputLink>
+                    </p>
+                </ui:fragment>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
 </html>

@@ -42,7 +42,7 @@ public class UserManager implements Serializable {
         }
 
         currentUser = user;
-        return "workout";
+        return "workout?faces-redirect=true";
     }
 
     public String signOut() {
@@ -56,6 +56,6 @@ public class UserManager implements Serializable {
     public String save(User user) {
         userService.saveUser(user);
         currentUser = user;
-        return "workout";
+        return "workout?faces-redirect=true";
     }
 }
