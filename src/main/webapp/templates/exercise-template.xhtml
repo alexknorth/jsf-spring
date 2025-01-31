@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form id="exerciseForm">
+            <section class="exercise-summary p-4 border-b border-gray-300 flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold">#{exercise.name}</h2>
+                    <p class="text-lg italic text-gray-700">#{exercise.description}</p>
+                    <p class="text-gray-600">
+                        <span class="underline">Muscle Group:</span> #{exercise.muscleGroup}
+                    </p>
+                    <p class="text-gray-600">
+                        <span class="underline">Category:</span> #{exercise.category}
+                    </p>
+                    <p class="text-gray-600">
+                        <span class="underline">Bodyweight Exercise:</span> #{exercise.bodyweightExercise ? 'Yes' : 'No'}
+                    </p>
+                </div>
+            </section>
+    </h:form>
+</ui:composition>

@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form id="exerciseForm">
+        <div class="flex justify-between items-center mb-4">
+            <p:inputText id="search"
+                         value="#{exerciseBean.searchQuery}"
+                         placeholder="Search exercises..."
+                         class="p-2 border rounded-md w-64">
+                <f:ajax event="keyup"
+                        listener="#{exerciseBean.searchExercises}"
+                        render="#{searchOutput}"/>
+            </p:inputText>
+            <p:commandButton id="reset" icon="pi pi-times" update="search exerciseForm" process="@this"
+                             action="#{exerciseBean.setSearchQuery('')}"
+                             styleClass="rounded-button ui-button-danger ui-button-outlined">
+                <f:ajax listener="#{exerciseBean.searchExercises}" render="exerciseForm"/>
+            </p:commandButton>
+        </div>
+    </h:form>
+</ui:composition>

@@ -10,54 +10,15 @@
     </script>
 </h:head>
 
+<!-- src/main/webapp/exercises.xhtml -->
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Available Exercises"/>
     <ui:define name="panel-main">
         <section class="p-6 bg-white rounded-lg shadow-md">
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-3xl font-bold">Available Exercises</h1>
-                <h:form id="form">
-                    <!-- Such-Button
-                    <p:button icon="pi pi-search" styleClass="rounded-button ui-button-success ui-button-flat" />-->
-
-                    <!-- Suchfeld -->
-                    <p:inputText id="search"
-                                 value="#{exerciseBean.searchQuery}"
-                                 placeholder="Search exercises..."
-                                 class="p-2 border rounded-md w-64">
-                        <f:ajax event="keyup"
-                                listener="#{exerciseBean.searchExercises}"
-                                render="exerciseForm" />
-                    </p:inputText>
-
-                    <!-- Löschen-Button
-                    <p:button icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat"
-                              onclick="clearSearchField(); return false;"/> -->
-                    <p:commandButton id="reset" icon="pi pi-times" update="search exerciseForm" process="@this"
-                                     action="#{exerciseBean.setSearchQuery('')}"
-                                     styleClass="rounded-button ui-button-danger ui-button-outlined">
-                        <f:ajax listener="#{exerciseBean.searchExercises}" render="exerciseForm"/>
-                    </p:commandButton>
-                </h:form>
             </div>
-            <!-- Ergebnisse -->
-            <h:form id="exerciseForm">
-                <ui:repeat value="#{exerciseBean.exercises}" var="exercise">
-                    <section class="exercise-summary p-4 border-b border-gray-300">
-                        <h2 class="text-xl font-bold">#{exercise.name}</h2>
-                        <p class="text-lg italic text-gray-700">#{exercise.description}</p>
-                        <p class="text-gray-600">
-                            <span class="underline">Muscle Group:</span> #{exercise.muscleGroup}
-                        </p>
-                        <p class="text-gray-600">
-                            <span class="underline">Category:</span> #{exercise.category}
-                        </p>
-                        <p class="text-gray-600">
-                            <span class="underline">Bodyweight Exercise:</span> #{exercise.bodyweightExercise ? 'Yes' : 'No'}
-                        </p>
-                    </section>
-                </ui:repeat>
-            </h:form>
+            <ui:include src="/templates/exercise-template.xhtml"/>
         </section>
     </ui:define>
 </ui:composition>

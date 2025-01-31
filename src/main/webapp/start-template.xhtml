@@ -9,21 +9,17 @@
     <title>Workout Erstellen</title>
 </h:head>
 
+<!-- src/main/webapp/start-template.xhtml -->
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Workout Erstellen"/>
-
     <ui:define name="panel-main">
-        <h:form>
+        <h:form id="workoutForm">
             <section class="p-6 bg-white rounded-lg shadow-md">
-                <!-- Header mit Workout-Name, Timer & Beenden-Button -->
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-bold">Template: #{templateBean.selectedTemplate.name}</h2>
-                    <!-- Timer -->
                     <p:commandButton value="Beenden" styleClass="ui-button-raised ui-button-success"
                                      oncomplete="PF('endWorkoutDialog').show(); return false;"/>
                 </div>
-
-                <!-- Wiederholte Liste von Übungen -->
                 <ui:repeat value="#{workoutBean.exercises}" var="workoutExercise">
                     <div class="mb-6 p-4 bg-gray-100 rounded shadow">
                         <h3 class="text-lg font-semibold text-blue-600">#{workoutExercise.exercise.name}</h3>
@@ -48,8 +44,6 @@
                                          update="@form" styleClass="ui-button-raised"/>
                     </div>
                 </ui:repeat>
-
-                <!-- Übung hinzufügen und Workout abbrechen Buttons -->
                 <div class="flex flex-col space-y-4">
                     <p:commandButton value="Übung hinzufügen" styleClass="ui-button-raised"
                                      onclick="PF('addExerciseDialog').show(); return false;"/>
@@ -57,16 +51,24 @@
                                      styleClass="ui-button-raised ui-button-danger"/>
                 </div>
             </section>
-
-            <!-- Dialog für Übung hinzufügen -->
             <p:dialog header="Übung hinzufügen" widgetVar="addExerciseDialog" modal="true" width="400">
-                <h:form>
-                    <p:outputLabel value="Hier kannst du eine Übung auswählen..."/>
-                    <!-- TODO: Übungsauswahl -->
+                <h:form id="exercisesForm">
+                    <ui:include src="/templates/exercises_search_template.xhtml">
+                        <ui:param name="searchOutput" value="exercisesForm"/>
+                    </ui:include>
+                    <ui:repeat value="#{exerciseBean.exercises}" var="exercise">
+                        <ui:include src="/templates/exercise-template.xhtml">
+                            <ui:param name="exercise" value="#{exercise}"/>
+                        </ui:include>
+
+                        <p:commandButton value="Add" action="#{workoutBean.addExercise(exercise)}"
+                                         oncomplete="PF('addExerciseDialog').hide();"
+                                         update=":workoutForm"
+                                         styleClass="ui-button-raised ui-button-success"/>
+                    </ui:repeat>
                 </h:form>
             </p:dialog>
 
-            <!-- Dialog für Workout beenden -->
             <p:dialog header="Workout abbrechen" widgetVar="endWorkoutDialog" modal="true" width="400">
                 <div class="flex justify-end gap-4">
                     <p>Willst du das Workout wirklich beenden?</p>

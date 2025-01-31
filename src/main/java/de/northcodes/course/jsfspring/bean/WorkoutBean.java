@@ -73,6 +73,7 @@ public class WorkoutBean implements Serializable {
     }
 
     public void addExercise(Exercise exercise) {
+        this.log.info("aufgerufen addExercise");
         WorkoutExercise workoutExercise = new WorkoutExercise();
         workoutExercise.setWorkout(workout);
         workoutExercise.setExercise(exercise);
