@@ -10,6 +10,12 @@
     </script>
 </h:head>
 
+<f:metadata>
+    <f:viewAction action="#{userManager.checkSignedIn}" />
+</f:metadata>
+
+
+
 <!-- src/main/webapp/exercises.xhtml -->
 <ui:composition template="/templates/page-template.xhtml">
     <ui:param name="pageTitle" value="Available Exercises"/>
@@ -18,7 +24,13 @@
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-3xl font-bold">Available Exercises</h1>
             </div>
-            <ui:include src="/templates/exercise-template.xhtml"/>
+            <ui:include src="/templates/exercises_search_template.xhtml">
+            </ui:include>
+            <ui:repeat value="#{exerciseBean.exercises}" var="exercise">
+                <ui:include src="/templates/exercise-template.xhtml">
+                    <ui:param name="exercise" value="#{exercise}"/>
+                </ui:include>
+            </ui:repeat>
         </section>
     </ui:define>
 </ui:composition>

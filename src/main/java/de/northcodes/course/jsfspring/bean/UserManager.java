@@ -58,4 +58,11 @@ public class UserManager implements Serializable {
         currentUser = user;
         return "workout?faces-redirect=true";
     }
+
+    public String checkSignedIn() {
+        if (!isSignedIn()) {
+            return "sign-in?faces-redirect=true";
+        }
+        return null;
+    }
 }
