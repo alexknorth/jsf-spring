@@ -19,7 +19,7 @@ public class WorkoutExercise {
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
 
-    @OneToMany(mappedBy = "workoutExercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "workoutExercise", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Set> sets;
 
     public Workout getWorkout() {

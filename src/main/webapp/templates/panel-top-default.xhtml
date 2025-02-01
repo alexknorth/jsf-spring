@@ -12,13 +12,13 @@
             <h:form>
                 <p:menuButton icon="pi pi-bars" value="Menu" styleClass="burger-menu bg-blue-500 text-white rounded-md p-2">
                     <p:menuitem value="Profile" outcome="profile.xhtml?faces-redirect=true"
-                                style="#{menuBean.isActive('profile') ? 'font-weight: bold; color: red;' : ''}" />
-                    <p:menuitem value="Recent" outcome="index.xhtml?faces-redirect=true"
-                                style="#{menuBean.isActive('recent') ? 'font-weight: bold; color: red;' : ''}" />
+                                style="#{menuBean.isActive('/profile.xhtml') ? 'font-weight: bold; color: red;' : ''}" />
+                    <p:menuitem value="Recent" outcome="recent.xhtml?faces-redirect=true"
+                                style="#{menuBean.isActive('/recent.xhtml') ? 'font-weight: bold; color: red;' : ''}" />
                     <p:menuitem value="Workout" outcome="workout.xhtml?faces-redirect=true"
-                                style="#{menuBean.isActive('workout') ? 'font-weight: bold; color: red;' : ''}" />
+                                style="#{menuBean.isActive('/workout.xhtml') ? 'font-weight: bold; color: red;' : ''}" />
                     <p:menuitem value="Exercises" outcome="exercises.xhtml?faces-redirect=true"
-                                style="#{menuBean.isActive('exercises') ? 'font-weight: bold; color: red;' : ''}" />
+                                style="#{menuBean.isActive('/exercises.xhtml') ? 'font-weight: bold; color: red;' : ''}" />
                     <p:menuitem value="Index" outcome="index.xhtml?faces-redirect=true"
                                 style="#{menuBean.isActive('index') ? '' : 'font-weight: bold'}" />
                 </p:menuButton>

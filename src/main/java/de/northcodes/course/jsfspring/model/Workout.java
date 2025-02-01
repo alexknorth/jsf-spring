@@ -1,7 +1,10 @@
 package de.northcodes.course.jsfspring.model;
 
+import de.northcodes.course.jsfspring.persistence.WorkoutExerciseRepository;
 import org.apache.tomcat.jni.Local;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -23,13 +26,12 @@ public class Workout {
     @JoinColumn(name = "template_id")
     private Template template;
 
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WorkoutExercise> workoutExercises;
 
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;
 
-    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -94,5 +96,15 @@ public class Workout {
             return String.format("%02d:%02d", minutes, seconds);
         }
         return null;
+    }
+
+    public int getTotalWeight() {
+        int totalWeight = 0;
+        for (WorkoutExercise exercise : workoutExercises) {
+            for (Set set : exercise.getSets()) {
+                totalWeight += (int) (set.getWeight() * set.getReps());
+            }
+        }
+        return totalWeight;
     }
 }
