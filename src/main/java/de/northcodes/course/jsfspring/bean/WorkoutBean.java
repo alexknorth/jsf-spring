@@ -55,6 +55,7 @@ public class WorkoutBean implements Serializable {
     private WorkoutService workoutService;
 
     Logger log = LoggerFactory.getLogger(WorkoutBean.class);
+    User currentUser = userManager.getCurrentUser();
 
     public WorkoutBean() {
         workout = new Workout();
@@ -72,12 +73,13 @@ public class WorkoutBean implements Serializable {
     public void initializeWorkout(Template template) {
         workout = new Workout();
         workout.setTemplate(template);
-        workout.setUser(userManager.getCurrentUser());
+        workout.setUser(currentUser);
         workout.setStartedAt(LocalDateTime.now());
         this.log.info("Initializing workout for template: {}", template.getName());
 
         // Find the latest workout with the given template
         Workout latestWorkout = workoutRepository.findTopByTemplateOrderByIdDesc(template);
+        assert latestWorkout == null || latestWorkout.getTemplate().equals(template);
 
         if (latestWorkout != null) {
             this.log.info("Latest workout found with ID: {}", latestWorkout.getId());
@@ -144,20 +146,12 @@ public class WorkoutBean implements Serializable {
 
     @Transactional
     public String finishWorkout() {
-        log.info("Finishing workout");
         workout.setFinishedAt(LocalDateTime.now());
-
-        // Ensure the user is set
-        User currentUser = userManager.getCurrentUser();
         if (currentUser == null) {
-            log.error("Current user is null. Cannot finish workout.");
             throw new IllegalStateException("Current user is null. Cannot finish workout.");
         }
         workout.setUser(currentUser);
-
-        // Save the workout first
-        workout = workoutRepository.save(workout);
-
+        workoutRepository.save(workout);
         List<WorkoutExercise> managedExercises = new ArrayList<>();
         for (WorkoutExercise exercise : exercises) {
             exercise.setWorkout(workout);
@@ -218,4 +212,5 @@ public class WorkoutBean implements Serializable {
     public void setCompletedWorkouts(List<Workout> completedWorkouts) {
         this.completedWorkouts = completedWorkouts;
     }
+    
 }

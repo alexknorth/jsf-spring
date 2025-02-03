@@ -106,3 +106,8 @@ body > footer > p {
     border-radius: 80px; /* Rounded corners */
 }
 
+.small-image {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
