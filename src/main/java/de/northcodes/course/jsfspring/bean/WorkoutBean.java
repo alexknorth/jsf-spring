@@ -55,7 +55,7 @@ public class WorkoutBean implements Serializable {
     private WorkoutService workoutService;
 
     Logger log = LoggerFactory.getLogger(WorkoutBean.class);
-    User currentUser = userManager.getCurrentUser();
+    User currentUser;
 
     public WorkoutBean() {
         workout = new Workout();
@@ -73,6 +73,7 @@ public class WorkoutBean implements Serializable {
     public void initializeWorkout(Template template) {
         workout = new Workout();
         workout.setTemplate(template);
+        currentUser = userManager.getCurrentUser();
         workout.setUser(currentUser);
         workout.setStartedAt(LocalDateTime.now());
         this.log.info("Initializing workout for template: {}", template.getName());
